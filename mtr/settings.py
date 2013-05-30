@@ -120,11 +120,21 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+    
+    # Third Party Apps
+    'storages',
+    
+    # Local Apps
+    'dashboard',
+    'reports',
+    'documents',
+    'vendors',
 )
+
+# Amazon S3 Storage Settings
+DEFAULT_FILE_STORAGE = 'libs.storages.S3Storage.S3BotoStorage'
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
