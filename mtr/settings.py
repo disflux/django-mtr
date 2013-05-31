@@ -11,7 +11,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': '',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
@@ -83,7 +83,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'w=lsy1j48fz#)^63yp^vofv_iuq!+c-nm#ril0*9_@19&-j7yo'
+SECRET_KEY = ''
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -131,6 +131,8 @@ INSTALLED_APPS = (
     'reports',
     'documents',
     'vendors',
+    'specifications',
+    'parts',
 )
 
 # Amazon S3 Storage Settings
@@ -164,3 +166,5 @@ LOGGING = {
         },
     }
 }
+
+from settings_local import *
