@@ -7,3 +7,6 @@ class Vendor(models.Model):
     state = models.TextField()
     zip = models.TextField()
     country = models.CharField(max_length=32)
+
+    def __unicode__(self):
+        return self.name

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Django MTR - Material Test Report Tracker{% endblock %}</title>
+        <meta charset="UTF-8" />
+        <meta name="description" content="{% block meta_description %}Part Engine is the part number search engine. Find information about part numbers for automotive, electronic, and other consumer products {% endblock %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.gritter.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.main.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.grey.css" class="skin-color" />
+        <link rel="shortcut icon" href="{{ STATIC_URL }}img/favicon.ico" type="image/x-icon" />
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.gritter.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.peity.min.js"></script>
+        <script src="{{ STATIC_URL }}js/unicorn.js"></script>
+        <script src="{{ STATIC_URL }}js/unicorn.interface.js"></script>
+        {% block head %}
+        {% endblock %}
+        
+        <!-- search typeahead -->
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".search input[type=text]").typeahead({
+                    items: 5,
+                    source: function (query, process) {
+                        $.get('/search/autocomplete', { q: query }, function (data) {
+                            process(data)
+                        })
+                    }
+                    });
+                {% if messages %}
+                {% for message in messages %}
+                $.gritter.add({
+                    title: 'Status Message',
+                    text: '{{ message }}',
+                    sticky: false
+                    });
+                {% endfor %}
+                {% endif %}
+            });
+        </script>
+          
+    </head>
+    <body>
+        
+        <div id="gritter-notify" class="notify-ui">
+        </div>
+        <div id="header">
+            <h1><a href="/">Django MTR Tracker</a></h1>		
+        </div>
+
+        <div class="search" id="search">
+            <form method="get" action="">
+                    <input autocomplete="off" name="q" type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+            </form>
+        </div>
+        
+        <div id="user-nav" class="navbar navbar-inverse noprint">
+            <ul class="nav btn-group">
+                {% if user.is_authenticated %}
+                <li class="btn btn-inverse" ><a title="View My Profile" href="{{ request.user.get_absolute_url }}"> </a></li>
+                
+                <li class="btn btn-inverse"><a title="" href="#"><i class="icon-cog"></i> <span class="text">Settings</span></a></li>
+                <li class="btn btn-inverse"><a title="" href=""><i class="icon-share-alt"></i> <span class="text">Logout</span></a></li>
+                
+                {% else %}
+                <li class="btn btn-inverse"><a title="" href=""><i class="icon-pencil"></i> <span class="text">Sign Up</span></a></li>
+                
+                <!-- login dropdown form -->
+                <li class="btn btn-inverse"><a title="" href=""><i class="icon-user"></i> <span class="text">Sign In</span></a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        {% block no_sidebar %}
+        <div id="sidebar">
+            <ul>
+                <li class="{% block home_active %}{% endblock %}"><a href=""><i class="icon-home"></i> <span>Home</span></a></li>
+                
+                <!-- parts sub-menu -->
+                <li class="submenu {% block parts_active %}{% endblock %}">
+                <a href=""><i class="icon-cog"></i> <span>Reports</span> <span class="label">2</span></a>
+                <ul>
+                    <li><a href=""><i class="icon-inbox"></i> Browse/Search Reports</a></li>
+                    <li><a href=""><i class="icon-plus-sign"></i> Create Report</a></li>
+                    <!-- <li><a href="form-wizard.html"><i class="icon-list-alt"></i> Part Statistics</a></li> -->
+                </ul>
+                </li>
+                
+                <!-- assemblies sub-menu -->
+                <li class="submenu {% block assemblies_active %}{% endblock %}">
+                <a href="#"><i class="icon-wrench"></i> <span>Orders</span> <span class="label">3</span></a>
+                <ul>
+                    <li><a href=""><i class="icon-list-alt"></i> Browse Assemblies/Lists</a></li>
+                    <li><a href=""><i class="icon-plus-sign"></i> Create Assembly/List</a></li>
+                    <li><a href="#"><i class="icon-star"></i> My Assemblies/Lists</a></li>
+                </ul>
+                </li>
+                
+                <!-- NSN sub-menu -->
+                <li class="submenu {% block nsn_active %}{% endblock %}">
+                <a href="#"><i class="icon-plane"></i> <span>Documents</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href=""><i class="icon-list-alt"></i> NSN Listing</a></li>
+                        <li><a href="#">FSC Details</a></li>
+                    </ul>
+                </li>
+                
+                <li {% block companies_active %}{% endblock %} ><a href=""><i class="icon-briefcase"></i> <span>Vendors</span></a></li>
+                
+                <li class="{% block search_active %}{% endblock %}" ><a href=""><i class="icon-search"></i> <span>Parts</span></a></li>
+                
+                <li class="submenu {% block users_active %}{% endblock %}" >
+                    <a href="#"><i class="icon-user"></i> <span>Users</span>  <span class="label">2</span></a>
+                        <ul>
+                            <li><a href=""><i class="icon-user"></i> User Directory</a></li>
+                            {% if request.user.is_authenticated %}
+                            <li><a href="{{ request.user.get_absolute_url }}"><i class="icon-star"></i> My Profile</a></li>
+                            {% else %}
+                            <li><a href=""><i class="icon-star"></i> My Profile</a></li>
+                            {% endif %}
+                        </ul>
+                </li>
+                
+                <!--<li {% block sourcing_active %}{% endblock %} ><a href="interface.html"><i class="icon-magnet"></i> <span>Sourcing Dashboard</span></a></li>-->
+                
+                <!--<li {% block data_collection_active %}{% endblock %} ><a href="tables.html"><i class="icon-filter"></i> <span>Data Collection</span></a></li>-->
+                
+                <li class="submenu {% block help_active %}{% endblock %}">
+                <a href="#"><i class="icon-question-sign"></i> <span>Help</span> <span class="label">3</span></a>
+                    <ul>
+                        <li><a href="/faq/"><i class="icon-question-sign"></i> F.A.Q.</a></li>
+                        <li><a href="/privacy/"><i class="icon-eye-close"></i> Privacy Policy</a></li>
+                        <li><a href="/contact/"><i class="icon-envelope"></i> Contact Us</a></li>
+                    </ul>
+                </li>
+                
+                
+            </ul>
+
+        </div>
+        {% endblock %}
+
+        <div id="content">
+            <div id="content-header">
+                <h1>{% block page_title %} {% endblock %}</h1>
+                
+                {% block right_buttons %}
+                
+                {% endblock %}
+            </div>
+            
+            {% block no_breadcrumb %}
+            <div id="breadcrumb" class="noprint">
+                <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+                {% block breadcrumb_links %} {% endblock %}
+            </div>
+            {% endblock %}
+            <div class="container-fluid">
+                {% block content %}
+                
+                {% endblock %}
+
+                <div class="noprint row-fluid">
+                    <div id="footer" class="noprint span12" style="margin-top:65px;">
+                   
+                            <br />
+                            &copy; 2012 - {% now "Y" %} disflux, LLC. (  )
+                            <br /><br />
+                            </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

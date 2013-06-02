@@ -1,0 +1,41 @@
+<div class="modal hide" id="new_document-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Attach a new document</h3>
+    </div>
+    <div class="modal-body">
+
+
+        <form id="image-form" class="form-horizontal" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label">Document Type</label>
+                <div class="controls">
+                    {{ new_document_form.type }}
+                </div>
+
+                <label class="control-label">File</label>
+                <div class="controls">
+                    {{ new_document_form.file }}
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="document_button" value="1" />
+                <button id="save-document" type="submit" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Upload</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+
+            </form>
+        </div>
+
+        <script type="text/javascript">
+            $('#save-document').click(function() {
+                    $('#save-document').button('loading');
+                    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() { 
+            $("select").select2({ width: 'resolve' });           
+            }); 
+</script>
+            </div>
