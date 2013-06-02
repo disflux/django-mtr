@@ -1,8 +1,9 @@
-from django import forms
-from parts.models import Part
+from django.forms import ModelForm
+from reports.models import Report
 
-class ReportForm(forms.Form):
-    part = forms.CharField(max_length=48)
-    company = forms.CharField(max_length=48)
-    desc = forms.CharField(max_length=256, required=False)
-    copy_attrs = forms.BooleanField(required=False)
+class ReportForm(ModelForm):
+    class Meta:
+        model = Report
+        fields = ['mfg_lot_number', 'vendor_lot_number', 'heat_number',
+                  'vendor', 'specification', 'part_number', 'origin_po',
+                  'origin_wo']

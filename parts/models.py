@@ -12,5 +12,10 @@ class Part(models.Model):
     
     def __unicode__(self):
         return self.part_number
+
+    def save(self, *args, **kwargs):
+        self.part_number = self.part_number.upper()
+        super(Part, self).save(*args, **kwargs)
+
         
 

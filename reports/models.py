@@ -14,6 +14,8 @@ class Report(models.Model):
     specification = models.ForeignKey(Specification, null=True)
     part_number = models.ForeignKey(Part)
     description = models.TextField()
+    origin_po = models.CharField(max_length=32, null=True, blank=True)
+    origin_wo = models.CharField(max_length=32, null=True, blank=True)
     approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -33,6 +35,12 @@ class Report(models.Model):
     def save(self, *args, **kwargs):
         import time
         if not self.lot_number:
-            self.lot_number = int(time.mktime(time.gmtime())) 
+            self.lot_number = int(time.mktime(time.gmtime()))
+
+        self.mfg_lot_number = self.mfg_lot_number.upper()
         super(Report, self).save(*args, **kwargs)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('reports.views.report', [self.lot_number])
     

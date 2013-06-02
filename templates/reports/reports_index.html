@@ -1,0 +1,82 @@
+{% extends "base/main.html" %}
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+{% endblock %}
+
+{% block parts_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="#" class="current">Reports</a>
+{% endblock %}
+
+{% block page_title %}Browse Reports{% endblock %}
+{% block title %}Part Listing - Page {{ page_num }} | Part Engine {% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Reports Listing</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Lot #</th>
+                            <th>MFG Lot #</th>
+                            <th>Vendor</th>
+                            <th>Part #</th>
+                            <th>Specification</th>
+                            <th>PO #</th>
+                            <th>Work Order #</th>
+                            <th>Date</th>
+                            <th># Documents</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for report in reports %}
+                        <tr>
+                            <td>
+                                <a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</a>
+                            </td>
+                            <td>
+                                {{ report.mfg_lot_number }}
+                            </td>
+                            <td>
+                                <a href="{{ part.company.get_absolute_url }}">{{ report.vendor.name }}</a>
+                            </td>
+                            <td>
+                                {{ report.part_number }}
+                            </td>
+                            <td>
+                                {{ report.specification }}
+                            </td>
+                            <td>
+                                {{ report.origin_po }}
+                            </td>
+                            <td>
+                                {{ report.origin_wo }}
+                            </td>
+                            <td>
+                                {{ report.created_at }}
+                            </td>
+                            <td>
+                                {{ report.documents.count }}
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -19,10 +19,10 @@ from reports.models import Report
 from documents.forms import NewDocumentForm
 from documents.models import Document
 
-def index(request):
-    return render_to_response('parts/index.html',
-                              {'parts_list': parts_list,
-                               'page_num': page,
+def reports_index(request):
+    reports = Report.objects.all()
+    return render_to_response('reports/reports_index.html',
+                              {'reports': reports,
                               },
                               context_instance=RequestContext(request))
 
@@ -38,7 +38,7 @@ def report(request, lot_number):
             doc.save()
             report.documents.add(doc)
             report.save()
-            messages.success(request, 'Document upload successful. Thanks for contributing!')
+            messages.success(request, 'Document upload successful.')
 
             return HttpResponseRedirect(reverse('reports.views.report',
                                                     args=[report.lot_number]))
@@ -49,32 +49,17 @@ def report(request, lot_number):
                               },
                               context_instance=RequestContext(request))
 
-def addpart(request, part_number, company, desc):
-    try:
-        c = Company.objects.get(slug=slugify(company))
-    except ObjectDoesNotExist:
-        c = Company(name=company, slug=slugify(company))
-        c.save()
-    if Part.objects.filter(number=part_number, company=c).exists():
-        newpart = Part.objects.get(number=part_number, company=c)
-    else: 
-        newpart = Part(number=part_number, company=c, user=request.user, description=desc, hits=0)
-        newpart.save()
-    return newpart
 
-def addreport(request):
+def new_report(request):
     if request.method == 'POST':
-        reportform = XrefForm(request.POST)
-        if partform.is_valid():
-            part_number = partform.cleaned_data['part'].upper()
-            desc = partform.cleaned_data['desc'].upper()
-            company = partform.cleaned_data['company'].upper()
-            newpart = addpart(request, part_number, company, desc)
-            return HttpResponseRedirect(newpart.get_absolute_url())
+        reportform = ReportForm(request.POST)
+        if reportform.is_valid():
+            report = reportform.save()
+            return HttpResponseRedirect(report.get_absolute_url())
     else:
-        partform = XrefForm()
-    return render_to_response('parts/add.html',
-                              {'partform': partform,},
+        reportform = ReportForm()
+    return render_to_response('reports/new_report.html',
+                              {'reportform': reportform,},
                               context_instance=RequestContext(request))
 
 

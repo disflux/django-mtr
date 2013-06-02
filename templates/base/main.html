@@ -87,8 +87,8 @@
                 <li class="submenu {% block parts_active %}{% endblock %}">
                 <a href=""><i class="icon-cog"></i> <span>Reports</span> <span class="label">2</span></a>
                 <ul>
-                    <li><a href=""><i class="icon-inbox"></i> Browse/Search Reports</a></li>
-                    <li><a href=""><i class="icon-plus-sign"></i> Create Report</a></li>
+                    <li><a href="{% url 'reports.views.reports_index' %}"><i class="icon-inbox"></i> Browse/Search Reports</a></li>
+                    <li><a href="{% url 'reports.views.new_report' %}"><i class="icon-plus-sign"></i> Create Report</a></li>
                     <!-- <li><a href="form-wizard.html"><i class="icon-list-alt"></i> Part Statistics</a></li> -->
                 </ul>
                 </li>
@@ -177,5 +177,7 @@
                 </div>
             </div>
         </div>
+        {% block js %}
+        {% endblock %}
     </body>
 </html>
