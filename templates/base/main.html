@@ -62,20 +62,7 @@
         </div>
         
         <div id="user-nav" class="navbar navbar-inverse noprint">
-            <ul class="nav btn-group">
-                {% if user.is_authenticated %}
-                <li class="btn btn-inverse" ><a title="View My Profile" href="{{ request.user.get_absolute_url }}"> </a></li>
-                
-                <li class="btn btn-inverse"><a title="" href="#"><i class="icon-cog"></i> <span class="text">Settings</span></a></li>
-                <li class="btn btn-inverse"><a title="" href=""><i class="icon-share-alt"></i> <span class="text">Logout</span></a></li>
-                
-                {% else %}
-                <li class="btn btn-inverse"><a title="" href=""><i class="icon-pencil"></i> <span class="text">Sign Up</span></a></li>
-                
-                <!-- login dropdown form -->
-                <li class="btn btn-inverse"><a title="" href=""><i class="icon-user"></i> <span class="text">Sign In</span></a></li>
-                {% endif %}
-            </ul>
+            
         </div>
 
         {% block no_sidebar %}

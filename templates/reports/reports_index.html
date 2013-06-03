@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block page_title %}Browse Reports{% endblock %}
-{% block title %}Part Listing - Page {{ page_num }} | Part Engine {% endblock %}
+{% block title %}Reports Listing{% endblock %}
 
 {% block content %}
 <div class="row-fluid">
@@ -30,12 +30,14 @@
                         <tr>
                             <th>Lot #</th>
                             <th>MFG Lot #</th>
+                            <th>Vendor Lot #</th>
+                            <th>Heat #</th>
                             <th>Vendor</th>
                             <th>Part #</th>
                             <th>Specification</th>
                             <th>PO #</th>
                             <th>Work Order #</th>
-                            <th>Date</th>
+      
                             <th># Documents</th>
 
                         </tr>
@@ -48,6 +50,12 @@
                             </td>
                             <td>
                                 {{ report.mfg_lot_number }}
+                            </td>
+                            <td>
+                                {{ report.vendor_lot_number }}
+                            </td>
+                            <td>
+                                {{ report.heat_number }}
                             </td>
                             <td>
                                 <a href="{{ part.company.get_absolute_url }}">{{ report.vendor.name }}</a>
@@ -63,9 +71,6 @@
                             </td>
                             <td>
                                 {{ report.origin_wo }}
-                            </td>
-                            <td>
-                                {{ report.created_at }}
                             </td>
                             <td>
                                 {{ report.documents.count }}
