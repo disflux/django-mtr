@@ -1,6 +1,11 @@
 Django==1.5.1
+PIL==1.1.7
 argparse==1.2.1
+boto==2.9.5
 distribute==0.6.34
+django-orm-extensions==3.0b3
 django-storages==1.1.8
+django-uuidfield==0.4.0
 psycopg2==2.5
+sorl-thumbnail==11.12
 wsgiref==0.1.2
