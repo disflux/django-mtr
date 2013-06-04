@@ -20,7 +20,7 @@ from documents.forms import NewDocumentForm
 from documents.models import Document
 
 def reports_index(request):
-    reports = Report.objects.all()
+    reports = Report.objects.all().order_by('-lot_number')
     return render_to_response('reports/reports_index.html',
                               {'reports': reports,
                               },
