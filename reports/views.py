@@ -14,7 +14,7 @@ from django.contrib.sites.models import get_current_site
 from django.core.files.storage import default_storage
 
 from reports.forms import ReportForm
-from reports.models import Report
+from reports.models import Report, ReportDocument
 
 from documents.forms import NewDocumentForm
 from documents.models import Document
@@ -36,7 +36,8 @@ def report(request, lot_number):
             doc = Document(type=newdoc.cleaned_data['type'],
                            file=request.FILES['file'])
             doc.save()
-            report.documents.add(doc)
+            rd = ReportDocument(report=report, document=doc)
+            rd.save()
             report.save()
             messages.success(request, 'Document upload successful.')
 
