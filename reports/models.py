@@ -21,7 +21,8 @@ class Report(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     documents = models.ManyToManyField(Document,
                                        related_name='attached_documents',
-                                       null=True, blank=True)
+                                       null=True, blank=True,
+                                       through='ReportDocument')
     linked_reports = models.ManyToManyField('Report',
                                             related_name='report_links',
                                             null=True, blank=True)
@@ -29,9 +30,6 @@ class Report(models.Model):
     def __unicode__(self):
         return self.lot_number
 
-    class Meta:
-        unique_together = ('lot_number', 'vendor',)
-        
     def save(self, *args, **kwargs):
         import time
         if not self.lot_number:
@@ -43,4 +41,11 @@ class Report(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('reports.views.report', [self.lot_number])
+
+class ReportDocument(models.Model):
+    report = models.ForeignKey(Report)
+    document = models.ForeignKey(Document)
+    primary_document = models.BooleanField(default=True)
+    attachment_date = models.DateTimeField(auto_now_add=True)
+
     
