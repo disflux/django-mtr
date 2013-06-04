@@ -46,9 +46,7 @@ def email_document(request):
     
 def attach_document(request):
     doc_id = request.POST.get('document_id', None)
-    print doc_id
     report_lot_number = request.POST.get('report_lot_number', None)
-    print report_lot_number
     doc = Document.objects.get(id=doc_id)
     report = Report.objects.get(lot_number=report_lot_number)
     rd = ReportDocument(report=report, document=doc)
