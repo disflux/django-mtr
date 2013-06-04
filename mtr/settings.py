@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'vendors',
     'specifications',
     'parts',
+    'orders',
 )
 
 # Amazon S3 Storage Settings
