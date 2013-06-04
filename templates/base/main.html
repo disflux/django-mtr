@@ -94,7 +94,7 @@
                 <li class="submenu {% block nsn_active %}{% endblock %}">
                 <a href="#"><i class="icon-plane"></i> <span>Documents</span> <span class="label">2</span></a>
                     <ul>
-                        <li><a href=""><i class="icon-list-alt"></i> NSN Listing</a></li>
+                        <li><a href="{% url 'documents.views.documents_index' %}"><i class="icon-list-alt"></i> Document Index</a></li>
                         <li><a href="#">FSC Details</a></li>
                     </ul>
                 </li>

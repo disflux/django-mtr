@@ -18,6 +18,10 @@ class Document(models.Model):
 
     def __unicode__(self):
         return str(self.uuid)
+        
+    @models.permalink
+    def get_absolute_url(self):
+        return ('documents.views.document', [str(self.uuid)])
 
 class DocumentType(models.Model):
     name = models.CharField(max_length=32, null=False)

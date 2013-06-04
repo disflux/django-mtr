@@ -1,0 +1,33 @@
+<div class="modal hide" id="attach_document-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Attach a new document</h3>
+    </div>
+    <div class="modal-body">
+        <form id="image-form" class="form-horizontal" method="post" action="{% url 'documents.views.attach_document' %}">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label">Report Lot Number</label>
+                <div class="controls">
+                    <input type="text" id="report_lot_number" name="report_lot_number" maxlength=12 />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="hidden" name="document_id" value="{{ document.pk }}" />
+                <button id="save-document" type="submit" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Attach</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </form>
+
+        <script type="text/javascript">
+            $('#save-document').click(function() {
+                    $('#save-document').button('loading');
+                    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function() { 
+            $("select").select2({ width: 'resolve' });           
+            }); 
+</script>
+                    </div>

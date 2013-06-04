@@ -1,0 +1,60 @@
+{% extends "base/main.html" %}
+{% load thumbnail %}
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+{% endblock %}
+
+{% block parts_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="#" class="current">Documents Index</a>
+{% endblock %}
+
+{% block page_title %}Browse Documents{% endblock %}
+{% block title %}Documents Index{% endblock %}
+
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Documents Index</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>UUID</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for document in documents %}
+                        <tr>
+                            
+                            <td>
+                                {{ document.type }}
+                            </td>
+                            <td>
+                                <a href="{{ document.get_absolute_url }}">{{ document.uuid }}</a>
+                            </td>
+                            <td>
+                                {{ document.created_at }}
+                            </td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

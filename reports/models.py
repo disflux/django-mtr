@@ -20,7 +20,6 @@ class Report(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     documents = models.ManyToManyField(Document,
-                                       related_name='attached_documents',
                                        null=True, blank=True,
                                        through='ReportDocument')
     linked_reports = models.ManyToManyField('Report',
