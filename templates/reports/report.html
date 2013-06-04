@@ -208,13 +208,11 @@
                     <tr>
                         <td>
                             {% thumbnail d.file "100x200" crop="center" as im %}
-                            {% thumbnail d.file "x900" format="PNG" as preview %}
                             <center>
-                                <a data-jkit="[lightbox:group=images]" class="lightbox thumbnail" href="{{ preview.url }}">
+                                <a target="_blank" href="{{ d.file.url }}">
                                     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
                                 </a>
                             </center>
-                                {% endthumbnail %}
                                 {% endthumbnail %}
                         </td>
                         <td>

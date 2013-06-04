@@ -7,7 +7,8 @@ $(document).ready(function(){
 	$('.data-table').dataTable({
 		"bJQueryUI": true,
 		"sPaginationType": "full_numbers",
-		"sDom": '<""l>t<"F"fp>'
+		"sDom": '<""l>t<"F"fp>',
+		"iDisplayLength": 50
 	});
 	
 	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();

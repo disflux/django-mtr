@@ -80,7 +80,15 @@
                 </ul>
                 </li>
                 
-                <!-- assemblies sub-menu -->
+                <!-- Documents sub-menu -->
+                <li class="submenu {% block doc_active %}{% endblock %}">
+                <a href="#"><i class="icon-plane"></i> <span>Documents</span> <span class="label">1</span></a>
+                    <ul>
+                        <li><a href="{% url 'documents.views.documents_index' %}"><i class="icon-list-alt"></i> Document Index</a></li>
+                    </ul>
+                </li>
+                
+                <!-- Orders sub-menu -->
                 <li class="submenu {% block assemblies_active %}{% endblock %}">
                 <a href="#"><i class="icon-wrench"></i> <span>Orders</span> <span class="label">3</span></a>
                 <ul>
@@ -90,14 +98,7 @@
                 </ul>
                 </li>
                 
-                <!-- NSN sub-menu -->
-                <li class="submenu {% block nsn_active %}{% endblock %}">
-                <a href="#"><i class="icon-plane"></i> <span>Documents</span> <span class="label">2</span></a>
-                    <ul>
-                        <li><a href="{% url 'documents.views.documents_index' %}"><i class="icon-list-alt"></i> Document Index</a></li>
-                        <li><a href="#">FSC Details</a></li>
-                    </ul>
-                </li>
+                
                 
                 <li {% block companies_active %}{% endblock %} ><a href=""><i class="icon-briefcase"></i> <span>Vendors</span></a></li>
                 
