@@ -10,6 +10,7 @@ urlpatterns = patterns('',
                        url(r'^$', 'dashboard.views.home', name='home'),
                        url(r'^reports/', include('reports.urls')),
                        url(r'^documents/', include('documents.urls')),
+                       url(r'^orders/', include('orders.urls')),
 
                        # Admin related urls
                        (r'^admin/doc/', include('django.contrib.admindocs.urls')),

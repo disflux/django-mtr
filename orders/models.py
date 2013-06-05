@@ -6,6 +6,9 @@ from documents.models import Document
 
 class Customer(models.Model):
     name = models.CharField(max_length=128, unique=True)
+
+    def __unicode__(self):
+        return self.name
     
 class Order(models.Model):
     customer = models.ForeignKey(Customer)
@@ -13,6 +16,9 @@ class Order(models.Model):
     order_number = models.CharField(max_length=16)
     line_items = models.ManyToManyField('OrderLineItem', related_name='order_line_items', null=True, blank=True)
     documents = models.ManyToManyField(Document, related_name='order_documents', null=True, blank=True)
+
+    def __unicode__(self):
+        return self.order_number
     
     
 class OrderLineItem(models.Model):
