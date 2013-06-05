@@ -1,6 +1,7 @@
 from django.db import models
 
 from reports.models import Report
+from documents.models import Document
 
 
 class Customer(models.Model):
@@ -10,9 +11,11 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer)
     customer_po = models.CharField(max_length=32)
     order_number = models.CharField(max_length=16)
-    line_items = models.ManyToManyField('OrderLineItem', related_name='order_line_items')
+    line_items = models.ManyToManyField('OrderLineItem', related_name='order_line_items', null=True, blank=True)
+    documents = models.ManyToManyField(Document, related_name='order_documents', null=True, blank=True)
+    
     
 class OrderLineItem(models.Model):
     order = models.ForeignKey(Order)
     line_number = models.IntegerField(max_length=4)
-    report = models.ForeignKey(Report)
+    report = models.ForeignKey(Report, blank=True, null=True)

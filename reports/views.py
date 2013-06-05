@@ -2,15 +2,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.template import RequestContext
-from django.template.defaultfilters import slugify, truncatechars
-from django.db import IntegrityError
-from django.db.models import Avg, Max, Min
-from django.contrib.auth.decorators import login_required
-from django.conf import settings
 from django.contrib import messages
-from django.core.exceptions import ObjectDoesNotExist
-from django.conf import settings
-from django.contrib.sites.models import get_current_site
 from django.core.files.storage import default_storage
 from io import BytesIO
 from reportlab.pdfgen import canvas
@@ -86,12 +78,16 @@ def report_label(request, lot_number):
 
     # Draw Lot number
     p.setFont("Helvetica", 20)
-    p.drawString(80*mm, 94*mm, "Lot # %s" % report.lot_number)
-    barcode = createBarcodeDrawing('Code128', value=report.lot_number,  barWidth=0.5*mm, barHeight=12*mm, humanReadable=True)
-    barcode.drawOn(p,80*mm, 75*mm)
+    p.drawString(82*mm, 98*mm, "Lot # %s" % report.lot_number)
+    barcode = createBarcodeDrawing('Code128', value=report.lot_number,  barWidth=0.5*mm, barHeight=10*mm, humanReadable=True)
+    barcode.drawOn(p,82*mm, 83*mm)
+    p.line(75*mm, 82*mm, 150*mm, 82*mm)
+    if report.heat_number:
+        p.setFont("Helvetica", 13)
+        p.drawString(78*mm, 77*mm, "Heat # %s" % report.heat_number)
     
     # Draw Description
-    p.setFont("Helvetica", 15)
+    p.setFont("Helvetica", 13)
     p.line(0,70*mm, 150*mm, 70*mm)
     p.drawString(10, 60*mm, report.part_number.description)
     p.line(0,55*mm, 150*mm, 55*mm)

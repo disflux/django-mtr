@@ -43,6 +43,8 @@ def email_document(request):
 
     email.attach("MTR_%s.pdf" % report.lot_number, doc.file.read(), 'application/pdf')
     email.send()
+    messages.success(request, "Email sent to %s" % recipient)
+    return HttpResponseRedirect(reverse('reports.views.report', args=[str(report.lot_number)]))
     
 def attach_document(request):
     doc_id = request.POST.get('document_id', None)

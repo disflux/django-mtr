@@ -30,8 +30,8 @@
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>
-                            <th>Type</th>
                             <th>UUID</th>
+                            <th>Type</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -40,11 +40,12 @@
                         <tr>
                             
                             <td>
-                                {{ document.type }}
-                            </td>
-                            <td>
                                 <a href="{{ document.get_absolute_url }}">{{ document.uuid }}</a>
                             </td>
+                            <td>
+                                {{ document.type }}
+                            </td>
+                            
                             <td>
                                 {{ document.created_at }}
                             </td>

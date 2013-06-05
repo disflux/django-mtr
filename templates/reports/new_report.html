@@ -57,7 +57,9 @@
                         {% for field in reportform %}
                         <label class="control-label" for="id_company">{{ field.label }}</label>                        
                         <div class="controls">
+                            {{ field.errors }}
                             {{ field }}
+                            <span class="help-block">{{ field.help_text }}</span>
                         </div>
                         {% endfor %}
                     </div>
@@ -72,12 +74,23 @@
     </div>
 
 
-    <div class="well span5">
-        <h2>New Report Checklist</h2>
-        <p>Make sure you have the following items available before creating a new report</p>
-        <ol>
-            <li><strong>Certs</strong> - scanned copies of all certs/MTRs needed</li>
-        </ol>
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>New Report Checklist</h5>
+            </div>
+            <div class="widget-content">
+                <p>Make sure you have the following items available before creating a new report</p>
+                <ol>
+                    <li><strong>Certs</strong> - scanned copies of all certs/MTRs needed</li>
+                    <li><strong>PO or Work Order</strong> - the PO# or WO# that the material originated from</li>
+                    <li><strong>Inspection Report</strong> - scanned copy of the completed inspection report</li>
+                </ol>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
