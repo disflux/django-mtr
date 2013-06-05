@@ -212,6 +212,14 @@
                                 <a target="_blank" href="{{ d.file.url }}">
                                     <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
                                 </a>
+                                <br /><br />
+                                <div class="buttons">
+                                    <a class="btn btn-mini tip-top" title="Download/Print Document" href="{{ d.file.url }}" ><i class="icon-print"></i></a>
+                                    <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.id }}" data-toggle="modal" title="Email Document">
+                                        <i class="icon-envelope"></i>
+                                    </a>
+                                    <a class="btn btn-mini tip-top" title="Remove Document"><i class="icon-trash"></i></a>
+                                </div>
                             </center>
                                 {% endthumbnail %}
                         </td>
@@ -228,17 +236,6 @@
                                 <tr>
                                     <td>Document Date</td>
                                     <td>{{ d.created_at }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Actions</td>
-                                    <td>
-                                        <div class="buttons">
-                                            <a class="btn btn-mini tip-top" title="Download/Print Document" href="{{ d.file.url }}" ><i class="icon-print"></i></a>
-                                            <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.id }}" data-toggle="modal" title="Email Document">
-                                                <i class="icon-envelope"></i>
-                                            </a>
-                                        </div>
-                                    </td>
                                 </tr>
                             </table>
                         </td>
