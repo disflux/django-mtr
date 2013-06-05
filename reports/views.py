@@ -13,6 +13,8 @@ from reports.models import Report, ReportDocument
 from documents.forms import NewDocumentForm
 from documents.models import Document
 
+from orders.models import OrderLineItem
+
 def reports_index(request):
     reports = Report.objects.all().order_by('-lot_number')
     return render_to_response('reports/reports_index.html',
@@ -22,6 +24,7 @@ def reports_index(request):
 
 def report(request, lot_number):
     report = Report.objects.get(lot_number=lot_number)
+    orders = OrderLineItem.objects.filter(report=report)
     newdoc = NewDocumentForm(None)
 
     if 'document_button' in request.POST:
@@ -41,6 +44,7 @@ def report(request, lot_number):
                               {
                                   'report': report,
                                   'new_document_form': newdoc,
+                                  'orders': orders,
                               },
                               context_instance=RequestContext(request))
 
@@ -82,9 +86,12 @@ def report_label(request, lot_number):
     barcode = createBarcodeDrawing('Code128', value=report.lot_number,  barWidth=0.5*mm, barHeight=10*mm, humanReadable=True)
     barcode.drawOn(p,82*mm, 83*mm)
     p.line(75*mm, 82*mm, 150*mm, 82*mm)
+    p.setFont("Helvetica", 13)
+    if report.mfg_lot_number:
+        p.drawString(78*mm, 77*mm, "MFG LOT # %s" % report.mfg_lot_number)
     if report.heat_number:
-        p.setFont("Helvetica", 13)
-        p.drawString(78*mm, 77*mm, "Heat # %s" % report.heat_number)
+        p.drawString(78*mm, 72*mm, "Heat # %s" % report.heat_number)
+    
     
     # Draw Description
     p.setFont("Helvetica", 13)

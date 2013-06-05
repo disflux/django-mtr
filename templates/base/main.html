@@ -89,10 +89,10 @@
                 </li>
                 
                 <!-- Orders sub-menu -->
-                <li class="submenu {% block assemblies_active %}{% endblock %}">
+                <li class="submenu {% block orders_active %}{% endblock %}">
                 <a href="#"><i class="icon-shopping-cart"></i> <span>Orders</span> <span class="label">2</span></a>
                 <ul>
-                    <li><a href=""><i class="icon-eye-open"></i> Browse/Search Orders </a></li>
+                    <li><a href="{% url 'orders.views.orders_index' %}"><i class="icon-eye-open"></i> Browse/Search Orders </a></li>
                     <li><a href="{% url 'orders.views.new_order' %}"><i class="icon-plus-sign"></i> Create New Order</a></li>
                 </ul>
                 </li>

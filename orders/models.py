@@ -19,9 +19,16 @@ class Order(models.Model):
 
     def __unicode__(self):
         return self.order_number
+        
+    @models.permalink
+    def get_absolute_url(self):
+        return ('orders.views.order', [self.order_number])
     
     
 class OrderLineItem(models.Model):
     order = models.ForeignKey(Order)
     line_number = models.IntegerField(max_length=4)
     report = models.ForeignKey(Report, blank=True, null=True)
+    
+    class Meta:
+        ordering = ('line_number',)

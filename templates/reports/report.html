@@ -259,13 +259,38 @@ Lot # {{ report.lot_number }}
                     <a class="btn btn-inverse btn-mini tip-left" title="Link Order" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>
-            <div id="xrefs-table">
+            <div class="widget-content nopadding">
+                <div id="xrefs-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Order #</th>
+                                <th>Customer</th>
+                                <th>PO #</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                
+                                <td>
+                                    <a href="{{ order.order.get_absolute_url }}">{{ order.order.order_number }}</a>
+                                </td>
+                                <td>
+                                    {{ order.order.customer }}
+                                </td>
+                                
+                                <td>
+                                    {{ order.order.customer_po }}
+                                </td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-
-        
-
-        
+        </div>    
     </div>
     <div id="modals">
         {% csrf_token %}

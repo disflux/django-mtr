@@ -1,0 +1,156 @@
+{% extends "base/main.html" %}
+
+{% load thumbnail %}
+
+
+{% block title %}
+{{ page_title|safe }}
+{% endblock %}
+
+{% block meta_description %}{{ part.number }} by {{ part.company.name|safe }} : {{ part.description }}{% endblock %}
+
+{% block doc_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+{% endblock %}
+
+{% block page_title %}Order # {{ order.order_number }} Details{% endblock %}
+
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".lightbox").fancybox({
+            'transitionIn'  :   'elastic',
+            'transitionOut' :   'elastic',
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false
+            });
+        {% if user.is_authenticated %}
+        $.fn.editable.defaults.mode = 'inline';
+        $('#description').editable({
+            params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
+        });
+        {% endif %}
+        });
+</script>
+<script type="text/javascript">
+    $(document).on("click", ".open-email-doc-modal", function () {
+            var id = $(this).data('id');
+     $("#doc-id-hidden").val( id );
+     $('#email_document-modal').modal('show');
+     console.log('Show Modal');
+});
+</script>
+
+    
+{% endblock %}
+
+
+
+{% block content %}
+<div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
+    <div class="span12">
+        <h2>Order # {{ order.order_number }}</h2>
+        <h4>{{ order.customer.name }} <small>PO # {{ order.customer_po }}</small></h4>
+        
+    </div>
+    
+</div>
+
+<div class="row-fluid">
+    <div class="span8">
+        <div class="widget-box collapsible">
+            <div class="widget-title">
+            <a href="#attributes" data-toggle="collapse">
+                <span class="icon">
+                    <i class="icon-list-alt"></i>
+                </span>
+                <h5>Attached Reports</h5>
+            </a>
+                <div class="buttons">
+                    <a class="btn btn-mini tip-top" title="Print Customer MTR Packet" href="#" onclick="window.print()"><i class="icon-print"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="Attach Report" href="#link_report_to_order-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                </div>
+            </div>
+            <div class="widget-content nopadding">
+            
+            <table class="table table-bordered">
+                <tr>
+                    <th>Line #</th>
+                    <th>Lot #</th>
+                    <th>Part #</th>
+                </tr>
+                {% for li in order.line_items.all %}
+                <tr>
+                    <td>{{ li.line_number }}</td>
+                    <td><a href="{{ li.report.get_absolute_url }}">{{ li.report.lot_number }}</a></td>
+                    <td>{{ li.report.part_number.part_number }}</td>
+                </tr>
+                {% endfor %}
+            
+            </table>
+            </div>
+        </div>                                               
+    </div>
+
+    <div class="span4">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-random"></i>
+                </span>
+                <h5>Details</h5>
+                </div>
+                <div class="widget-content nopadding">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>Customer</td>
+                        <td>{{ order.customer }}</td>
+                    </tr>
+                    <tr>
+                        <td>PO #</td>
+                        <td>{{ order.customer_po }}</td>
+                    </tr>
+                    <tr>
+                        <td>WO #</td>
+                        <td>{{ order.order_number }}</td>
+                    </tr>
+                    <tr>
+                        <td>Attached Reports</td>
+                        <td>{{ order.line_items.count }}</td>
+                    </tr>
+                </table>
+                </div>
+            </div>
+            <div id="xrefs-table">
+        </div>
+    </div>
+
+
+        
+
+        
+    </div>
+    <div id="modals">
+        {% csrf_token %}
+        {% include 'modals/link_report_to_order.html' %}
+        
+
+    </div>
+</div>
+
+{% endblock %}

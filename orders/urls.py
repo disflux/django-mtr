@@ -5,5 +5,5 @@ urlpatterns = patterns('',
     
     url(r'^new_order/$', 'orders.views.new_order'),
 
-    url(r'^(?P<order_id>\w+)$', 'orders.views.order'),
+    url(r'^(?P<order_number>\w+)$', 'orders.views.order'),
 )
