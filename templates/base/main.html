@@ -72,9 +72,9 @@
                 
                 <!-- parts sub-menu -->
                 <li class="submenu {% block parts_active %}{% endblock %}">
-                <a href=""><i class="icon-cog"></i> <span>Reports</span> <span class="label">2</span></a>
+                <a href=""><i class="icon-list-alt"></i> <span>Reports</span> <span class="label">2</span></a>
                 <ul>
-                    <li><a href="{% url 'reports.views.reports_index' %}"><i class="icon-inbox"></i> Browse/Search Reports</a></li>
+                    <li><a href="{% url 'reports.views.reports_index' %}"><i class="icon-eye-open"></i> Browse/Search Reports</a></li>
                     <li><a href="{% url 'reports.views.new_report' %}"><i class="icon-plus-sign"></i> Create Report</a></li>
                     <!-- <li><a href="form-wizard.html"><i class="icon-list-alt"></i> Part Statistics</a></li> -->
                 </ul>
@@ -82,15 +82,15 @@
                 
                 <!-- Documents sub-menu -->
                 <li class="submenu {% block doc_active %}{% endblock %}">
-                <a href="#"><i class="icon-plane"></i> <span>Documents</span> <span class="label">1</span></a>
+                <a href="#"><i class="icon-file"></i> <span>Documents</span> <span class="label">1</span></a>
                     <ul>
-                        <li><a href="{% url 'documents.views.documents_index' %}"><i class="icon-list-alt"></i> Document Index</a></li>
+                        <li><a href="{% url 'documents.views.documents_index' %}"><i class="icon-eye-open"></i> Document Index</a></li>
                     </ul>
                 </li>
                 
                 <!-- Orders sub-menu -->
                 <li class="submenu {% block assemblies_active %}{% endblock %}">
-                <a href="#"><i class="icon-wrench"></i> <span>Orders</span> <span class="label">3</span></a>
+                <a href="#"><i class="icon-shopping-cart"></i> <span>Orders</span> <span class="label">3</span></a>
                 <ul>
                     <li><a href=""><i class="icon-list-alt"></i> Browse Assemblies/Lists</a></li>
                     <li><a href=""><i class="icon-plus-sign"></i> Create Assembly/List</a></li>
@@ -102,7 +102,7 @@
                 
                 <li {% block companies_active %}{% endblock %} ><a href=""><i class="icon-briefcase"></i> <span>Vendors</span></a></li>
                 
-                <li class="{% block search_active %}{% endblock %}" ><a href=""><i class="icon-search"></i> <span>Parts</span></a></li>
+                <li class="{% block search_active %}{% endblock %}" ><a href=""><i class="icon-cog"></i> <span>Parts</span></a></li>
                 
                 <li class="submenu {% block users_active %}{% endblock %}" >
                     <a href="#"><i class="icon-user"></i> <span>Users</span>  <span class="label">2</span></a>
