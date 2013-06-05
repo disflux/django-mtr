@@ -76,12 +76,22 @@ def report_label(request, lot_number):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
     p.setPageSize((150*mm, 105*mm))
+    # Draw Logo/Image
+    p.setFont("Helvetica", 40)
+    p.drawString(10, 90*mm, "TSA MFG")
+    p.setFont("Helvetica", 10)
+    p.drawString(10, 85*mm, "14901 Chandler Rd . Omaha, NE . 68138")
+    p.drawString(25, 81*mm, "800-228-2948   Fax: 402-895-3297")
+    p.line(75*mm, 105*mm, 75*mm, 70*mm)
+
+    # Draw Lot number
     p.setFont("Helvetica", 20)
     p.drawString(80*mm, 94*mm, "Lot # %s" % report.lot_number)
     barcode = createBarcodeDrawing('Code128', value=report.lot_number,  barWidth=0.5*mm, barHeight=12*mm, humanReadable=True)
     barcode.drawOn(p,80*mm, 75*mm)
     
     # Draw Description
+    p.setFont("Helvetica", 15)
     p.line(0,70*mm, 150*mm, 70*mm)
     p.drawString(10, 60*mm, report.part_number.description)
     p.line(0,55*mm, 150*mm, 55*mm)
@@ -100,12 +110,16 @@ def report_label(request, lot_number):
     p.setFont("Helvetica", 15)
     p.drawString(10, 20*mm, "Date")
     p.drawString(40*mm, 20*mm, str(report.created_at))
-    p.line(0,19*mm, 150*mm, 19*mm)
+    p.line(0, 18*mm, 150*mm, 18*mm)
     p.drawString(10, 12*mm, "Vendor")
     p.drawString(40*mm, 12*mm, report.vendor.name)
-    p.line(0,11*mm, 150*mm, 11*mm)
-    p.drawString(10, 4*mm, "PO #")
-    p.drawString(40*mm, 4*mm, report.origin_po)
+    p.line(0,10*mm, 150*mm, 10*mm)
+    if report.origin_po:
+        p.drawString(10, 4*mm, "PO #")
+        p.drawString(40*mm, 4*mm, report.origin_po)
+    elif report.origin_wo:
+        p.drawString(10, 4*mm, "WO #")
+        p.drawString(40*mm, 4*mm, report.origin_po)
     
     p.showPage()
     p.save()

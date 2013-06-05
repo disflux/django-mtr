@@ -1,1 +1,120 @@
-{% extends 'base/main.html' %}
+{% extends "base/main.html" %}
+{% load thumbnail %}
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+{% endblock %}
+
+{% block home_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+<a href="#" class="current">Documents Index</a>
+{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12 center" style="text-align: center;">					
+        <ul class="quick-actions">
+            <li>
+            <a href="{% url 'reports.views.new_report' %}">
+                <i class="icon-survey"></i>
+                New Report
+            </a>
+            </li>
+            <li>
+            <a href="#">
+                <i class="icon-shopping-bag"></i>
+                New Order
+            </a>
+            </li>
+            <li>
+            <a href="#">
+                <i class="icon-database"></i>
+                New Part
+            </a>
+            </li>
+            <li>
+            <a href="#">
+                <i class="icon-wallet"></i>
+                New Vendor
+            </a>
+            </li>
+        </ul>
+    </div>	
+</div>
+<div class="row-fluid">
+    <div class="span12 center" style="text-align: center;">					
+        <ul class="quick-actions-horizontal">
+            <li>
+            <a href="{% url 'reports.views.reports_index' %}">
+                <i class="icon-survey"></i>
+                <span>Manage Reports</span>
+            </a>
+            </li>
+            <li>
+            <a href="#">
+                <i class="icon-shopping-bag"></i>
+                <span>Manage Orders</span>
+            </a>
+            </li>
+             <li>
+             <a href="{% url 'documents.views.documents_index' %} ">
+                <i class="icon-pdf"></i>
+                <span>Manage Documents</span>
+            </a>
+            </li>
+            <li>
+            <a href="#">
+                <i class="icon-database"></i>
+                <span>Manage Parts</span>
+            </a>
+            </li>
+            <li>
+            <a href="#">
+                <i class="icon-wallet"></i>
+                <span>Manage Vendors</span>
+            </a>
+            </li>
+        </ul>
+    </div>	
+</div>
+<div class="row-fluid"
+    <div class="span12 center" style="text-align: center;">					
+        <ul class="stat-boxes">
+            <li class="popover-visits">
+            <div class="left peity_bar_good"><span>2,4,9,7,12,10,12</span>+10%</div>
+            <div class="right">
+                <strong>{{ doc_count }}</strong>
+                Documents
+            </div>
+            </li>
+            <li class="popover-users">
+            <div class="left peity_bar_neutral"><span>20,15,18,14,10,9,9,9</span>0%</div>
+            <div class="right">
+                <strong>{{ report_count }}</strong>
+                Reports
+            </div>
+            </li>
+            <li class="popover-orders">
+            <div class="left peity_bar_bad"><span>3,5,9,7,12,20,10</span>-50%</div>
+            <div class="right">
+                <strong>{{ order_count }}</strong>
+                Orders
+            </div>
+            </li>
+            <li class="popover-tickets">
+            <div class="left peity_line_good"><span>12,6,9,23,14,10,17</span>+70%</div>
+            <div class="right">
+                <strong>{{ part_count }}</strong>
+                Parts
+            </div>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

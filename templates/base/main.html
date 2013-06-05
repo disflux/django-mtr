@@ -68,7 +68,7 @@
         {% block no_sidebar %}
         <div id="sidebar">
             <ul>
-                <li class="{% block home_active %}{% endblock %}"><a href=""><i class="icon-home"></i> <span>Home</span></a></li>
+                <li class="{% block home_active %}{% endblock %}"><a href="{% url 'dashboard.views.home' %}"><i class="icon-home"></i> <span>Home</span></a></li>
                 
                 <!-- parts sub-menu -->
                 <li class="submenu {% block parts_active %}{% endblock %}">
