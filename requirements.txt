@@ -7,6 +7,7 @@ django-orm-extensions==3.0b3
 django-storages==1.1.8
 django-uuidfield==0.4.0
 psycopg2==2.5
+pyPdf==1.13
 reportlab==2.7
 sorl-thumbnail==11.12
 wsgiref==0.1.2

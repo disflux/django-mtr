@@ -82,7 +82,7 @@
                 <h5>Attached Reports</h5>
             </a>
                 <div class="buttons">
-                    <a class="btn btn-mini tip-top" title="Print Customer MTR Packet" href="#" onclick="window.print()"><i class="icon-print"></i></a>
+                    <a class="btn btn-mini tip-top" title="Print Customer MTR Packet" href="{% url 'orders.views.generate_cert_packet' order.order_number %}"><i class="icon-print"></i></a>
                     <a class="btn btn-inverse btn-mini tip-left" title="Attach Report" href="#link_report_to_order-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
                 </div>
             </div>

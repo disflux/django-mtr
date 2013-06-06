@@ -46,7 +46,7 @@ class Report(models.Model):
 class ReportDocument(models.Model):
     report = models.ForeignKey(Report)
     document = models.ForeignKey(Document)
-    primary_document = models.BooleanField(default=True)
+    primary_document = models.BooleanField(default=False)
     attachment_date = models.DateTimeField(auto_now_add=True)
 
     
