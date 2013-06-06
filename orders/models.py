@@ -27,8 +27,8 @@ class Order(models.Model):
     
 class OrderLineItem(models.Model):
     order = models.ForeignKey(Order)
-    line_number = models.IntegerField(max_length=4)
-    report = models.ForeignKey(Report, blank=True, null=True)
+    line_number = models.IntegerField(max_length=4, help_text="Line number on the work order")
+    report = models.ForeignKey(Report, blank=True, null=True, help_text="Report Lot #")
     
     class Meta:
         ordering = ('line_number',)

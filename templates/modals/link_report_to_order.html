@@ -1,7 +1,7 @@
 <div class="modal hide" id="link_report_to_order-modal">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
-        <h3>Attach a new document</h3>
+        <h3>Attach report to order # {{ order.order_number }}</h3>
     </div>
     <div class="modal-body">
         <form id="image-form" class="form-horizontal" method="post">
@@ -11,6 +11,7 @@
                 <label class="control-label">{{ field.label }}</label>
                 <div class="controls">
                     {{ field }}
+                    <span class="help-block">{{ field.help_text }}</span>
                 </div>
             {% endfor %}
             </div>

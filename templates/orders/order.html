@@ -4,12 +4,12 @@
 
 
 {% block title %}
-{{ page_title|safe }}
+Order # {{ order.order_number }}
 {% endblock %}
 
 {% block meta_description %}{{ part.number }} by {{ part.company.name|safe }} : {{ part.description }}{% endblock %}
 
-{% block doc_active %}active open{% endblock %}
+{% block orders_active %}active open{% endblock %}
 
 {% block breadcrumb_links %}
 {% endblock %}
@@ -63,11 +63,12 @@
 
 {% block content %}
 <div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
-    <div class="span12">
+    <div class="span6">
         <h2>Order # {{ order.order_number }}</h2>
         <h4>{{ order.customer.name }} <small>PO # {{ order.customer_po }}</small></h4>
         
     </div>
+    
     
 </div>
 
@@ -82,8 +83,8 @@
                 <h5>Attached Reports</h5>
             </a>
                 <div class="buttons">
-                    <a class="btn btn-mini tip-top" title="Print Customer MTR Packet" href="{% url 'orders.views.generate_cert_packet' order.order_number %}"><i class="icon-print"></i></a>
-                    <a class="btn btn-inverse btn-mini tip-left" title="Attach Report" href="#link_report_to_order-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-mini tip-top" title="Print Customer MTR Packet" href="{% url 'orders.views.generate_cert_packet' order.order_number %}"><i class="icon-print"></i> Generate MTR Packet</a>
+                    <a class="btn btn-inverse btn-mini tip-top" title="Attach Report" href="#link_report_to_order-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Attach Report</a>
                 </div>
             </div>
             <div class="widget-content nopadding">

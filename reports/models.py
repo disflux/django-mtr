@@ -27,12 +27,11 @@ class Report(models.Model):
                                             null=True, blank=True)
     
     def __unicode__(self):
-        return self.lot_number
+        return "%s - %s" % (self.lot_number, self.part_number)
 
     def save(self, *args, **kwargs):
-        import time
         if not self.lot_number:
-            self.lot_number = int(time.mktime(time.gmtime()))
+            self.lot_number = self.id + 10000
 
         self.mfg_lot_number = self.mfg_lot_number.upper()
         self.vendor_lot_number = self.vendor_lot_number.upper()
