@@ -149,6 +149,15 @@ THUMBNAIL_QUALITY = 100
 THUMBNAIL_COLORSPACE = 'GRAY'
 THUMBNAIL_FORMAT = 'PNG'
 
+# Settings for PDF Generation
+PDF_COMPANY_NAME = 'TSA MFG'
+PDF_COMPANY_SHORT_NAME = 'TSA'
+PDF_COMPANY_STREET = '14901 Chandler Rd'
+PDF_COMPANY_LOCALITY = 'Omaha, NE'
+PDF_COMPANY_ZIPCODE = '68138'
+PDF_COMPANY_PHONE = '800-228-2948'
+PDF_COMPANY_FAX = '402-895-3297'
+
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.

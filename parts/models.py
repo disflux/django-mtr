@@ -14,6 +14,7 @@ class Part(models.Model):
 
     def save(self, *args, **kwargs):
         self.part_number = self.part_number.upper()
+        self.description = self.description.upper()
         super(Part, self).save(*args, **kwargs)
 
         

@@ -54,6 +54,7 @@ def new_order(request):
                               context_instance=RequestContext(request))
                               
 def generate_cert_packet(request, order_number):
+    from django.conf import settings
     from reportlab.lib.units import mm
     from io import BytesIO
     from reportlab.pdfgen import canvas
@@ -73,10 +74,16 @@ def generate_cert_packet(request, order_number):
     
     # Draw Header
     p.setFont("Helvetica", 40)
-    p.drawCentredString(107.5*mm, 280*mm, "TSA MFG")
+    p.drawCentredString(107.5*mm, 280*mm, settings.PDF_COMPANY_NAME)
     p.setFont("Helvetica", 10)
-    p.drawCentredString(107.5*mm, 275*mm, "14901 Chandler Rd . Omaha, NE . 68138")
-    p.drawCentredString(107.5*mm, 271*mm, "800-228-2948   Fax: 402-895-3297")
+    p.drawCentredString(107.5*mm, 275*mm, "%s . %s . %s" %
+                        (
+                            settings.PDF_COMPANY_STREET,
+                            settings.PDF_COMPANY_LOCALITY,
+                            settings.PDF_COMPANY_ZIPCODE
+                        ))
+    p.drawCentredString(107.5*mm, 271*mm, "%s .  Fax: %s" %
+                        (settings.PDF_COMPANY_PHONE, settings.PDF_COMPANY_FAX))
     p.line(0*mm, 269*mm, 215*mm, 269*mm)
     p.setFont("Helvetica", 25)
     p.drawCentredString(107.5*mm, 257*mm, "Material Test Reports")
@@ -97,7 +104,8 @@ def generate_cert_packet(request, order_number):
     p.setFont("Helvetica", 12)
     p.line(10*mm, 192*mm, 195*mm, 192*mm)
     p.drawString(12*mm, 195*mm, "Line #")
-    p.drawCentredString(45*mm, 200*mm, "TSA Lot #")
+    p.drawCentredString(45*mm, 200*mm, "%s Lot #" %
+                        settings.PDF_COMPANY_SHORT_NAME)
     p.drawCentredString(45*mm, 195*mm, "(MFG Lot #)")
     p.drawString(70*mm, 195*mm, "Part #")
     p.drawString(100*mm, 195*mm, "Description")

@@ -16,7 +16,6 @@ class Category(models.Model):
 class Specification(models.Model):
     category = models.ForeignKey(Category)
     spec = models.CharField(max_length=25)
-    short_description = models.TextField()
     description = models.TextField()
     key_information = models.TextField(null=True, blank=True)
     featured = models.BooleanField(default=False)

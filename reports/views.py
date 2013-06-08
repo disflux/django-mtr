@@ -65,6 +65,8 @@ def new_report(request):
 def report_label(request, lot_number):
     from reportlab.graphics.barcode import createBarcodeDrawing
     from reportlab.lib.units import mm
+    from django.conf import settings
+
     report = Report.objects.get(lot_number=lot_number)
     
     response = HttpResponse(content_type='application/pdf')
@@ -75,10 +77,15 @@ def report_label(request, lot_number):
     p.setPageSize((150*mm, 105*mm))
     # Draw Logo/Image
     p.setFont("Helvetica", 40)
-    p.drawString(10, 90*mm, "TSA MFG")
+    p.drawString(10, 90*mm, settings.PDF_COMPANY_NAME)
     p.setFont("Helvetica", 10)
-    p.drawString(10, 85*mm, "14901 Chandler Rd . Omaha, NE . 68138")
-    p.drawString(25, 81*mm, "800-228-2948   Fax: 402-895-3297")
+    p.drawString(10, 85*mm, "%s . %s . %s" %
+                        (
+                            settings.PDF_COMPANY_STREET,
+                            settings.PDF_COMPANY_LOCALITY,
+                            settings.PDF_COMPANY_ZIPCODE
+                        ))
+    p.drawString(25, 81*mm, "%s .  Fax: %s" % (settings.PDF_COMPANY_PHONE, settings.PDF_COMPANY_FAX)) 
     p.line(75*mm, 105*mm, 75*mm, 70*mm)
 
     # Draw Lot number
@@ -91,7 +98,7 @@ def report_label(request, lot_number):
     if report.mfg_lot_number:
         p.drawString(78*mm, 77*mm, "MFG LOT # %s" % report.mfg_lot_number)
     if report.heat_number:
-        p.drawString(78*mm, 72*mm, "Heat # %s" % report.heat_number)
+        p.drawString(78*mm, 72*mm, "HEAT # %s" % report.heat_number)
     
     
     # Draw Description
@@ -123,7 +130,7 @@ def report_label(request, lot_number):
         p.drawString(40*mm, 4*mm, report.origin_po)
     elif report.origin_wo:
         p.drawString(10, 4*mm, "WO #")
-        p.drawString(40*mm, 4*mm, report.origin_po)
+        p.drawString(40*mm, 4*mm, report.origin_wo)
     
     p.showPage()
     p.save()

@@ -23,6 +23,10 @@ class Order(models.Model):
     @models.permalink
     def get_absolute_url(self):
         return ('orders.views.order', [self.order_number])
+
+    def save(self, *args, **kwargs):
+        self.customer_po = self.customer_po.upper()
+        super(Order, self).save(*args, **kwargs)
     
     
 class OrderLineItem(models.Model):
