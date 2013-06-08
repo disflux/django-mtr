@@ -54,6 +54,7 @@ def new_report(request):
         reportform = ReportForm(request.POST)
         if reportform.is_valid():
             report = reportform.save()
+            
             return HttpResponseRedirect(report.get_absolute_url())
     else:
         reportform = ReportForm()
@@ -82,9 +83,9 @@ def report_label(request, lot_number):
 
     # Draw Lot number
     p.setFont("Helvetica", 20)
-    p.drawString(82*mm, 98*mm, "Lot # %s" % report.lot_number)
+    p.drawCentredString(110*mm, 98*mm, "Lot # %s" % report.lot_number)
     barcode = createBarcodeDrawing('Code128', value=report.lot_number,  barWidth=0.5*mm, barHeight=10*mm, humanReadable=True)
-    barcode.drawOn(p,82*mm, 83*mm)
+    barcode.drawOn(p,84*mm, 83*mm)
     p.line(75*mm, 82*mm, 150*mm, 82*mm)
     p.setFont("Helvetica", 13)
     if report.mfg_lot_number:

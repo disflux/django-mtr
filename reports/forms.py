@@ -7,6 +7,6 @@ class ReportForm(ModelForm):
         model = Report
         fields = ['mfg_lot_number', 'vendor_lot_number', 'heat_number',
                   'vendor', 'specification', 'part_number', 'origin_po',
-                  'origin_wo']
+                  'origin_wo', 'linked_reports']
     origin_po = forms.CharField(label='Originating PO#', required=False)
     origin_wo = forms.CharField(label='Originating WO#', required=False)

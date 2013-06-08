@@ -1,9 +1,12 @@
-from django.db import models
+import string
+import random
 
+from django.db import models
 from documents.models import Document
 from vendors.models import Vendor
 from specifications.models import Specification
 from parts.models import Part
+
 
 class Report(models.Model):
     lot_number = models.CharField(max_length=128, null=True, blank=True, editable=False, unique=True)
@@ -30,13 +33,13 @@ class Report(models.Model):
         return "%s - %s" % (self.lot_number, self.part_number)
 
     def save(self, *args, **kwargs):
-        if not self.lot_number:
-            self.lot_number = self.id + 10000
-
         self.mfg_lot_number = self.mfg_lot_number.upper()
         self.vendor_lot_number = self.vendor_lot_number.upper()
         self.heat_number = self.heat_number.upper()
         super(Report, self).save(*args, **kwargs)
+        if not self.lot_number:
+            self.lot_number = self.id + 10000
+            super(Report, self).save(*args, **kwargs)
 
     @models.permalink
     def get_absolute_url(self):
