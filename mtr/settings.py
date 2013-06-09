@@ -100,6 +100,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'mtr.middleware.LoginRequiredMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -157,6 +158,13 @@ PDF_COMPANY_LOCALITY = 'Omaha, NE'
 PDF_COMPANY_ZIPCODE = '68138'
 PDF_COMPANY_PHONE = '800-228-2948'
 PDF_COMPANY_FAX = '402-895-3297'
+
+# Login Required Middleware Settings
+LOGIN_URL = '/accounts/login/'
+LOGIN_EXEMPT_URLS = (
+ r'^about\.html$',
+ r'^legal/', # allow any URL under /legal/*
+)
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

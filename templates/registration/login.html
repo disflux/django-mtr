@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Unicorn Admin</title>
+		<meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.login.css" />
+    </head>
+    <body>
+        <div id="logo">
+            <img src="{{ STATIC_URL }}img/logo.png" alt="" />
+        </div>
+        <div id="loginbox">            
+            <form id="loginform" class="form-vertical" method="post">
+		<p>Enter username and password to continue.</p>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-user"></i></span><input id="id_username" name="username" type="text" placeholder="Username" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="input-prepend">
+                            <span class="add-on"><i class="icon-lock"></i></span><input id="id_password" name="password" type="password" placeholder="Password" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <input type="hidden" name="next" value="/" />
+                    {% csrf_token %}
+                    <span class="pull-right"><input type="submit" class="btn btn-inverse" value="Login" /></span>
+                </div>
+            </form>
+        </div>
+        
+        <script src="{{ STATIC_URL }}js/jquery.min.js"></script>  
+        <script src="{{ STATIC_URL }}js/unicorn.login.js"></script> 
+    </body>
+</html>
