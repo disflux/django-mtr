@@ -4,6 +4,7 @@ DIRNAME = os.path.dirname(__file__)
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
@@ -130,6 +131,7 @@ INSTALLED_APPS = (
     # Third Party Apps
     'storages',
     'sorl.thumbnail',
+    'haystack',
     
     # Local Apps
     'dashboard',
@@ -146,7 +148,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 # sorl-thumbnail Settings
 THUMBNAIL_ENGINE = 'sorl.thumbnail.engines.convert_engine.Engine'
-THUMBNAIL_QUALITY = 100
+THUMBNAIL_QUALITY = 95
 THUMBNAIL_COLORSPACE = 'GRAY'
 THUMBNAIL_FORMAT = 'PNG'
 
@@ -162,8 +164,6 @@ PDF_COMPANY_FAX = '402-895-3297'
 # Login Required Middleware Settings
 LOGIN_URL = '/accounts/login/'
 LOGIN_EXEMPT_URLS = (
- r'^about\.html$',
- r'^legal/', # allow any URL under /legal/*
 )
 
 # Full text search settings
