@@ -1,3 +1,4 @@
+# Set DEBUG=True to enable debugging
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -11,15 +12,6 @@ DATABASES = {
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
-}
-
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'haystack',
-    },
 }
 
 MEDIA_ROOT = '/home/derek/web/media/'
@@ -36,10 +28,12 @@ SERVER_EMAIL = ''
 
 SECRET_KEY = ''
 
+# Amazon AWS Access Credentials
 AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
 AWS_STORAGE_BUCKET_NAME = ''
-
 AWS_IS_GZIPPED = True
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+# Uncomment the following line to store static files on Amazon S3
+#STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
