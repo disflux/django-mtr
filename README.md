@@ -15,7 +15,7 @@ An unlimited number of user defined documents can be attached to each report.
 
 Requirements
 ------------
-See ```requirements.txt``` for all python requirements
+See ```requirements.txt``` for all python requirements  
 
 * Django 1.5+
 * PostgreSQL 9.0+
@@ -25,8 +25,8 @@ Setup
 -----
 1. Checkout this repository
 2. Setup an AWS account and S3 bucket
-3. Copy mtr/settings_local-template.py to mtr/settings_local.py and edit accordingly
-4. Edit mtr/settings.py accordingly
-5. run manage.py syncdb to populate database tables
+3. Copy ```mtr/settings_local-template.py``` to ```mtr/settings_local.py``` and edit accordingly
+4. Edit ```mtr/settings.py``` accordingly
+5. run ```manage.py syncdb``` to populate database tables
 6. Deploy via wsgi or run the development server for testing
 
