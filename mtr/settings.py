@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'storages',
     'sorl.thumbnail',
     'haystack',
+    'csvimport',
     
     # Local Apps
     'dashboard',

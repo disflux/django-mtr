@@ -31,11 +31,8 @@ class Document(models.Model):
         return str(self.uuid)
 
     def save(self, *args, **kwargs):
-        
-
         super(Document, self).save(*args, **kwargs)
 
-        
     @models.permalink
     def get_absolute_url(self):
         return ('documents.views.document', [str(self.uuid)])
@@ -43,6 +40,9 @@ class Document(models.Model):
 class DocumentType(models.Model):
     name = models.CharField(max_length=32, null=False)
     description = models.TextField(null=False)
+    
+    class Meta:
+        ordering = ('name',)
 
     def __unicode__(self):
         return self.name

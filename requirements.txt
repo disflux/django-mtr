@@ -3,7 +3,9 @@ PIL==1.1.7
 Whoosh==2.4.1
 argparse==1.2.1
 boto==2.9.5
+chardet==2.1.1
 distribute==0.6.34
+django-csvimport==0.9
 django-haystack==2.0.0
 django-orm-extensions==3.0b3
 django-storages==1.1.8

@@ -33,7 +33,7 @@ def report(request, lot_number):
             doc = Document(type=newdoc.cleaned_data['type'],
                            file=request.FILES['file'])
             doc.save()
-            rd = ReportDocument(report=report, document=doc)
+            rd = ReportDocument(report=report, document=doc, primary_document=newdoc.cleaned_data['primary'])
             rd.save()
             report.save()
             messages.success(request, 'Document upload successful.')
