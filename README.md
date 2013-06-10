@@ -1,3 +1,5 @@
+### Warning: THIS SOFTWARE IS ALPHA, IT IS NOT PRODUCTION READY AT THIS TIME
+
 Django-MTR
 ==========
 Derek Musselmann - May 2013
@@ -15,7 +17,7 @@ An unlimited number of user defined documents can be attached to each report.
 
 Requirements
 ------------
-See ```requirements.txt``` for all python requirements  
+See ```requirements.txt``` for all python requirements.  
 
 * Django 1.5+
 * PostgreSQL 9.0+
@@ -23,7 +25,7 @@ See ```requirements.txt``` for all python requirements
 
 Setup
 -----
-1. Checkout this repository
+1. Checkout this repository (```git clone https://github.com/phrac/django-mtr.git```)
 2. Setup an AWS account and S3 bucket
 3. Copy ```mtr/settings_local-template.py``` to ```mtr/settings_local.py``` and edit accordingly
 4. Edit ```mtr/settings.py``` accordingly
