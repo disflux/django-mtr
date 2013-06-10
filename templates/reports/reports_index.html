@@ -48,13 +48,25 @@
                                 <a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</a>
                             </td>
                             <td>
+                                {% if report.mfg_lot_number %}
                                 {{ report.mfg_lot_number }}
+                                {% else %}
+                                N/A
+                                {% endif %}
                             </td>
                             <td>
+                                {% if report.vendor_lot_number %}
                                 {{ report.vendor_lot_number }}
+                                {% else %}
+                                N/A
+                                {% endif %}
                             </td>
                             <td>
+                                {% if report.heat_number %}
                                 {{ report.heat_number }}
+                                {% else %}
+                                N/A
+                                {% endif %}
                             </td>
                             <td>
                                 <a href="{{ part.company.get_absolute_url }}">{{ report.vendor.name }}</a>
@@ -66,10 +78,18 @@
                                 {{ report.specification }}
                             </td>
                             <td>
+                                {% if report.origin_po %}
                                 {{ report.origin_po }}
+                                {% else %}
+                                N/A
+                                {% endif %}
                             </td>
                             <td>
+                                {% if report.origin_wo %}
                                 {{ report.origin_wo }}
+                                {% else %}
+                                N/A
+                                {% endif %}
                             </td>
                             <td>
                                 {{ report.documents.count }}

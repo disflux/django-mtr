@@ -6,7 +6,7 @@ from django.contrib import messages
 
 from orders.forms import OrderForm, NewLineItemForm
 from orders.models import Customer, Order, OrderLineItem
-from reports.models import Report
+from reports.models import Report, ReportDocument
 
 
 def orders_index(request):
@@ -132,13 +132,13 @@ def generate_cert_packet(request, order_number):
     outputPDF.addPage(cover_input.getPage(0))
     
     for li in order.line_items.all():
-        for doc in li.report.documents.all():
-            f = urlopen(Request(doc.file.url)).read()
-            mem = StringIO(f)
-            pdf = PdfFileReader(mem)
-            for pageNum in xrange(pdf.getNumPages()):
-                current = pdf.getPage(pageNum)
-                outputPDF.addPage(current)    
+        doc = ReportDocument.objects.get(report=li.report, primary_document=True)
+        f = urlopen(Request(doc.document.file.url)).read()
+        mem = StringIO(f)
+        pdf = PdfFileReader(mem)
+        for pageNum in xrange(pdf.getNumPages()):
+            current = pdf.getPage(pageNum)
+            outputPDF.addPage(current)    
     
     outputPDF.write(response)
     
