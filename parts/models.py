@@ -1,7 +1,7 @@
 from django.db import models
 
 class Part(models.Model):
-    part_number = models.CharField(max_length=128, null=True)
+    part_number = models.CharField(max_length=128, unique=True)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

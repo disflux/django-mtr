@@ -118,7 +118,10 @@ def generate_cert_packet(request, order_number):
         vert_position = start-(i*7)
         p.drawString(15*mm, vert_position*mm, str(li.line_number))
         p.drawCentredString(45*mm, (vert_position+3)*mm, str(li.report.lot_number))
-        p.drawCentredString(45*mm, vert_position*mm, "(%s)" % str(li.report.mfg_lot_number))
+        if li.report.mfg_lot_number:
+            p.drawCentredString(45*mm, vert_position*mm, "(%s)" % str(li.report.mfg_lot_number))
+        else:
+            p.drawCentredString(45*mm, vert_position*mm, "(%s)" % str(li.report.heat_number))
         p.drawCentredString(77*mm, vert_position*mm, str(li.report.part_number))
         p.drawString(100*mm, vert_position*mm, str(li.report.part_number.description))
         p.line(12*mm, (vert_position-1)*mm, 195*mm, (vert_position-1)*mm)
@@ -132,13 +135,15 @@ def generate_cert_packet(request, order_number):
     outputPDF.addPage(cover_input.getPage(0))
     
     for li in order.line_items.all():
-        doc = ReportDocument.objects.get(report=li.report, primary_document=True)
-        f = urlopen(Request(doc.document.file.url)).read()
-        mem = StringIO(f)
-        pdf = PdfFileReader(mem)
-        for pageNum in xrange(pdf.getNumPages()):
-            current = pdf.getPage(pageNum)
-            outputPDF.addPage(current)    
+        documents = li.report.get_all_primary_documents()
+        for doc in documents:
+            if doc is not None:
+                f = urlopen(Request(doc)).read()
+                mem = StringIO(f)
+                pdf = PdfFileReader(mem)
+                for pageNum in xrange(pdf.getNumPages()):
+                    current = pdf.getPage(pageNum)
+                    outputPDF.addPage(current)    
     
     outputPDF.write(response)
     

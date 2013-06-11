@@ -40,6 +40,21 @@ class Report(models.Model):
         if not self.lot_number:
             self.lot_number = self.id + 10000
             super(Report, self).save(*args, **kwargs)
+            
+    def get_primary_document_url(self):
+        docs = ReportDocument.objects.filter(report=self, primary_document=True)
+        for doc in docs:
+            if doc.primary_document is True:
+                return doc.document.file.url 
+            
+    def get_all_primary_documents(self):
+        documents = []
+        documents.append(self.get_primary_document_url())
+        for report in self.linked_reports.all():
+            documents.append(report.get_primary_document_url())
+        return documents
+             
+        
 
     @models.permalink
     def get_absolute_url(self):
@@ -50,5 +65,8 @@ class ReportDocument(models.Model):
     document = models.ForeignKey(Document)
     primary_document = models.BooleanField(default=False)
     attachment_date = models.DateTimeField(auto_now_add=True)
+    
+    def __unicode__(self):
+        return "Report # %s : Document UUID: %s" % (self.report.lot_number, self.document.uuid)
 
     
