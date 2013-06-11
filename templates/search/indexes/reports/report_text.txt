@@ -1,0 +1,8 @@
+{{ object.lot_number }}
+{{ object.mfg_lot_number }}
+{{ object.vendor_lot_number }}
+{{ object.heat_number }}
+{{ object.part_number }}
+{{ object.origin_po }}
+{{ object.origin_wo }}
+{{ object.specification }}

@@ -1,0 +1,53 @@
+<tr>
+    <td>
+        <strong><a href="{{ result.object.get_absolute_url }}">{{ result.object.lot_number }}</a></strong>
+    </td>
+    <td>
+        {% if result.object.mfg_lot_number %}
+        {{ result.object.mfg_lot_number }}
+        {% else %}
+        N/A
+        {% endif %}
+    </td>
+    <td>
+        {% if result.object.vendor_lot_number %}
+        {{ result.object.vendor_lot_number }}
+        {% else %}
+        N/A
+        {% endif %}
+    </td>
+    <td>
+        {% if result.object.heat_number %}
+        {{ result.object.heat_number }}
+        {% else %}
+        N/A
+        {% endif %}
+    </td>
+    <td>
+        {{ result.object.vendor.name }}
+    </td>
+    <td>
+        {{ result.object.part_number }}
+    </td>
+    <td>
+        {{ result.object.specification }}
+    </td>
+    <td>
+        {% if result.object.origin_po %}
+        {{ result.object.origin_po }}
+        {% else %}
+        N/A
+        {% endif %}
+    </td>
+    <td>
+        {% if result.object.origin_wo %}
+        {{ result.object.origin_wo }}
+        {% else %}
+        N/A
+        {% endif %}
+    </td>
+    <td>
+        {{ result.object.documents.count }}
+    </td>
+
+</tr>

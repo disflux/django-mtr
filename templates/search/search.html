@@ -1,0 +1,109 @@
+{% extends "base/main.html" %}
+
+{% block breadcrumb_links %}
+<a href="#"><i class="icon-search"></i> Search</a>
+<a href="#">"<em>{{ searchterm }}</em>"</a>
+{% endblock %}
+
+{% block page_title %}
+Search
+{% endblock %}
+
+{% block search_active %}active{% endblock %}
+
+{% block content %}
+
+<div class="row-fluid">
+    <div class="span6 offset3">
+        <div class="widget-box">
+            <div class="widget-content">
+        		<form action="." method="get" class="form-horizontal">
+        			<div class="control-group">
+        				
+        				<div class="input-append">
+        					<input class="offset8 input-large" type="text" name="q" placeholder="{{ query }}"/>
+        					<button class="btn" type="submit" value="Search" /><i class="icon-search"></i>
+        				</div>
+        			</div>
+        		</form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if query %}
+<div class="row-fluid">
+    <div class="span12">
+        <h3>Showing {{ page.object_list|length }} of {{ page.paginator.count }} results for term <i>"{{ query }}"</i></h3>
+    </div>
+</div>        
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-content nopadding">
+                <table class="table table-bordered results">
+                    <thead>
+                        <tr>
+                            <th>Lot #</th>
+                            <th>MFG Lot #</th>
+                            <th>Vendor Lot #</th>
+                            <th>Heat #</th>
+                            <th>Vendor</th>
+                            <th>Part #</th>
+                            <th>Specification</th>
+                            <th>PO#</th>
+                            <th>WO#</th>
+                            <th># Docs</th>
+
+                        </tr>
+                    </thead>
+                    {% for result in page.object_list %}
+                    {% if result.content_type == "reports.report" %}
+                            {% include "search/includes/reports/report.html" %}
+                    {% endif %}
+                    
+                    {% endfor %}
+                </table>
+            
+                <div class="pagination">
+                    {{ results_list.render }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if facets.fields.company %}
+    <div class="well span3">
+        <h3>Filter by company</h3>
+            <dl>
+                {% for company in facets.fields.company|slice:":30" %}
+                {% if company.1 > 0 %}
+                <dd class="company_facet">
+                <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=company_exact:{{ company.0|urlencode }}">{{ company.0 }}</a> ({{ company.1 }})
+                </dd>
+                {% endif %}
+                {% endfor %}
+                
+            </dl>
+    </div>
+    {% endif %}
+    
+    {% if facets.fields.attributes %}
+    <div class="well span3">
+        <h3>Filter by Attribute</h3>
+            <dl>
+
+                {% for attributes in facets.fields.attributes|slice:":30" %}
+                {% if attributes.1 > 0 %}
+                <dd class="attribute_facet">
+                <a href="{% url search.views.results %}?q={{ searchterm|urlencode }}&amp;f=attributes_exact:{{ attributes.0|urlencode }}">{{ attributes.0 }}</a> ({{ attributes.1 }})
+                </dd>
+                {% endif %}
+                {% endfor %}
+                
+            </dl>
+    </div>
+    {% endif %}
+{% endif %}
+</div>
+{% endblock %}
