@@ -6,4 +6,5 @@
 *~
 *.swo
 settings_local.py
+whoosh_index
 

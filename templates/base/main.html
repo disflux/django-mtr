@@ -56,8 +56,8 @@
         </div>
 
         <div class="search" id="search">
-            <form method="get" action="">
-                    <input autocomplete="off" name="q" type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+            <form method="get" action="/search/">
+                <input autocomplete="off" name="q" type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
             </form>
         </div>
         
@@ -68,10 +68,11 @@
         {% block no_sidebar %}
         <div id="sidebar">
             <ul>
-                <li class="{% block home_active %}{% endblock %}"><a href="{% url 'dashboard.views.home' %}"><i class="icon-home"></i> <span>Home</span></a></li>
+                <li class="{% block home_active %}{% endblock %}"><a href="{% url 'dashboard.views.home' %}"><i class="icon-home"></i> <span>Dashboard</span></a></li>
+                <li class="{% block search_active %}{% endblock %}"><a href="/search"><i class="icon-search"></i> <span>Search</span></a></li>
                 
                 <!-- parts sub-menu -->
-                <li class="submenu {% block parts_active %}{% endblock %}">
+                <li class="submenu {% block reports_active %}{% endblock %}">
                 <a href=""><i class="icon-list-alt"></i> <span>Reports</span> <span class="label">2</span></a>
                 <ul>
                     <li><a href="{% url 'reports.views.reports_index' %}"><i class="icon-eye-open"></i> Browse/Search Reports</a></li>
@@ -101,7 +102,7 @@
                 
                 <li {% block companies_active %}{% endblock %} ><a href=""><i class="icon-briefcase"></i> <span>Vendors</span></a></li>
                 
-                <li class="{% block search_active %}{% endblock %}" ><a href=""><i class="icon-cog"></i> <span>Parts</span></a></li>
+                <li class="{% block parts_active %}{% endblock %}" ><a href=""><i class="icon-cog"></i> <span>Parts</span></a></li>
                 
                 <li class="submenu {% block users_active %}{% endblock %}" >
                     <a href="#"><i class="icon-user"></i> <span>Users</span>  <span class="label">2</span></a>

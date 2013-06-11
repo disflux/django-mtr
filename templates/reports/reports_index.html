@@ -5,7 +5,7 @@
 <script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
 {% endblock %}
 
-{% block parts_active %}active open{% endblock %}
+{% block reports_active %}active open{% endblock %}
 
 {% block breadcrumb_links %}
     <a href="#" class="current">Reports</a>
@@ -45,7 +45,7 @@
                         {% for report in reports %}
                         <tr>
                             <td>
-                                <a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</a>
+                                <strong><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</a></strong>
                             </td>
                             <td>
                                 {% if report.mfg_lot_number %}
@@ -69,7 +69,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ part.company.get_absolute_url }}">{{ report.vendor.name }}</a>
+                                {{ report.vendor.name }}
                             </td>
                             <td>
                                 {{ report.part_number }}

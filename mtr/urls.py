@@ -11,6 +11,7 @@ urlpatterns = patterns('',
                        url(r'^reports/', include('reports.urls')),
                        url(r'^documents/', include('documents.urls')),
                        url(r'^orders/', include('orders.urls')),
+                       url(r'^search/', include('haystack.urls')),
 
                        url('^accounts/', include('django.contrib.auth.urls')),
 
