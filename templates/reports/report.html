@@ -238,10 +238,10 @@ Lot # {{ report.lot_number }}
             <div class="widget-content nopadding">
                 <div id="images-table">
                     <table class="table table-striped table-bordered">
-                        {% for d in report.documents.all %}
+                        {% for d in report.reportdocument_set.all %}
                         <tr>
                             <td>
-                                {% thumbnail d.file "100x200" as im %}
+                                {% thumbnail d.document.file "100x200" as im %}
                                 <center>
                                     <a target="_blank" href="{{ d.file.url }}">
                                         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
@@ -255,18 +255,22 @@ Lot # {{ report.lot_number }}
                                 <table class="table table-bordered">
                                     <tr>
                                         <td><strong>Type</strong></td>
-                                        <td><strong>{{ d.type.name }}</strong></td>
+                                        <td><strong>{{ d.document.type.name }}</strong></td>
                                     </tr>
                                     <tr>
                                         <td>Document UUID</td>
-                                        <td><a href="{{ d.get_absolute_url }}">{{ d.uuid }}</a></td>
+                                        <td><a href="{{ d.document.get_absolute_url }}">{{ d.document.uuid }}</a></td>
                                     </tr>
                                     <tr>
                                         <td>Document Date</td>
-                                        <td>{{ d.created_at }}</td>
+                                        <td>{{ d.document.created_at }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Attached By</td>
+                                        <td>Document Created By</td>
+                                        <td>{{ d.document.created_by }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attached to Report By</td>
                                         <td>{{ d.created_by }}</td>
                                     </tr>
                                     <tr>
