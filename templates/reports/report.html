@@ -210,6 +210,14 @@ Lot # {{ report.lot_number }}
                                     {{ report.updated_at }} 
                                 </td>
                             </tr>
+                            <tr>
+                                <td>
+                                    <strong>Created By</strong>   
+                                </td>
+                                <td>
+                                    {{ report.created_by }} 
+                                </td>
+                            </tr>
                         </table>
                     </div>
                 </div>
@@ -256,6 +264,10 @@ Lot # {{ report.lot_number }}
                                     <tr>
                                         <td>Document Date</td>
                                         <td>{{ d.created_at }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Attached By</td>
+                                        <td>{{ d.created_by }}</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2" style="text-align:center;">

@@ -33,7 +33,7 @@ def report(request, lot_number):
             doc = Document(type=newdoc.cleaned_data['type'],
                            file=request.FILES['file'])
             doc.save()
-            rd = ReportDocument(report=report, document=doc, primary_document=newdoc.cleaned_data['primary'])
+            rd = ReportDocument(report=report, document=doc, primary_document=newdoc.cleaned_data['primary'], created_by=request.user)
             rd.save()
             report.save()
             messages.success(request, 'Document upload successful.')
@@ -53,7 +53,9 @@ def new_report(request):
     if request.method == 'POST':
         reportform = ReportForm(request.POST)
         if reportform.is_valid():
-            report = reportform.save()
+            report = reportform.save(commit=False)
+            report.created_by = request.user
+            report.save()
             
             return HttpResponseRedirect(report.get_absolute_url())
     else:

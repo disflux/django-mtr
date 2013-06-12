@@ -134,6 +134,10 @@ Order # {{ order.order_number }}
                         <td>Attached Reports</td>
                         <td>{{ order.line_items.count }}</td>
                     </tr>
+                    <tr>
+                        <td>Created By</td>
+                        <td>{{ order.created_by }}</td>
+                    </tr>
                 </table>
                 </div>
             </div>

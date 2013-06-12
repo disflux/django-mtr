@@ -1,6 +1,6 @@
 import string
 import random
-
+from django.contrib.auth.models import User
 from django.db import models
 from documents.models import Document
 from vendors.models import Vendor
@@ -22,6 +22,7 @@ class Report(models.Model):
     approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, null=True)
     documents = models.ManyToManyField(Document,
                                        null=True, blank=True,
                                        through='ReportDocument')
@@ -65,6 +66,7 @@ class ReportDocument(models.Model):
     document = models.ForeignKey(Document)
     primary_document = models.BooleanField(default=False)
     attachment_date = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, null=True)
     
     def __unicode__(self):
         return "Report # %s : Document UUID: %s" % (self.report.lot_number, self.document.uuid)

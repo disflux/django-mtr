@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 from reports.models import Report
@@ -16,6 +17,7 @@ class Order(models.Model):
     order_number = models.CharField(max_length=16)
     line_items = models.ManyToManyField('OrderLineItem', related_name='order_line_items', null=True, blank=True)
     documents = models.ManyToManyField(Document, related_name='order_documents', null=True, blank=True)
+    created_by = models.ForeignKey(User, null=True)
 
     def __unicode__(self):
         return self.order_number

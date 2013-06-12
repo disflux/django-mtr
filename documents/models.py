@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 
@@ -26,6 +27,7 @@ class Document(models.Model):
     pages = models.IntegerField(max_length=3, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(User, null=True)
 
     def __unicode__(self):
         return str(self.uuid)

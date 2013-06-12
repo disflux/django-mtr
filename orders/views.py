@@ -45,7 +45,9 @@ def new_order(request):
     if request.method == 'POST':
         orderform = OrderForm(request.POST)
         if orderform.is_valid():
-            order = orderform.save()
+            order = orderform.save(commit=False)
+            order.created_by = request.user
+            order.save()
             return HttpResponseRedirect(order.get_absolute_url())
     else:
         orderform = OrderForm()
