@@ -9,6 +9,9 @@ from parts.models import Part
 
 
 class Report(models.Model):
+    """
+    Stores characteristics of a single, self generated lot number.
+    """
     lot_number = models.CharField(max_length=128, null=True, blank=True, editable=False, unique=True)
     mfg_lot_number = models.CharField(max_length=128, null=True, blank=True, help_text="The manufacturer's lot number (if available)")
     vendor_lot_number = models.CharField(max_length=128, null=True, blank=True, help_text="The vendor's lot number (if available)")
@@ -37,6 +40,9 @@ class Report(models.Model):
         return "%s - %s" % (self.lot_number, self.part_number)
 
     def save(self, *args, **kwargs):
+        """
+        Sanitizes user inputted data to upper() and assigns a lot number
+        """
         self.mfg_lot_number = self.mfg_lot_number.upper()
         self.vendor_lot_number = self.vendor_lot_number.upper()
         self.heat_number = self.heat_number.upper()
@@ -65,6 +71,11 @@ class Report(models.Model):
         return ('reports.views.report', [self.lot_number])
 
 class ReportDocument(models.Model):
+    """
+    Stores information about documents attached to a specific report. Related
+    to :model:`reports.Report` and :model:`documents.Document`
+    
+    """
     report = models.ForeignKey(Report)
     document = models.ForeignKey(Document)
     primary_document = models.BooleanField(default=False)

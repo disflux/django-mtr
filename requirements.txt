@@ -10,6 +10,7 @@ django-haystack==2.0.0
 django-orm-extensions==3.0b3
 django-storages==1.1.8
 django-uuidfield==0.4.0
+docutils==0.10
 psycopg2==2.5
 pyPdf==1.13
 reportlab==2.7
