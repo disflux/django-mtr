@@ -30,6 +30,9 @@ class Report(models.Model):
                                             related_name='report_links',
                                             null=True, blank=True)
     
+    class Meta:
+        ordering = ('lot_number', )
+        
     def __unicode__(self):
         return "%s - %s" % (self.lot_number, self.part_number)
 

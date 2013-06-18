@@ -232,7 +232,8 @@ Lot # {{ report.lot_number }}
                 </span>
                 <h5>Attached Documents</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-left" title="Attach a New Document" href="#new_document-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Attach New Document</a>
+                    <a class="btn btn-mini tip-top" title="Link a Report" href="#link_report-modal" data-toggle="modal"><i class="icon-random"></i> Link a Report</a>
+                    <a class="btn btn-inverse btn-mini tip-top" title="Attach a New Document" href="#new_document-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Attach New Document</a>
                 </div>
             </div>
             <div class="widget-content nopadding">
@@ -243,7 +244,7 @@ Lot # {{ report.lot_number }}
                             <td>
                                 {% thumbnail d.document.file "100x200" as im %}
                                 <center>
-                                    <a target="_blank" href="{{ d.file.url }}">
+                                    <a target="_blank" href="{{ d.document.file.url }}">
                                         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
                                     </a>
                                     <br /><br />
@@ -275,7 +276,7 @@ Lot # {{ report.lot_number }}
                                     </tr>
                                     <tr>
                                         <td colspan="2" style="text-align:center;">
-                                            <a class="btn btn-mini tip-top" title="Download/Print Document" href="{{ d.file.url }}" ><i class="icon-print"></i> Print Document</a>
+                                            <a class="btn btn-mini tip-top" title="Download/Print Document" href="{{ d.document.file.url }}" ><i class="icon-print"></i> Print Document</a>
                                             <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.id }}" data-toggle="modal" title="Email Document">
                                                 <i class="icon-envelope"></i> Email Document
                                             </a>

@@ -19,7 +19,7 @@ def results(request):
     searchform = SearchForm(request.GET)
     
     if not "q" in request.GET:
-        return redirect('search.views.index')
+        return render_to_response('search/search.html', context_instance=RequestContext(request))
     
     if searchform.is_valid():
         q = searchform.cleaned_data['q']

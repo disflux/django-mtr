@@ -2,7 +2,7 @@
 
 {% block breadcrumb_links %}
 <a href="#"><i class="icon-search"></i> Search</a>
-<a href="#">"<em>{{ searchterm }}</em>"</a>
+<a href="#">"<em>{{ query }}</em>"</a>
 {% endblock %}
 
 {% block page_title %}
@@ -21,7 +21,7 @@ Search
         			<div class="control-group">
         				
         				<div class="input-append">
-        					<input class="offset8 input-large" type="text" name="q" placeholder="{{ query }}"/>
+        					<input class="offset8 input-large" type="text" name="q" value="{{ query }}" placeholder="{{ query }}"/>
         					<button class="btn" type="submit" value="Search" /><i class="icon-search"></i>
         				</div>
         			</div>

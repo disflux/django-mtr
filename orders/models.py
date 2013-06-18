@@ -14,7 +14,7 @@ class Customer(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer)
     customer_po = models.CharField(max_length=32)
-    order_number = models.CharField(max_length=16)
+    order_number = models.CharField(max_length=16, unique=True)
     line_items = models.ManyToManyField('OrderLineItem', related_name='order_line_items', null=True, blank=True)
     documents = models.ManyToManyField(Document, related_name='order_documents', null=True, blank=True)
     created_by = models.ForeignKey(User, null=True)
