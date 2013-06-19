@@ -83,6 +83,7 @@ Lot # {{ report.lot_number }}
                     <h5>Lot Number Details</h5>
                 </a>
                 <div class="buttons">
+                    <a target="_blank" class="btn btn-mini tip-top" title="Generate Blank Inspection Report" href="{% url 'pdfgen.blank_inspection_report.blank_inspection_report' report.lot_number %}" data-toggle="modal"><i class="icon-search"></i> Inspection Report</a>
                     <a target="_blank" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-tag"></i> Print Inventory Tag</a>
                 </div>
             </div>
