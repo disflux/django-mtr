@@ -83,7 +83,7 @@ Order # {{ order.order_number }}
                 <h5>Attached Reports</h5>
             </a>
                 <div class="buttons">
-                    <a target="_blank" class="btn btn-mini tip-top" title="Print Customer MTR Packet" href="{% url 'orders.views.generate_cert_packet' order.order_number %}"><i class="icon-print"></i> Generate MTR Packet</a>
+                    <a target="_blank" class="btn btn-mini tip-top" title="Print Customer MTR Packet" href="{% url 'pdfgen.cert_packet.generate_cert_packet' order.order_number %}"><i class="icon-print"></i> Generate MTR Packet</a>
                     <a class="btn btn-inverse btn-mini tip-top" title="Attach Report" href="#link_report_to_order-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Attach Report</a>
                 </div>
             </div>
