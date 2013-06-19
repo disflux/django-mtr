@@ -68,6 +68,11 @@ a:hover {
 #search button:hover i, #search button:active i {
 	opacity: 0.9;
 }
+
+.search-large {
+    width:500px;    
+}
+
 /* Top user navigation */
 #user-nav {
     position: absolute;

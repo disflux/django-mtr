@@ -21,7 +21,7 @@ Search
         			<div class="control-group">
         				
         				<div class="input-append">
-        					<input class="offset8 input-large" type="text" name="q" value="{{ query }}" placeholder="{{ query }}"/>
+        					<input class="search-large" type="text" name="q" value="{{ query }}" placeholder="{{ query }}"/>
         					<button class="btn" type="submit" value="Search" /><i class="icon-search"></i>
         				</div>
         			</div>
@@ -104,6 +104,69 @@ Search
             </dl>
     </div>
     {% endif %}
+{% else %}
+<div class="widget-box">
+<div class="widget-content">
+    <h3>Queries <small>How to use the search box to find what you are looking for</small></h2>
+    <div class="row">
+        <div class="span6">
+        <h4>Standard search</h4>
+        <p>We implement all of the standard search features that you would expect to find
+        on any major search engine. These include exact phrase, keyword, or, and none types.</p>
+        
+        <p>You can use these features to narrow down your results and find exactly what you
+        are looking for.</p>
+            
+        </div>
+        <div class="span5">
+        <h4>Using standard search <small>some examples</small></h4>
+        <p>Text that is <code>highlighted like this</code> is what you would type in the search box.</p>
+        <dl>
+            <dt>Match all keywords:</dt>
+            <dd>Type important terms: <code>jetta brake pad</code></dd>
+            
+            <dt>Match an exact phrase:</dt>
+            <dd>Put <code>"</code> around your terms: <code>"timken roller bearing"</code></dd>
+            
+            <dt>Exclude certain terms and phrases:</dt>
+            <dd>Prefix terms with <code>-</code>: <code>jetta brake -disc</code></dd>
+            
+            <dt>Find one thing or another:</dt>
+            <dd>Include <code>OR</code> in your query: <code>jetta brake pad OR disc</code></dd>
+        </dl>
+        </p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span6">
+            <h4>Wildcard search</h4>
+            <p>Wildcards are helpful specifically when you are searching by part number.
+            Wildcards help find the part you're looking for if you don't know the full part number.
+            </p>
+            <p>For example, say you just pulled the alternator out of your car and you see:
+            9357<strong>X</strong>564 where the <strong>X</strong> is smudged out. With wildcard searches, you can
+            easily find that part using a <code>?</code> wildcard. You would simply search for <code>9357?564</code>.
+            </p>
+            <p>django-mtr currently has two wildcards: <code>?</code> and <code>*</code>.</p>
+            
+        </div>
+        
+        <div class="span5">
+            <h4>Using wildcards <small>some examples</small></h4>
+            <p>Text that is <code>highlighted like this</code> is what you would type in the search box.</p>
+            <dl>
+                <dt>Find all part numbers starting with digits <strong>4196</strong>:</dt>
+                <dd>Query: <code>4196*</code></dd>
+                <dt>Find part numbers starting with 419 with the 4 character unknown:</dt>
+                <dd>Query: <code>419?*</code></dd>
+                <dt>Find a part number with one or more missing digits:</dt>
+                <dd>Query: <code>9?57?564</code></dd>
+            </dl>
+            </p>
+        </div>
+    </div>
+</div>
 {% endif %}
 </div>
 {% endblock %}
