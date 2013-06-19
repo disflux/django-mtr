@@ -26,6 +26,7 @@ class Report(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, null=True)
+    raw_material = models.BooleanField(default=False, help_text="Check this box if product is raw material")
     documents = models.ManyToManyField(Document,
                                        null=True, blank=True,
                                        through='ReportDocument')

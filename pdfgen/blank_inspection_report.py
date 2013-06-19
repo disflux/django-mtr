@@ -23,19 +23,28 @@ def blank_inspection_report(request, lot_number):
     # create a new PDF with Reportlab
     can = canvas.Canvas(packet, pagesize=letter)
     can.drawString(37*mm,239*mm, report.origin_po)
+    if report.origin_wo:
+        can.drawString(37*mm,237*mm, "WO# %s" % report.origin_wo)
     can.drawCentredString(95*mm,239*mm, str(report.created_at.date()))
     can.drawCentredString(153*mm,239*mm, report.vendor.name)
     can.drawString(135*mm,228*mm, "HEAT # %s" % report.heat_number)
     can.drawString(135*mm,224*mm, "MFG Lot # %s" % report.mfg_lot_number)
     can.drawString(135*mm,220*mm, "TSA Lot # %s" % report.lot_number)
     can.setFont("Helvetica", 9)
-    can.drawCentredString(43*mm,95*mm, report.part_number.part_number)
+    if report.raw_material is False:
+        can.drawCentredString(43*mm,95*mm, report.part_number.part_number)
+    else:
+        can.drawCentredString(43*mm,176*mm, report.part_number.part_number)
+        can.drawCentredString(45*mm,170*mm, str(report.specification))
     can.save()
+    
     #move to the beginning of the StringIO buffer
     packet.seek(0)
     new_pdf = PdfFileReader(packet)
+    
     # read your existing PDF
     existing_pdf = PdfFileReader(file(settings.PDF_INSPECTION_REPORT_TEMPLATE, "rb"))
+    
     # add the "watermark" (which is the new pdf) on the existing page
     page = existing_pdf.getPage(0)
     page.mergePage(new_pdf.getPage(0))
