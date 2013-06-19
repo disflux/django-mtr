@@ -147,21 +147,6 @@ INSTALLED_APPS = (
 # Amazon S3 Storage Settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
-# sorl-thumbnail Settings
-THUMBNAIL_ENGINE = 'sorl.thumbnail.engines.convert_engine.Engine'
-THUMBNAIL_QUALITY = 95
-THUMBNAIL_COLORSPACE = 'GRAY'
-THUMBNAIL_FORMAT = 'PNG'
-
-# Settings for PDF Generation
-PDF_COMPANY_NAME = 'TSA MFG'
-PDF_COMPANY_SHORT_NAME = 'TSA'
-PDF_COMPANY_STREET = '14901 Chandler Rd'
-PDF_COMPANY_LOCALITY = 'Omaha, NE'
-PDF_COMPANY_ZIPCODE = '68138'
-PDF_COMPANY_PHONE = '800-228-2948'
-PDF_COMPANY_FAX = '402-895-3297'
-
 # Login Required Middleware Settings
 LOGIN_URL = '/accounts/login/'
 LOGIN_EXEMPT_URLS = (

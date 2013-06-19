@@ -1,3 +1,6 @@
+import os
+DIRNAME = os.path.dirname(__file__)
+
 # Set DEBUG=True to enable debugging
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -33,6 +36,24 @@ AWS_ACCESS_KEY_ID = ''
 AWS_SECRET_ACCESS_KEY = ''
 AWS_STORAGE_BUCKET_NAME = ''
 AWS_IS_GZIPPED = True
+
+# PDF Generation settings
+PDF_INSPECTION_REPORT_TEMPLATE = os.path.join(DIRNAME,
+                                              '../templates/pdfgen/inspection_report.pdf')
+PDF_BARCODE_STYLE = 'Code128' # Options: Code128, Code39
+PDF_COMPANY_NAME = 'TSA MFG'
+PDF_COMPANY_SHORT_NAME = 'TSA'
+PDF_COMPANY_STREET = '14901 Chandler Rd'
+PDF_COMPANY_LOCALITY = 'Omaha, NE'
+PDF_COMPANY_ZIPCODE = '68138'
+PDF_COMPANY_PHONE = '800-228-2948'
+PDF_COMPANY_FAX = '402-895-3297'
+
+# sorl-thumbnail Settings
+THUMBNAIL_ENGINE = 'sorl.thumbnail.engines.convert_engine.Engine'
+THUMBNAIL_QUALITY = 95
+THUMBNAIL_COLORSPACE = 'GRAY'
+THUMBNAIL_FORMAT = 'PNG'
 
 # Uncomment the following line to store static files on Amazon S3
 #STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
