@@ -7,9 +7,14 @@
         <form id="image-form" class="form-horizontal" method="post" action="{% url 'documents.views.attach_document' %}">
             {% csrf_token %}
             <div class="control-group">
-                <label class="control-label">Report Lot Number</label>
+                <label class="control-label">Attach to Report</label>
                 <div class="controls">
-                    <input type="text" id="report_lot_number" name="report_lot_number" maxlength=12 />
+                    {{ attach_document_form.lot_number }}
+                </div>
+                
+                <label class="control-label">Primary Document?</label>
+                <div class="controls">
+                    {{ attach_document_form.primary }}
                 </div>
             </div>
             <div class="modal-footer">
