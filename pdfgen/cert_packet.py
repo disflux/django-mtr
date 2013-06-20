@@ -87,7 +87,7 @@ def generate_cert_packet(request, order_number):
         documents = li.report.get_all_primary_documents()
         for doc in documents:
             if doc is not None:
-                f = urlopen(Request(doc)).read()
+                f = urlopen(Request(doc['url'])).read()
                 mem = StringIO(f)
                 pdf = PdfFileReader(mem)
                 for pageNum in xrange(pdf.getNumPages()):

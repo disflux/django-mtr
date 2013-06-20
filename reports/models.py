@@ -56,7 +56,7 @@ class Report(models.Model):
         docs = ReportDocument.objects.filter(report=self, primary_document=True)
         for doc in docs:
             if doc.primary_document is True:
-                return doc.document.file.url 
+                return {'uuid': doc.document.uuid, 'url': doc.document.file.url} 
             
     def get_all_primary_documents(self):
         documents = []
