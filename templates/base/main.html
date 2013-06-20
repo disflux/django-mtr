@@ -102,7 +102,7 @@
                 
                 <li {% block companies_active %}{% endblock %} ><a href=""><i class="icon-briefcase"></i> <span>Vendors</span></a></li>
                 
-                <li class="{% block parts_active %}{% endblock %}" ><a href=""><i class="icon-cog"></i> <span>Parts</span></a></li>
+                <li class="{% block parts_active %}{% endblock %}" ><a href="#"><i class="icon-cog"></i> <span>Parts</span></a></li>
                 
                 <li class="submenu {% block users_active %}{% endblock %}" >
                     <a href="#"><i class="icon-user"></i> <span>Users</span>  <span class="label">2</span></a>
@@ -120,13 +120,8 @@
                 
                 <!--<li {% block data_collection_active %}{% endblock %} ><a href="tables.html"><i class="icon-filter"></i> <span>Data Collection</span></a></li>-->
                 
-                <li class="submenu {% block help_active %}{% endblock %}">
-                <a href="#"><i class="icon-question-sign"></i> <span>Help</span> <span class="label">3</span></a>
-                    <ul>
-                        <li><a href="/faq/"><i class="icon-question-sign"></i> F.A.Q.</a></li>
-                        <li><a href="/privacy/"><i class="icon-eye-close"></i> Privacy Policy</a></li>
-                        <li><a href="/contact/"><i class="icon-envelope"></i> Contact Us</a></li>
-                    </ul>
+                <li class="{% block help_active %}{% endblock %}">
+                    <a href="#"><i class="icon-question-sign"></i> <span>Help</span></a>
                 </li>
                 
                 

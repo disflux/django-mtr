@@ -55,7 +55,7 @@ def generate_cert_packet(request, order_number):
     p.drawString(12*mm, 195*mm, "Line #")
     p.drawCentredString(45*mm, 200*mm, "%s Lot #" %
                         settings.PDF_COMPANY_SHORT_NAME)
-    p.drawCentredString(45*mm, 195*mm, "(MFG Lot #)")
+    p.drawCentredString(45*mm, 195*mm, "(MFG Lot/Heat #)")
     p.drawString(70*mm, 195*mm, "Part #")
     p.drawString(100*mm, 195*mm, "Description")
     p.setFont("Helvetica", 8)

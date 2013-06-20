@@ -25,8 +25,10 @@ def blank_inspection_report(request, lot_number):
         p.drawString(37*mm,237*mm, "WO# %s" % report.origin_wo)
     p.drawCentredString(95*mm,239*mm, str(report.created_at.date()))
     p.drawCentredString(153*mm,239*mm, report.vendor.name)
-    p.drawString(135*mm,228*mm, "HEAT # %s" % report.heat_number)
-    p.drawString(135*mm,224*mm, "MFG Lot # %s" % report.mfg_lot_number)
+    if report.heat_number:
+        p.drawString(135*mm,228*mm, "HEAT # %s" % report.heat_number)
+    if report.mfg_lot_number:
+        p.drawString(135*mm,224*mm, "MFG Lot # %s" % report.mfg_lot_number)
     p.drawString(135*mm,220*mm, "%s Lot # %s" %
                    (settings.PDF_COMPANY_SHORT_NAME, report.lot_number))
     p.setFont("Helvetica", 9)
