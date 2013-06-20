@@ -40,8 +40,6 @@ def results(request):
                               { 
                                   'results_list': results, 
                                   'query': q,
-                                  'sqs': sqs,
-                                  'suggestions': suggestions,
                                  # 'facets': results.facet_counts(),
                               },
                               context_instance=RequestContext(request))
