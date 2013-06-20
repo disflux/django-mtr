@@ -16,6 +16,10 @@ class Part(models.Model):
         self.part_number = self.part_number.upper()
         self.description = self.description.upper()
         super(Part, self).save(*args, **kwargs)
+        
+    @models.permalink
+    def get_absolute_url(self):
+        return ('parts.views.part', [str(self.part_number)])
 
         
 

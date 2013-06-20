@@ -245,7 +245,8 @@ Lot # {{ report.lot_number }}
                             <td>
                                 {% thumbnail d.document.file "100x200" as im %}
                                 <center>
-                                    <a target="_blank" href="{{ d.document.file.url }}">
+  
+                                    <a target="_blank" href="{% url 'pdfgen.doc_overlay.doc_overlay' d.document.uuid report.lot_number %}">
                                         <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
                                     </a>
                                     <br /><br />
@@ -257,7 +258,7 @@ Lot # {{ report.lot_number }}
                                 <table class="table table-bordered">
                                     <tr>
                                         <td><strong>Type</strong></td>
-                                        <td><strong>{{ d.document.type.name }}</strong></td>
+                                        <td><strong>{{ d.document.type }}</strong></td>
                                     </tr>
                                     <tr>
                                         <td>Document UUID</td>
