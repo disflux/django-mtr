@@ -5,9 +5,7 @@ from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from pyPdf import PdfFileReader, PdfFileWriter
-from urllib2 import Request, urlopen
 from StringIO import StringIO
-import cStringIO
 
 from reports.models import Report
 
@@ -21,22 +19,23 @@ def blank_inspection_report(request, lot_number):
 
     packet = StringIO()
     # create a new PDF with Reportlab
-    can = canvas.Canvas(packet, pagesize=letter)
-    can.drawString(37*mm,239*mm, report.origin_po)
+    p = canvas.Canvas(packet, pagesize=letter)
+    p.drawString(37*mm,239*mm, report.origin_po)
     if report.origin_wo:
-        can.drawString(37*mm,237*mm, "WO# %s" % report.origin_wo)
-    can.drawCentredString(95*mm,239*mm, str(report.created_at.date()))
-    can.drawCentredString(153*mm,239*mm, report.vendor.name)
-    can.drawString(135*mm,228*mm, "HEAT # %s" % report.heat_number)
-    can.drawString(135*mm,224*mm, "MFG Lot # %s" % report.mfg_lot_number)
-    can.drawString(135*mm,220*mm, "TSA Lot # %s" % report.lot_number)
-    can.setFont("Helvetica", 9)
+        p.drawString(37*mm,237*mm, "WO# %s" % report.origin_wo)
+    p.drawCentredString(95*mm,239*mm, str(report.created_at.date()))
+    p.drawCentredString(153*mm,239*mm, report.vendor.name)
+    p.drawString(135*mm,228*mm, "HEAT # %s" % report.heat_number)
+    p.drawString(135*mm,224*mm, "MFG Lot # %s" % report.mfg_lot_number)
+    p.drawString(135*mm,220*mm, "%s Lot # %s" %
+                   (settings.PDF_COMPANY_SHORT_NAME, report.lot_number))
+    p.setFont("Helvetica", 9)
     if report.raw_material is False:
-        can.drawCentredString(43*mm,95*mm, report.part_number.part_number)
+        p.drawCentredString(43*mm,95*mm, report.part_number.part_number)
     else:
-        can.drawCentredString(43*mm,176*mm, report.part_number.part_number)
-        can.drawCentredString(45*mm,170*mm, str(report.specification))
-    can.save()
+        p.drawCentredString(43*mm,176*mm, report.part_number.part_number)
+        p.drawCentredString(45*mm,170*mm, str(report.specification))
+    p.save()
     
     #move to the beginning of the StringIO buffer
     packet.seek(0)
