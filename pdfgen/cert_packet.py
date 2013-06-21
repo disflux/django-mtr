@@ -33,17 +33,12 @@ def prepare_internal_cert(uuid, customer, wo, po, quantity, invoice):
     # Write Quantity
     p.drawCentredString(136*mm, 185*mm, quantity) 
     p.save()
-    print 'saved overlay'
     # add the "watermark" (which is the new pdf) on the existing page
     packet.seek(0)
     new_pdf = PdfFileReader(packet)
-    print 'opened new pdf'
     page = existing_pdf.getPage(0)
     page.mergePage(new_pdf.getPage(0))
-    print 'merged'
     outputPDF.addPage(page)
-    print 'added page'
-    print 'returning'
     return outputPDF
 
 def generate_cert_packet(request, order_number):
@@ -123,15 +118,14 @@ def generate_cert_packet(request, order_number):
         documents = li.report.get_all_primary_documents()
         for doc in documents:
             if doc is not None:
-                print doc['type']
                 if doc['type'] == 'WS':
+                    # This is an internal cert, prepare it
                     pdf = prepare_internal_cert(doc['uuid'], 
                                                 order.customer.name, 
                                                 order.order_number, 
                                                 order.customer_po, 
                                                 str(li.quantity), 
-                                                str(order.invoice_number))
-                    print 'got mem'    
+                                                str(order.invoice_number))   
                 else:    
                     f = urlopen(Request(doc['url'])).read()
                     mem = StringIO(f)
