@@ -31,7 +31,7 @@ def report(request, lot_number):
             doc = Document(type=newdoc.cleaned_data['type'],
                            file=request.FILES['file'], created_by=request.user)
             doc.save()
-            rd = ReportDocument(report=report, document=doc, primary_document=newdoc.cleaned_data['primary'], created_by=request.user)
+            rd = ReportDocument(report=report, document=doc, primary_document=newdoc.cleaned_data['primary'], created_by=request.user, internal_cert=newdoc.cleaned_data['internal'])
             rd.save()
             report.save()
             messages.success(request, 'Document upload successful.')

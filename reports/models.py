@@ -52,13 +52,20 @@ class Report(models.Model):
             self.lot_number = self.id + 10000
             super(Report, self).save(*args, **kwargs)
             
+    
     def get_primary_document_url(self):
+        """
+        Finds the primary document for a report
+        """
         docs = ReportDocument.objects.filter(report=self, primary_document=True)
         for doc in docs:
             if doc.primary_document is True:
-                return {'uuid': doc.document.uuid, 'url': doc.document.file.url} 
+                return {'uuid': doc.document.uuid, 'url': doc.document.file.url, 'type': doc.internal_cert} 
             
     def get_all_primary_documents(self):
+        """
+        Finds all primary documents of report and linked reports
+        """
         documents = []
         documents.append(self.get_primary_document_url())
         for report in self.linked_reports.all():
@@ -77,11 +84,17 @@ class ReportDocument(models.Model):
     to :model:`reports.Report` and :model:`documents.Document`
     
     """
+    CERT_TYPES = (
+                    ('O', 'Other document'),
+                    ('DBA', 'TSA produced DBA'),
+                    ('WS', 'TSA produced Weld Stud'),
+                )
     report = models.ForeignKey(Report)
     document = models.ForeignKey(Document)
     primary_document = models.BooleanField(default=False)
     attachment_date = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True)
+    internal_cert = models.CharField(max_length=4, choices=CERT_TYPES)
     
     def __unicode__(self):
         return "Report # %s : Document UUID: %s" % (self.report.lot_number, self.document.uuid)

@@ -3,13 +3,49 @@ from django.conf import settings
 from reportlab.lib.units import mm
 from io import BytesIO
 from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import letter
 from pyPdf import PdfFileReader, PdfFileWriter
 from urllib2 import Request, urlopen
 from StringIO import StringIO
 import cStringIO
 
 from orders.models import Customer, Order, OrderLineItem
+from documents.models import Document
     
+def prepare_internal_cert(uuid, customer, wo, po, quantity, invoice):
+    document = Document.objects.get(uuid=uuid)
+    f = urlopen(Request(document.file.url)).read()
+    existing_pdf = PdfFileReader(StringIO(f))
+    outputPDF = PdfFileWriter()
+
+    packet = StringIO()
+    # create a new PDF with Reportlab
+    p = canvas.Canvas(packet, pagesize=letter)
+    p.setFont("Helvetica", 10)
+    # Write Customer name
+    p.drawCentredString(54*mm,208*mm, customer)
+    # Write Customer PO #
+    p.drawCentredString(144*mm, 208*mm, po)
+    # Write Work Order #
+    p.drawCentredString(56*mm,200*mm, wo)
+    # Write Invoice #
+    p.drawCentredString(136*mm,200*mm, invoice)
+    # Write Quantity
+    p.drawCentredString(136*mm, 185*mm, quantity) 
+    p.save()
+    print 'saved overlay'
+    # add the "watermark" (which is the new pdf) on the existing page
+    packet.seek(0)
+    new_pdf = PdfFileReader(packet)
+    print 'opened new pdf'
+    page = existing_pdf.getPage(0)
+    page.mergePage(new_pdf.getPage(0))
+    print 'merged'
+    outputPDF.addPage(page)
+    print 'added page'
+    print 'returning'
+    return outputPDF
+
 def generate_cert_packet(request, order_number):
     order = Order.objects.get(order_number=order_number)
     
@@ -87,9 +123,21 @@ def generate_cert_packet(request, order_number):
         documents = li.report.get_all_primary_documents()
         for doc in documents:
             if doc is not None:
-                f = urlopen(Request(doc['url'])).read()
-                mem = StringIO(f)
-                pdf = PdfFileReader(mem)
+                print doc['type']
+                if doc['type'] == 'WS':
+                    pdf = prepare_internal_cert(doc['uuid'], 
+                                                order.customer.name, 
+                                                order.order_number, 
+                                                order.customer_po, 
+                                                str(li.quantity), 
+                                                str(order.invoice_number))
+                    print 'got mem'    
+                else:    
+                    f = urlopen(Request(doc['url'])).read()
+                    mem = StringIO(f)
+                    pdf = PdfFileReader(mem)
+                
+                
                 for pageNum in xrange(pdf.getNumPages()):
                     current = pdf.getPage(pageNum)
                     outputPDF.addPage(current)    

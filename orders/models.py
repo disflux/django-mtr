@@ -18,6 +18,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer)
     customer_po = models.CharField(max_length=32)
     order_number = models.CharField(max_length=16, unique=True)
+    invoice_number = models.CharField(max_length=16, unique=True)
     line_items = models.ManyToManyField('OrderLineItem', related_name='order_line_items', null=True, blank=True)
     documents = models.ManyToManyField(Document, related_name='order_documents', null=True, blank=True)
     created_by = models.ForeignKey(User, null=True)
@@ -38,6 +39,7 @@ class OrderLineItem(models.Model):
     order = models.ForeignKey(Order)
     line_number = models.IntegerField(max_length=4, help_text="Line number on the work order")
     report = models.ForeignKey(Report, blank=True, null=True, help_text="Report Lot #")
+    quantity = models.IntegerField(default=0, null=True)
     
     class Meta:
         ordering = ('line_number',)
