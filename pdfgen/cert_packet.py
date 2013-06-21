@@ -28,9 +28,9 @@ def prepare_internal_cert(type, uuid, customer, wo, po, quantity, invoice):
                        'wo': [56, 200,], 'invoice': [136, 200,],
                        'quantity': [136, 185,]}
     if type == 'DBA':
-        coordinates = {'customer': [54, 201,], 'po': [139, 201,], 
-                       'wo': [56, 192,], 'invoice': [136, 192,],
-                       'quantity': [124, 175,]}  
+        coordinates = {'customer': [54, 201,], 'po': [150, 201,], 
+                       'wo': [56, 192,], 'invoice': [126, 192,],
+                       'quantity': [112, 175,]}  
 
     # Write Customer name
     p.drawCentredString(coordinates['customer'][0]*mm, coordinates['customer'][1]*mm, customer)
