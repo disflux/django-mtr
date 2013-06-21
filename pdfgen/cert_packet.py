@@ -12,26 +12,36 @@ import cStringIO
 from orders.models import Customer, Order, OrderLineItem
 from documents.models import Document
     
-def prepare_internal_cert(uuid, customer, wo, po, quantity, invoice):
+def prepare_internal_cert(type, uuid, customer, wo, po, quantity, invoice):
     document = Document.objects.get(uuid=uuid)
     f = urlopen(Request(document.file.url)).read()
     existing_pdf = PdfFileReader(StringIO(f))
     outputPDF = PdfFileWriter()
-
     packet = StringIO()
-    # create a new PDF with Reportlab
     p = canvas.Canvas(packet, pagesize=letter)
     p.setFont("Helvetica", 10)
+    
+    # setup the coordinates of the labels
+    coordinates = {}
+    if type == 'WS':
+        coordinates = {'customer': [54, 208,], 'po': [144, 208,], 
+                       'wo': [56, 200,], 'invoice': [136, 200,],
+                       'quantity': [136, 185,]}
+    if type == 'DBA':
+        coordinates = {'customer': [54, 201,], 'po': [139, 201,], 
+                       'wo': [56, 192,], 'invoice': [136, 192,],
+                       'quantity': [124, 175,]}  
+
     # Write Customer name
-    p.drawCentredString(54*mm,208*mm, customer)
+    p.drawCentredString(coordinates['customer'][0]*mm, coordinates['customer'][1]*mm, customer)
     # Write Customer PO #
-    p.drawCentredString(144*mm, 208*mm, po)
+    p.drawCentredString(coordinates['po'][0]*mm, coordinates['po'][1]*mm, po)
     # Write Work Order #
-    p.drawCentredString(56*mm,200*mm, wo)
+    p.drawCentredString(coordinates['wo'][0]*mm, coordinates['wo'][1]*mm, wo)
     # Write Invoice #
-    p.drawCentredString(136*mm,200*mm, invoice)
+    p.drawCentredString(coordinates['invoice'][0]*mm, coordinates['invoice'][1]*mm, invoice)
     # Write Quantity
-    p.drawCentredString(136*mm, 185*mm, quantity) 
+    p.drawCentredString(coordinates['quantity'][0]*mm, coordinates['quantity'][1]*mm, quantity) 
     p.save()
     # add the "watermark" (which is the new pdf) on the existing page
     packet.seek(0)
@@ -118,14 +128,15 @@ def generate_cert_packet(request, order_number):
         documents = li.report.get_all_primary_documents()
         for doc in documents:
             if doc is not None:
-                if doc['type'] == 'WS':
+                if doc['type'] == 'WS' or doc['type'] == 'DBA':
                     # This is an internal cert, prepare it
-                    pdf = prepare_internal_cert(doc['uuid'], 
+                    pdf = prepare_internal_cert(doc['type'], doc['uuid'], 
                                                 order.customer.name, 
                                                 order.order_number, 
                                                 order.customer_po, 
                                                 str(li.quantity), 
-                                                str(order.invoice_number))   
+                                                str(order.invoice_number))
+                   
                 else:    
                     f = urlopen(Request(doc['url'])).read()
                     mem = StringIO(f)
