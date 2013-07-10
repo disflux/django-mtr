@@ -4,7 +4,7 @@
 
 
 {% block title %}
-{{ page_title|safe }}
+Part # {{ part.part_number }}
 {% endblock %}
 
 
@@ -29,23 +29,7 @@
 <script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
 <script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".lightbox").fancybox({
-            'transitionIn'  :   'elastic',
-            'transitionOut' :   'elastic',
-            'speedIn'       :   600, 
-            'speedOut'      :   200, 
-            'overlayShow'   :   false
-            });
-        {% if user.is_authenticated %}
-        $.fn.editable.defaults.mode = 'inline';
-        $('#description').editable({
-            params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
-        });
-        {% endif %}
-        });
-</script>
+
 <script type="text/javascript">
     $(document).on("click", ".open-email-doc-modal", function () {
             var id = $(this).data('id');
@@ -77,21 +61,24 @@
                 <span class="icon">
                     <i class="icon-list-alt"></i>
                 </span>
-                <h5>Document Preview</h5>
+                <h5>Lot #'s associated with this part</h5>
             </a>
-                <div class="buttons">
-                    <a class="btn btn-mini tip-top" title="Print this part" href="#" onclick="window.print()"><i class="icon-print"></i></a>
-                    <a class="btn btn-inverse btn-mini tip-left" title="Attach to Report" href="#attach_document-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
-                </div>
             </div>
             <div class="widget-content nopadding">
-            {% thumbnail document.file "800x600" as im %}
-            <center>
-                <a href="{{ document.file.url }}">
-                    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
-                </a>
-            </center>
-            {% endthumbnail %}
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Lot #</th>
+                        <th>Vendor</th>
+                        <th>Date</th>
+                    </tr>
+                    {% for report in reports %}
+                    <tr>
+                        <td><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</td>
+                        <td>{{ report.vendor.name }}</td>
+                        <td>{{ report.created_at }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
             </div>
         </div>                                               
     </div>

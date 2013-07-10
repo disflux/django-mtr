@@ -34,15 +34,16 @@ def email_document(request):
     report_id = request.POST.get('report-id', None)
     recipient = request.POST.get('recipient', None)
 
-    doc = Document.objects.get(id=doc_id)
+    doc = Document.objects.get(pk=doc_id)
     report = Report.objects.get(id=report_id)
     subject = "%s for lot # %s" % (doc.type, report.lot_number)
-    body = "See attached document for the %s for lot # %s" % (doc.type, report.lot_number)
+    body = "See attached document `%s` for lot # %s" % (doc.type, report.lot_number)
     body += "\n\nLot Number: %s" % report.lot_number
     body += "\nPart Number: %s" % report.part_number
     body += "\nDescription: %s" % report.part_number.description
+    body += "\n\nYou can view the full report at http://mtr.disflux.org%s" % report.get_absolute_url()
 
-    email = EmailMessage(subject, body, 'mtr@tsamfg.com', [recipient], headers={'Reply-To': 'derek.m@tsamfgomaha.com'})
+    email = EmailMessage(subject, body, 'mtr@tsamfg.com', [recipient], headers={'Reply-To': 'derek.m@tsamfg.com'})
 
     email.attach("MTR_%s.pdf" % report.lot_number, doc.file.read(), 'application/pdf')
     email.send()

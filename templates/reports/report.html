@@ -262,7 +262,7 @@ Lot # {{ report.lot_number }}
                                     </tr>
                                     <tr>
                                         <td>Document UUID</td>
-                                        <td><a href="{{ d.document.get_absolute_url }}">{{ d.document.uuid }}</a></td>
+                                        <td><a href="{{ d.document.get_absolute_url }}">{{ d.document.uuid }}</a> ({{ d.document.pk }})</td>
                                     </tr>
                                     <tr>
                                         <td>Document Date</td>
@@ -279,7 +279,7 @@ Lot # {{ report.lot_number }}
                                     <tr>
                                         <td colspan="2" style="text-align:center;">
                                             <a class="btn btn-mini tip-top" title="Download/Print Document" href="{{ d.document.file.url }}" ><i class="icon-print"></i> Print Document</a>
-                                            <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.id }}" data-toggle="modal" title="Email Document">
+                                            <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.document.pk }}" data-toggle="modal" title="Email Document">
                                                 <i class="icon-envelope"></i> Email Document
                                             </a>
                                             <a class="btn btn-mini tip-top" title="Remove Document"><i class="icon-trash"></i> Remove Document</a>
@@ -412,7 +412,7 @@ Lot # {{ report.lot_number }}
                                     </tr>
                                     <tr>
                                         <td>Document UUID</td>
-                                        <td><a href="{{ d.get_absolute_url }}">{{ d.uuid }}</a></td>
+                                        <td><a href="{{ d.get_absolute_url }}">{{ d.uuid }}</a> ({{ d.document.pk }})</td>
                                     </tr>
                                     <tr>
                                         <td>Document Date</td>
