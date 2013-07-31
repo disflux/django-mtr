@@ -22,6 +22,7 @@ See ```requirements.txt``` for all python requirements.
 * Django 1.5+
 * PostgreSQL 9.0+
 * An Amazon AWS account and S3 bucket
+* ElasticSearch setup
 
 Setup
 -----
