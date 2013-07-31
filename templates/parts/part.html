@@ -114,35 +114,7 @@ Part # {{ part.part_number }}
             <div id="xrefs-table">
         </div>
     </div>
-    <div class="span6">
-        <div class="widget-box">
-            <div class="widget-title">
-                <span class="icon">
-                    <i class="icon-random"></i>
-                </span>
-                <h5>Linked Reports</h5>
-                <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-left" title="New Cross Reference" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
-                </div>
-                </div>
-                <div class="widget-content nopadding">
-                <table class="table table-bordered">
-                    <tr>
-                        <th>Lot #</th>
-                        <th>Part #</th>
-                    </tr>
-                    {% for report in reports %}
-                    <tr>
-                        <td><a href="{{ report.report.get_absolute_url }}">{{ report.report.lot_number }}</a></td>
-                        <td>{{ report.report.part_number.part_number }}</td>
-                    </tr>
-                    {% endfor %}
-                </table>
-                </div>
-            </div>
-            <div id="xrefs-table">
-        </div>
-    </div>
+    
 
         
 

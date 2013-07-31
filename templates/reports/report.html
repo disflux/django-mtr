@@ -12,6 +12,8 @@ Lot # {{ report.lot_number }}
 {% block reports_active %}active open{% endblock %}
 
 {% block breadcrumb_links %}
+<a href="{% url 'reports.views.reports_index' %}">Reports</a>
+<a href="#" class="current">Lot # {{ report.lot_number }}</a>
 {% endblock %}
 
 {% block page_title %}Lot # {{ report.lot_number }} Details{% endblock %}
@@ -469,6 +471,47 @@ Lot # {{ report.lot_number }}
                                 
                                 <td>
                                     {{ order.order.customer_po }}
+                                </td>
+                                
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>    
+    </div>
+    
+    <!-- Linked Reports -->
+    <div class="span4">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-random"></i>
+                </span>
+                <h5>Reports that link to this report</h5>
+                <div class="buttons">
+                    <a class="btn btn-inverse btn-mini tip-left" title="Link Order" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                </div>
+            </div>
+            <div class="widget-content nopadding">
+                <div id="xrefs-table">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Lot #</th>
+                                <th>Part #</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in report.report_links.all %}
+                            
+                            <tr>
+                                <td>
+                                    <a href="{{ r.get_absolute_url }}">{{ r.lot_number }}</a>
+                                </td>
+                                <td>
+                                    {{ r.part_number }}
                                 </td>
                                 
                             </tr>

@@ -104,8 +104,8 @@
                 
                 <li class="submenu {% block parts_active %}{% endblock %}" ><a href="#"><i class="icon-cog"></i> <span>Parts</span> <span class="label">2</span></a>
                     <ul>
-                        <li><a href=""><i class="icon-search"></i> Browse Parts</a></li>
-                        <li><a href="{{ request.user.get_absolute_url }}"><i class="icon-plus-sign"></i> Create New Part</a></li>
+                        <li><a href="{% url 'parts.views.parts_index' %}"><i class="icon-search"></i> Browse Parts</a></li>
+                        <li><a href="{% url 'parts.views.new_part' %}"><i class="icon-plus-sign"></i> Create New Part</a></li>
                     </ul>
                 </li>
                 <li class="submenu {% block users_active %}{% endblock %}" >

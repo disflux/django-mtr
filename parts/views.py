@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 
 from parts.models import Part
+from parts.forms import NewPartForm
 from reports.models import Report
 
 def parts_index(request):
@@ -24,6 +25,21 @@ def part(request, part_number):
                               {'part': part,
                                'reports': reports,
                               },
+                              context_instance=RequestContext(request))
+                              
+def new_part(request):
+    if request.method == 'POST':
+        partform = NewPartForm(request.POST)
+        if partform.is_valid():
+            part = partform.save()
+            part.created_by = request.user
+            part.save()
+            
+            return HttpResponseRedirect(part.get_absolute_url())
+    else:
+        partform = NewPartForm()
+    return render_to_response('parts/new_part.html',
+                              {'partform': partform,},
                               context_instance=RequestContext(request))
                               
     

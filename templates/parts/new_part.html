@@ -1,0 +1,91 @@
+{% extends "base/main.html" %}
+{% block head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<!-- search typeahead -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".company-ta input[type=text]").typeahead({
+            items: 5,
+            source: function (query, process) {
+                $.get('/search/autocomplete?type=company', { q: query }, function (data) {
+                    process(data)
+                })
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+{% block js %}
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() { 
+            $("select").select2({ width: 'resolve' });           
+            }); 
+</script>
+{% endblock %}
+
+{% block breadcrumb_links %}
+<a href="#" class="current">Add a report</a>
+{% endblock %}
+
+{% block right_buttons %}{% endblock %}
+
+{% block parts_active %}active open{% endblock %}
+
+{% block page_title %}Add a new part{% endblock %}
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span7">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Add a new part</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <form class="well form-horizontal" action="" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    
+                    <div class="control-group">
+                        {% for field in partform %}
+                        <label class="control-label" for="id_company">{{ field.label }}</label>                        
+                        <div class="controls">
+                            {{ field.errors }}
+                            {{ field }}
+                            <span class="help-block">{{ field.help_text }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-inverse">Add Part</button>
+                        <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>New Part Checklist</h5>
+            </div>
+            <div class="widget-content">
+               
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
