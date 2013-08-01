@@ -1,47 +1,48 @@
+{% load highlight %}
 <tr>
     <td>
         <strong><a href="{{ result.object.get_absolute_url }}">{{ result.object.lot_number }}</a></strong>
     </td>
     <td>
         {% if result.object.mfg_lot_number %}
-        {{ result.object.mfg_lot_number }}
+        {% highlight result.object.mfg_lot_number with query %}
         {% else %}
         N/A
         {% endif %}
     </td>
     <td>
         {% if result.object.vendor_lot_number %}
-        {{ result.object.vendor_lot_number }}
+        {% highlight result.object.vendor_lot_number with query %}
         {% else %}
         N/A
         {% endif %}
     </td>
     <td>
         {% if result.object.heat_number %}
-        {{ result.object.heat_number }}
+        {% highlight result.object.heat_number with query %}
         {% else %}
         N/A
         {% endif %}
     </td>
     <td>
-        {{ result.object.vendor.name }}
+        {% highlight result.object.vendor.name with query %}
     </td>
     <td>
-        {{ result.object.part_number }}
+        {% highlight result.object.part_number with query %}
     </td>
     <td>
-        {{ result.object.specification }}
+        {% highlight result.object.specification with query %}
     </td>
     <td>
         {% if result.object.origin_po %}
-        {{ result.object.origin_po }}
+        {% highlight result.object.origin_po with query %}
         {% else %}
         N/A
         {% endif %}
     </td>
     <td>
         {% if result.object.origin_wo %}
-        {{ result.object.origin_wo }}
+        {% highlight result.object.origin_wo with query %}
         {% else %}
         N/A
         {% endif %}

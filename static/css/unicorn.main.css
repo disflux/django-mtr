@@ -14,7 +14,9 @@ body {
 a:hover {
 	text-decoration: none;
 }
-
+.highlighted {
+    background-color:yellow;
+}
 /* Header */
 #header {
     height: 77px;

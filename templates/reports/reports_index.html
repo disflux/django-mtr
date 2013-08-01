@@ -34,10 +34,8 @@
                             <th>Heat #</th>
                             <th>Vendor</th>
                             <th>Part #</th>
-                            <th>Specification</th>
                             <th>PO#</th>
                             <th>WO#</th>
-                            <th># Docs</th>
 
                         </tr>
                     </thead>
@@ -72,10 +70,7 @@
                                 {{ report.vendor.name }}
                             </td>
                             <td>
-                                {{ report.part.part_number }}
-                            </td>
-                            <td>
-                                {{ report.specification }}
+                                <a href="{{ report.part_number.get_absolute_url }}">{{ report.part_number }}</a>
                             </td>
                             <td>
                                 {% if report.origin_po %}
@@ -90,9 +85,6 @@
                                 {% else %}
                                 N/A
                                 {% endif %}
-                            </td>
-                            <td>
-                                {{ report.documents.count }}
                             </td>
 
                         </tr>
