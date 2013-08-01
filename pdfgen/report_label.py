@@ -60,6 +60,17 @@ def report_label(request, lot_number):
     barcode.drawOn(p, 0, 28*mm)
     p.line(0, 25*mm, 150*mm, 25*mm)
     
+    # Draw Box Quantity if available
+    if report.part_number.box_quantity:
+        p.line(105*mm, 55*mm, 105*mm, 25*mm)
+        p.setFont("Helvetica", 10)
+        p.drawString(110*mm, 50*mm, "Quantity")
+        p.setFont("Helvetica", 25)
+        p.drawString(110*mm, 40*mm, str(report.part_number.box_quantity))
+        barcode = createBarcodeDrawing('Code128', value=str(report.part_number.box_quantity),  barWidth=0.5*mm, barHeight=9*mm, humanReadable=False)
+        barcode.drawOn(p, 103*mm, 28*mm)
+    
+    
     # Draw Other Info
     #p.line(110*mm, 0, 110*mm, 25*mm)
     p.setFont("Helvetica", 15)

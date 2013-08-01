@@ -42,6 +42,22 @@ def new_part(request):
                               {'partform': partform,},
                               context_instance=RequestContext(request))
                               
+def edit_part(request, part_number):
+    p = Part.objects.get(part_number=part_number)
+    if request.method == 'POST':
+        partform = NewPartForm(request.POST, instance=p)
+        if partform.is_valid():
+            part = partform.save()
+            part.created_by = request.user
+            part.save()
+            
+            return HttpResponseRedirect(part.get_absolute_url())
+    else:
+        partform = NewPartForm(instance=p)
+    return render_to_response('parts/new_part.html',
+                              {'partform': partform,},
+                              context_instance=RequestContext(request))
+                              
     
 
     

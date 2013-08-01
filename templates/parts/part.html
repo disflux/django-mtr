@@ -8,9 +8,11 @@ Part # {{ part.part_number }}
 {% endblock %}
 
 
-{% block doc_active %}active open{% endblock %}
+{% block parts_active %}active open{% endblock %}
 
 {% block breadcrumb_links %}
+<a href="{% url 'parts.views.parts_index'">Parts</a>
+<a href="#" class="current">{{ part }} : {{ part.description }}</a>
 {% endblock %}
 
 {% block page_title %}Part # {{ part.part_number }} Details{% endblock %}
@@ -54,7 +56,7 @@ Part # {{ part.part_number }}
 </div>
 
 <div class="row-fluid">
-    <div class="span6">
+    <div class="span7">
         <div class="widget-box collapsible">
             <div class="widget-title">
             <a href="#attributes" data-toggle="collapse">
@@ -83,7 +85,7 @@ Part # {{ part.part_number }}
         </div>                                               
     </div>
 
-    <div class="span6">
+    <div class="span5">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -91,22 +93,30 @@ Part # {{ part.part_number }}
                 </span>
                 <h5>Details</h5>
                 <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-left" title="New Cross Reference" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="Edit Part" href="{% url 'parts.views.edit_part' part.part_number %}" data-toggle="modal"><i class="icon-edit icon-white"></i></a>
                 </div>
                 </div>
                 <div class="widget-content nopadding">
                 <table class="table table-bordered">
                     <tr>
-                        <td>UUID</td>
-                        <td>{{ document.uuid }}</td>
+                        <td>Part #</td>
+                        <td>{{ part }}</td>
                     </tr>
                     <tr>
-                        <td>Type</td>
-                        <td>{{ document.type }}</td>
+                        <td>Description</td>
+                        <td>{{ part.description }}</td>
+                    </tr>
+                    <tr>
+                        <td>Box Qty</td>
+                        <td>{{ part.box_quantity|default:"N/A" }}</td>
                     </tr>
                     <tr>
                         <td>Created</td>
-                        <td>{{ document.created_at }}</td>
+                        <td>{{ part.created_at }}</td>
+                    </tr>
+                    <tr>
+                        <td>Last Update</td>
+                        <td>{{ part.updated_at }}</td>
                     </tr>
                 </table>
                 </div>

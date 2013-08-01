@@ -75,7 +75,7 @@ Lot # {{ report.lot_number }}
 </div>
 
 <div class="row-fluid">
-    <div class="span8">
+    <div class="span7">
         <div class="widget-box collapsible">
             <div class="widget-title">
                 <a href="#attributes" data-toggle="collapse">
@@ -186,7 +186,7 @@ Lot # {{ report.lot_number }}
                                     <strong>Part Number</strong>   
                                 </td>
                                 <td>
-                                    {{ report.part_number }} 
+                                    <a href="{{ report.part_number.get_absolute_url }}">{{ report.part_number }}</a> 
                                 </td>
                             </tr>
                             <tr>
@@ -437,7 +437,7 @@ Lot # {{ report.lot_number }}
 
     </div>
 
-    <div class="span4">
+    <div class="span5">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -483,7 +483,7 @@ Lot # {{ report.lot_number }}
     </div>
     
     <!-- Linked Reports -->
-    <div class="span4">
+    <div class="span5">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -501,6 +501,7 @@ Lot # {{ report.lot_number }}
                             <tr>
                                 <th>Lot #</th>
                                 <th>Part #</th>
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -512,6 +513,9 @@ Lot # {{ report.lot_number }}
                                 </td>
                                 <td>
                                     {{ r.part_number }}
+                                </td>
+                                <td>
+                                    {{ r.created_at }}
                                 </td>
                                 
                             </tr>

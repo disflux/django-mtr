@@ -30,7 +30,6 @@ def results(request):
                 return redirect('reports.views.report', lot_number=report.lot_number)
             except:
                 sqs = SearchQuerySet().auto_query(q)
-                suggestions = sqs.spelling_suggestion()
                 results = sqs.filter(content=AutoQuery(q))
 
         else:
