@@ -55,6 +55,14 @@ THUMBNAIL_QUALITY = 95
 THUMBNAIL_COLORSPACE = 'GRAY'
 THUMBNAIL_FORMAT = 'PNG'
 
+# Database Backup Settings
+EASYDUMP_MANIFESTS = {
+    'default': {
+        'database': 'default',
+        's3-bucket': 'tsa_database_dumps'
+    }
+}
+
 # Uncomment the following line to store static files on Amazon S3
 #STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
