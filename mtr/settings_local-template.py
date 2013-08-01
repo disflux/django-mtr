@@ -56,10 +56,13 @@ THUMBNAIL_COLORSPACE = 'GRAY'
 THUMBNAIL_FORMAT = 'PNG'
 
 # Database Backup Settings
+AWS_ACCESS_KEY = AWS_ACCESS_KEY_ID
+AWS_SECRET_KEY = AWS_SECRET_ACCESS_KEY
 EASYDUMP_MANIFESTS = {
     'default': {
         'database': 'default',
-        's3-bucket': 'tsa_database_dumps'
+        's3-bucket': 'tsa_database_dumps',
+        'reduced-redundancy': False
     }
 }
 
