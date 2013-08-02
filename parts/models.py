@@ -5,7 +5,7 @@ class Part(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    box_quantity = models.IntegerField(null=True)
+    box_quantity = models.IntegerField(null=True, blank=True)
 
     class Meta:
         ordering = ('part_number', )

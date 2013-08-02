@@ -9,11 +9,8 @@ from StringIO import StringIO
 
 from reports.models import Report
 
-def blank_inspection_report(request, lot_number):
+def generate_inspection_report(lot_number):
     report = Report.objects.get(lot_number=lot_number)
-
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="inspection_report.pdf"'
 
     outputPDF = PdfFileWriter()
 
@@ -52,5 +49,31 @@ def blank_inspection_report(request, lot_number):
     outputPDF.addPage(page)
     
     # finally, write "output" to a real file
+
+    return outputPDF
+    
+
+def blank_inspection_report(request, lot_number):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="inspection_report.pdf"'
+    outputPDF = generate_inspection_report(lot_number)
     outputPDF.write(response)
     return response
+
+def batch_inspection_report(request):
+    start = int(request.GET.get('start'))
+    end = int(request.GET.get('end'))
+    
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="inspection_report.pdf"'
+    outputPDF = PdfFileWriter()
+    
+    for cert in range(start, end):
+        report = Report.objects.get(lot_number=cert)
+        pdf = generate_inspection_report(report.lot_number)
+        outputPDF.addPage(pdf.getPage(0))
+    
+    outputPDF.write(response)
+    return response
+        
+        

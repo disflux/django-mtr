@@ -21,21 +21,23 @@ def report_label(request, lot_number):
     p.setPageSize((150*mm, 105*mm))
     # Draw Logo/Image
     p.setFont("Helvetica", 40)
-    p.drawString(10, 90*mm, settings.PDF_COMPANY_NAME)
+    p.drawCentredString(37*mm, 90*mm, settings.PDF_COMPANY_NAME)
     p.setFont("Helvetica", 10)
-    p.drawString(10, 85*mm, "%s . %s . %s" %
+    p.drawCentredString(37*mm, 85*mm, "%s . %s . %s" %
                         (
                             settings.PDF_COMPANY_STREET,
                             settings.PDF_COMPANY_LOCALITY,
                             settings.PDF_COMPANY_ZIPCODE
                         ))
-    p.drawString(25, 81*mm, "%s .  Fax: %s" % (settings.PDF_COMPANY_PHONE, settings.PDF_COMPANY_FAX)) 
+    p.drawCentredString(37*mm, 81*mm, "%s .  Fax: %s" % (settings.PDF_COMPANY_PHONE, settings.PDF_COMPANY_FAX))
+    p.setFont("Helvetica", 16)
+    p.drawCentredString(37*mm, 75*mm, str(settings.PDF_COMPANY_WEB)) 
     p.line(75*mm, 105*mm, 75*mm, 70*mm)
 
     # Draw Lot number
     p.setFont("Helvetica", 20)
-    p.drawCentredString(110*mm, 98*mm, "Lot # %s" % report.lot_number)
-    barcode = createBarcodeDrawing('Code128', value=report.lot_number,  barWidth=0.5*mm, barHeight=10*mm, humanReadable=True)
+    p.drawCentredString(110*mm, 96*mm, "Lot # %s" % report.lot_number)
+    barcode = createBarcodeDrawing('Code128', value=report.lot_number,  barWidth=0.5*mm, barHeight=10*mm, humanReadable=False)
     barcode.drawOn(p,84*mm, 83*mm)
     p.line(75*mm, 82*mm, 150*mm, 82*mm)
     p.setFont("Helvetica", 13)
