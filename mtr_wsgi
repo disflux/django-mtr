@@ -1,13 +1,18 @@
-SITE_DIR = '/usr/home/derek/django-mtr/django-mtr'
-import site
-site.addsitedir(SITE_DIR)
-import os
-import sys
+import os, sys, site
 
-sys.path.append(SITE_DIR)
-sys.path.append('/usr/local/bin')
+site.addsitedir('/home/tsaderek/.virtualenvs/django-mtr/lib/python2.7/site-packages')
+
 os.environ['DJANGO_SETTINGS_MODULE'] = 'mtr.settings'
 
-import django.core.handlers.wsgi
+activate_this = os.path.expanduser("~/.virtualenvs/django-mtr/bin/activate_this.py")
+execfile(activate_this, dict(__file__=activate_this))
 
-application = django.core.handlers.wsgi.WSGIHandler()
+# Calculate the path based on the location of the WSGI script
+project = '/home/derek/webapps/djangomtr/django-mtr/'
+workspace = os.path.dirname(project)
+sys.path.append(workspace)
+
+sys.path = ['/home/tsaderek/webapps/djangomtr/django-mtr', '/home/tsaderek/webapps/djangomtr'] + sys.path
+
+from django.core.handlers.wsgi import WSGIHandler
+application = WSGIHandler()

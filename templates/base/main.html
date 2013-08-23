@@ -108,6 +108,13 @@
                         <li><a href="{% url 'parts.views.new_part' %}"><i class="icon-plus-sign"></i> Create New Part</a></li>
                     </ul>
                 </li>
+                
+                <li class="submenu {% block tools_active %}{% endblock %}" ><a href="#"><i class="icon-wrench"></i> <span>Tools</span> <span class="label">2</span></a>
+                    <ul>
+                        <li><a href="{% url 'parts.views.parts_index' %}"><i class="icon-wrench"></i> Batch Inspection Report</a></li>
+                        
+                    </ul>
+                </li>
                 <li class="submenu {% block users_active %}{% endblock %}" >
                     <a href="#"><i class="icon-user"></i> <span>Users</span>  <span class="label">2</span></a>
                         <ul>

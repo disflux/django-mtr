@@ -6,6 +6,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from pyPdf import PdfFileReader, PdfFileWriter
 from StringIO import StringIO
+from django.db.models import Avg, Max, Min
 
 from reports.models import Report
 
@@ -61,14 +62,20 @@ def blank_inspection_report(request, lot_number):
     return response
 
 def batch_inspection_report(request):
-    start = int(request.GET.get('start'))
-    end = int(request.GET.get('end'))
+    if 'po' in request.GET:
+        po = int(request.GET.get('po'))
+        lots = Report.objects.filter(origin_po=po).aggregate(high_lot=Max('lot_number'), low_lot=Min('lot_number'))
+        start = int(lots['low_lot'])
+        end = int(lots['high_lot'])
+    else:    
+        start = int(request.GET.get('start'))
+        end = int(request.GET.get('end'))
     
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="inspection_report.pdf"'
     outputPDF = PdfFileWriter()
     
-    for cert in range(start, end):
+    for cert in range(start, end+1):
         report = Report.objects.get(lot_number=cert)
         pdf = generate_inspection_report(report.lot_number)
         outputPDF.addPage(pdf.getPage(0))
