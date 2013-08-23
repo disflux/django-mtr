@@ -56,9 +56,9 @@ def report_label(request, lot_number):
     # Draw Part Number
     p.setFont("Helvetica", 10)
     p.drawString(10, 50*mm, "Part #")
-    p.setFont("Helvetica", 25)
+    p.setFont("Helvetica", 20)
     p.drawString(10, 40*mm, report.part_number.part_number)
-    barcode = createBarcodeDrawing('Code128', value=report.part_number.part_number,  barWidth=0.5*mm, barHeight=9*mm, humanReadable=False)
+    barcode = createBarcodeDrawing('Code128', value=report.part_number.part_number,  barWidth=0.36*mm, barHeight=9*mm, humanReadable=False)
     barcode.drawOn(p, 0, 28*mm)
     p.line(0, 25*mm, 150*mm, 25*mm)
     
