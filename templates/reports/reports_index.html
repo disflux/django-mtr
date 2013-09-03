@@ -67,7 +67,7 @@
                                 {% endif %}
                             </td>
                             <td>
-                                {{ report.vendor.name }}
+                                <a href="{{ report.vendor.get_absolute_url }}">{{ report.vendor.name }}</a>
                             </td>
                             <td>
                                 <a href="{{ report.part_number.get_absolute_url }}">{{ report.part_number }}</a>

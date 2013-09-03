@@ -1,0 +1,121 @@
+{% extends "base/main.html" %}
+
+{% load thumbnail %}
+
+
+{% block title %}
+Vendor {{ vendor }}
+{% endblock %}
+
+
+{% block vendors_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+<a href="{% url 'vendors.views.vendor_index'">Vendors</a>
+<a href="#" class="current">{{ vendor }}</a>
+{% endblock %}
+
+{% block page_title %}{{ vendor }} Details{% endblock %}
+
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
+<link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
+<script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#lot-table').dataTable();
+} );
+</script>    
+{% endblock %}
+
+
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <h2>Vendor {{ vendor.name }} <small>{{ part.description }}</small></h2>     
+    </div>   
+</div>
+
+<div class="row-fluid">
+    <div class="span7">
+        <div class="widget-box collapsible">
+            <div class="widget-title">
+            <a href="#attributes" data-toggle="collapse">
+                <span class="icon">
+                    <i class="icon-list-alt"></i>
+                </span>
+                <h5>Lot #'s associated with this Vendor</h5>
+            </a>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Lot #</th>
+                            <th>Part #</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    {% for report in reports %}
+                        <tr>
+                            <td><strong><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</strong></td>
+                            <td><a href="{{ report.part_number.get_absolute_url }}">{{ report.part_number }}</a></td>
+                            <td>{{ report.created_at }}</td>
+                        </tr>
+
+                    {% endfor %}
+                </table>
+            </div>
+        </div>                                               
+    </div>
+
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-random"></i>
+                </span>
+                <h5>Details</h5>
+                <div class="buttons">
+                    <a class="btn btn-inverse btn-mini tip-left" title="Edit Vendor" href="" data-toggle="modal"><i class="icon-edit icon-white"></i></a>
+                </div>
+                </div>
+                <div class="widget-content">
+                    <address>
+                    <strong>{{ vendor.name }}</strong><br />
+                    {{ vendor.street }}<br />
+                    {{ vendor.city }},
+                    {{ vendor.state }}&nbsp;
+                    {{ vendor.zip }}
+                    </address>
+                </div>
+            </div>
+            <div id="xrefs-table">
+        </div>
+    </div>
+    
+
+        
+
+        
+    </div>
+    <div id="modals">
+        {% csrf_token %}
+        {% include 'modals/attach_document.html' %}
+        
+
+    </div>
+</div>
+
+{% endblock %}

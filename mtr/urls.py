@@ -13,6 +13,7 @@ urlpatterns = patterns('',
                        url(r'^orders/', include('orders.urls')),
                        url(r'^search/', include('search.urls')),
                        url(r'^parts/', include('parts.urls')),
+                       url(r'^vendors/', include('vendors.urls')),
 
                        url('^accounts/', include('django.contrib.auth.urls')),
 

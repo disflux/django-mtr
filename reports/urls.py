@@ -8,5 +8,6 @@ urlpatterns = patterns('',
     url(r'^ir/(?P<lot_number>\d+)$', 'pdfgen.blank_inspection_report.blank_inspection_report'),
     url(r'^ir/batch/$', 'pdfgen.blank_inspection_report.batch_inspection_report'),
 
+    url(r'^edit/(?P<lot_number>\d+)$', 'reports.views.edit_report'),
     url(r'^(?P<lot_number>\d+)$', 'reports.views.report'),
 )

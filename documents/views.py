@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
@@ -62,6 +63,17 @@ def attach_document(request):
         lot_number.save()
         messages.success(request, 'Document attachment successful.')
         return HttpResponseRedirect(reverse('documents.views.document', args=[str(doc.uuid)]))
+
+
+@staff_member_required        
+def remove_document(request):
+    report_document = request.GET.get('rd')
+    rd = ReportDocument.objects.get(id=report_document)
+    report = rd.report
+    rd.delete()
+    messages.success(request, 'Document removal successful.')
+    return HttpResponseRedirect(report.get_absolute_url())
+    
     
 
     

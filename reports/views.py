@@ -61,6 +61,20 @@ def new_report(request):
     return render_to_response('reports/new_report.html',
                               {'reportform': reportform,},
                               context_instance=RequestContext(request))
+
+def edit_report(request, lot_number):
+    report = Report.objects.get(lot_number=lot_number) 
+    if request.method == 'POST':
+        reportform = ReportForm(request.POST, instance=report)
+        if reportform.is_valid():
+            report = reportform.save()
+            
+            return HttpResponseRedirect(report.get_absolute_url())
+    else:
+        reportform = ReportForm(instance=report)
+    return render_to_response('reports/new_report.html',
+                              {'reportform': reportform,},
+                              context_instance=RequestContext(request))
                               
 
 

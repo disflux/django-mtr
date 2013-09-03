@@ -88,6 +88,7 @@ Lot # {{ report.lot_number }}
                     <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.batch_inspection_report' %}?po={{ report.origin_po }}" data-toggle="modal"><i class="icon-search"></i> Batch IR PO# {{ report.origin_po }}</a>
                     <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.blank_inspection_report' report.lot_number %}" data-toggle="modal"><i class="icon-search"></i> Inspection Report</a>
                     <a target="_blank" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-tag"></i> Print Inventory Tag</a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="Edit Part" href="{% url 'reports.views.edit_report' report.lot_number %}" data-toggle="modal"><i class="icon-edit icon-white"></i></a>
                 </div>
             </div>
             <div class="widget-content nopadding">
@@ -285,7 +286,9 @@ Lot # {{ report.lot_number }}
                                             <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.document.pk }}" data-toggle="modal" title="Email Document">
                                                 <i class="icon-envelope"></i> Email Document
                                             </a>
-                                            <a class="btn btn-mini tip-top" title="Remove Document"><i class="icon-trash"></i> Remove Document</a>
+                                            {% if user.is_staff %}
+                                            <a href="{% url 'documents.views.remove_document' %}?rd={{ d.pk }}" class="btn btn-mini tip-top" title="Remove Document"><i class="icon-trash"></i></a>
+                                            {% endif %}
                                         </td>
                                     </tr>
                                 </table>

@@ -1,0 +1,71 @@
+{% extends "base/main.html" %}
+{% load thumbnail %}
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+{% endblock %}
+
+{% block vendors_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="#" class="current">Vendors Index</a>
+{% endblock %}
+
+{% block page_title %}Browse Vendors{% endblock %}
+{% block title %}Vendors Index{% endblock %}
+
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Vendor Index</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Vendor</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Zip</th>
+                            <th>Country</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vendor in vendors %}
+                        <tr>
+                            
+                            <td>
+                                <strong><a href="{{ vendor.get_absolute_url }}">{{ vendor.name }}</a></strong>
+                            </td>
+                            <td>
+                                {{ vendor.street }}
+                            </td>
+                            <td>
+                                {{ vendor.city }}
+                            </td>
+                            <td>
+                                {{ vendor.state }}
+                            </td>
+                            <td>
+                                {{ vendor.zip }}
+                            </td>
+                            <td>
+                                {{ vendor.country }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
