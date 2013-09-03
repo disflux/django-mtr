@@ -25,3 +25,14 @@ def vendor(request, vendor_id):
                                'reports': reports,
                               },
                               context_instance=RequestContext(request))
+                              
+def purchase_order(request, purchase_order):
+    reports = Report.objects.filter(origin_po__icontains=purchase_order)
+    vendor = reports[0].vendor
+    return render_to_response('vendors/po.html',
+                              {
+                               'reports': reports,
+                               'po': purchase_order,
+                               'vendor': vendor,
+                              },
+                              context_instance=RequestContext(request))

@@ -71,12 +71,22 @@ Part # {{ part.part_number }}
                     <tr>
                         <th>Lot #</th>
                         <th>Vendor</th>
+                        <th>PO #</th>
                         <th>Date</th>
                     </tr>
                     {% for report in reports %}
                     <tr>
-                        <td><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</td>
-                        <td>{{ report.vendor.name }}</td>
+                        <td><strong><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</a></strong></td>
+                        <td><a href="{{ report.vendor.get_absolute_url }}">{{ report.vendor.name }}</a></td>
+                        <td>
+                            {% if report.origin_po %}
+                            {% with po_list=report.po_list %}
+                            {% include 'base/po_list.html' %}
+                            {% endwith %}
+                            {% else %}
+                            N/A
+                            {% endif %}
+                        </td>
                         <td>{{ report.created_at }}</td>
                     </tr>
                     {% endfor %}

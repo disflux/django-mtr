@@ -1,0 +1,4 @@
+{% load highlight %}
+{% for po in po_list %}
+<a href="{% url 'vendors.views.purchase_order' po %}">{% if query %}{% highlight po with query %}{% else %}{{ po }}{% endif %}</a>{% if not forloop.last %},{% endif %}
+{% endfor %}

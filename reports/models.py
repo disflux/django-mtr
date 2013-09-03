@@ -1,4 +1,4 @@
-import string
+import string, re
 import random
 from django.contrib.auth.models import User
 from django.db import models
@@ -47,6 +47,8 @@ class Report(models.Model):
         self.mfg_lot_number = self.mfg_lot_number.upper()
         self.vendor_lot_number = self.vendor_lot_number.upper()
         self.heat_number = self.heat_number.upper()
+        self.origin_po = re.sub(r'([^\s\w]|_)+', ' ', self.origin_po.strip())
+        self.origin_po = re.sub(' +', ' ', self.origin_po)
         super(Report, self).save(*args, **kwargs)
         if not self.lot_number:
             self.lot_number = self.id + 10000
@@ -71,6 +73,9 @@ class Report(models.Model):
         for report in self.linked_reports.all():
             documents.append(report.get_primary_document_url())
         return documents
+        
+    def po_list(self):
+        return self.origin_po.split(' ')    
              
         
 

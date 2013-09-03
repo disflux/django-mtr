@@ -25,17 +25,19 @@
         {% endif %}
     </td>
     <td>
-        {% highlight result.object.vendor.name with query %}
+        <a href="{{ result.object.vendor.get_absolute_url }}">{% highlight result.object.vendor.name with query %}</a>
     </td>
     <td>
-        {% highlight result.object.part_number with query %}
+        <a href="{{ result.object.part_number.get_absolute_url }}">{% highlight result.object.part_number with query %}</a>
     </td>
     <td>
         {% highlight result.object.specification with query %}
     </td>
     <td>
         {% if result.object.origin_po %}
-        {% highlight result.object.origin_po with query %}
+        {% with po_list=result.object.po_list %}
+        {% include 'base/po_list.html' %}
+        {% endwith %}
         {% else %}
         N/A
         {% endif %}

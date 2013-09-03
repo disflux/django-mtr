@@ -85,7 +85,9 @@ Lot # {{ report.lot_number }}
                     <h5>Details</h5>
                 </a>
                 <div class="buttons">
+                    {% if report.origin_po %}
                     <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.batch_inspection_report' %}?po={{ report.origin_po }}" data-toggle="modal"><i class="icon-search"></i> Batch IR PO# {{ report.origin_po }}</a>
+                    {% endif %}
                     <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.blank_inspection_report' report.lot_number %}" data-toggle="modal"><i class="icon-search"></i> Inspection Report</a>
                     <a target="_blank" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-tag"></i> Print Inventory Tag</a>
                     <a class="btn btn-inverse btn-mini tip-left" title="Edit Part" href="{% url 'reports.views.edit_report' report.lot_number %}" data-toggle="modal"><i class="icon-edit icon-white"></i></a>
@@ -145,7 +147,7 @@ Lot # {{ report.lot_number }}
                                 </td>
                                 <td>
                                     {% if report.vendor %}
-                                    {{ report.vendor.name }}
+                                    <a href="{{ report.vendor.get_absolute_url }}">{{ report.vendor.name }}</a>
                                     {% else %}
                                     N/A
                                     {% endif %} 
@@ -157,7 +159,9 @@ Lot # {{ report.lot_number }}
                                 </td>
                                 <td>
                                     {% if report.origin_po %}
-                                    {{ report.origin_po }}
+                                    {% with po_list=report.po_list %}
+                                    {% include 'base/po_list.html' %}
+                                    {% endwith %}
                                     {% else %}
                                     N/A
                                     {% endif %} 
@@ -341,7 +345,7 @@ Lot # {{ report.lot_number }}
                                 </td>
                                 <td>
                                     {% if lr.vendor %}
-                                    {{ lr.vendor.name }}
+                                    <a href="{{ lr.vendor.get_absolute_url }}">{{ lr.vendor.name }}</a>
                                     {% else %}
                                     N/A
                                     {% endif %} 
@@ -353,7 +357,7 @@ Lot # {{ report.lot_number }}
                                 </td>
                                 <td>
                                     {% if lr.origin_po %}
-                                    {{ lr.origin_po }}
+                                    <a href="#">{{ lr.origin_po }}</a>
                                     {% else %}
                                     N/A
                                     {% endif %} 
@@ -376,7 +380,7 @@ Lot # {{ report.lot_number }}
                                     <strong>Part Number</strong>   
                                 </td>
                                 <td>
-                                    {{ lr.part_number.part_number }} 
+                                    <a href="{{ lr.part_number.get_absolute_url }}">{{ lr.part_number.part_number }}</a> 
                                 </td>
                             </tr>
                             <tr>
@@ -418,7 +422,7 @@ Lot # {{ report.lot_number }}
                                     </tr>
                                     <tr>
                                         <td>Document UUID</td>
-                                        <td><a href="{{ d.get_absolute_url }}">{{ d.uuid }}</a> ({{ d.document.pk }})</td>
+                                        <td><a href="{{ d.get_absolute_url }}">{{ d.uuid }}</a> ({{ d.pk }})</td>
                                     </tr>
                                     <tr>
                                         <td>Document Date</td>

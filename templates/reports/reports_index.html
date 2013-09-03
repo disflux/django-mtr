@@ -74,7 +74,9 @@
                             </td>
                             <td>
                                 {% if report.origin_po %}
-                                {{ report.origin_po }}
+                                {% with po_list=report.po_list %}
+                                {% include 'base/po_list.html' %}
+                                {% endwith %}
                                 {% else %}
                                 N/A
                                 {% endif %}

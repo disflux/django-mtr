@@ -4,7 +4,7 @@
 
 
 {% block title %}
-Vendor {{ vendor }}
+PO #  {{ po }}
 {% endblock %}
 
 
@@ -12,10 +12,11 @@ Vendor {{ vendor }}
 
 {% block breadcrumb_links %}
 <a href="{% url 'vendors.views.vendor_index'">Vendors</a>
-<a href="#" class="current">{{ vendor }}</a>
+<a href="{{ vendor.get_absolute_url }}">{{ vendor.name }}</a>
+<a href="#" class="current">PO # {{ po }}</a>
 {% endblock %}
 
-{% block page_title %}{{ vendor }} Details{% endblock %}
+{% block page_title %}PO # {{ po }} Details{% endblock %}
 
 
 {% block head %}
@@ -43,7 +44,7 @@ $(document).ready(function() {
 {% block content %}
 <div class="row-fluid">
     <div class="span12">
-        <h2>Vendor {{ vendor.name }} <small>{{ part.description }}</small></h2>     
+        <h2>Purchase Order {{ po }} <small>{{ vendor }}</small></h2>     
     </div>   
 </div>
 
@@ -59,12 +60,11 @@ $(document).ready(function() {
             </a>
             </div>
             <div class="widget-content nopadding">
-                <table class="table table-bordered data-table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Lot #</th>
                             <th>Part #</th>
-                            <th>PO #</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -72,13 +72,9 @@ $(document).ready(function() {
                         <tr>
                             <td><strong><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</strong></td>
                             <td><a href="{{ report.part_number.get_absolute_url }}">{{ report.part_number }}</a></td>
-                            <td>{% if report.origin_po %}
-                            {% with po_list=report.po_list %}
-                            {% include 'base/po_list.html' %}
-                            {% endwith %}
-                            {% endif %}
                             <td>{{ report.created_at }}</td>
                         </tr>
+
                     {% endfor %}
                 </table>
             </div>
