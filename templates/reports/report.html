@@ -241,7 +241,7 @@ Lot # {{ report.lot_number }}
                 </span>
                 <h5>Attached Documents</h5>
                 <div class="buttons">
-                    <a class="btn btn-mini tip-top" title="Link a Report" href="#link_report-modal" data-toggle="modal"><i class="icon-random"></i> Link a Report</a>
+                    <a class="btn btn-mini tip-top" title="Generate MTR" href="{% url 'pdfgen.views.mtr_generator' %}?lot_number={{ report.lot_number }}" data-toggle="modal"><i class="icon-random"></i> Build an MTR</a>
                     <a class="btn btn-inverse btn-mini tip-top" title="Attach a New Document" href="#new_document-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Attach New Document</a>
                 </div>
             </div>
