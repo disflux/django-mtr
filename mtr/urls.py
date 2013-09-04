@@ -20,4 +20,5 @@ urlpatterns = patterns('',
                        # Admin related urls
                        (r'^admin/doc/', include('django.contrib.admindocs.urls')),
                        url(r'^admin/', include(admin.site.urls)),
+                       url(r'^djangojs/', include('djangojs.urls')),
                       )

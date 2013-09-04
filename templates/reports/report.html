@@ -1,7 +1,5 @@
 {% extends "base/main.html" %}
-
 {% load thumbnail %}
-
 
 {% block title %}
 Lot # {{ report.lot_number }}
@@ -18,8 +16,6 @@ Lot # {{ report.lot_number }}
 
 {% block page_title %}Lot # {{ report.lot_number }} Details{% endblock %}
 
-{% block html_itemscope %}itemscope itemtype="http://schema.org/Product"{% endblock %}
-
 {% block head %}
 <script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
@@ -33,23 +29,7 @@ Lot # {{ report.lot_number }}
 <script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
 <script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".lightbox").fancybox({
-            'transitionIn'  :   'elastic',
-            'transitionOut' :   'elastic',
-            'speedIn'       :   600, 
-            'speedOut'      :   200, 
-            'overlayShow'   :   false
-            });
-        {% if user.is_authenticated %}
-        $.fn.editable.defaults.mode = 'inline';
-        $('#description').editable({
-            params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
-        });
-        {% endif %}
-        });
-</script>
+
 <script type="text/javascript">
     $(document).on("click", ".open-email-doc-modal", function () {
             var id = $(this).data('id');
@@ -90,6 +70,7 @@ Lot # {{ report.lot_number }}
                     {% endif %}
                     <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.blank_inspection_report' report.lot_number %}" data-toggle="modal"><i class="icon-search"></i> Inspection Report</a>
                     <a target="_blank" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-tag"></i> Print Inventory Tag</a>
+                    <a class="btn btn-inverse btn-mini tip-left" title="Copy to new Lot" href="{% url 'reports.views.new_report' %}?copy={{ report.lot_number }}" data-toggle="modal"><i class="icon-retweet icon-white"></i></a>
                     <a class="btn btn-inverse btn-mini tip-left" title="Edit Part" href="{% url 'reports.views.edit_report' report.lot_number %}" data-toggle="modal"><i class="icon-edit icon-white"></i></a>
                 </div>
             </div>

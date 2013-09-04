@@ -48,7 +48,7 @@ $(document).ready(function() {
 </div>
 
 <div class="row-fluid">
-    <div class="span7">
+    <div class="span8">
         <div class="widget-box collapsible">
             <div class="widget-title">
             <a href="#attributes" data-toggle="collapse">
@@ -65,6 +65,7 @@ $(document).ready(function() {
                             <th>Lot #</th>
                             <th>Part #</th>
                             <th>PO #</th>
+                            <th>WO #</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -76,7 +77,16 @@ $(document).ready(function() {
                             {% with po_list=report.po_list %}
                             {% include 'base/po_list.html' %}
                             {% endwith %}
+                            {% else %}
+                            N/A
                             {% endif %}
+                            <td>
+                                {% if report.origin_wo %}
+                                {{ report.origin_wo }}
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
                             <td>{{ report.created_at }}</td>
                         </tr>
                     {% endfor %}
@@ -85,7 +95,7 @@ $(document).ready(function() {
         </div>                                               
     </div>
 
-    <div class="span5">
+    <div class="span4">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">

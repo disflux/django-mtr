@@ -2,7 +2,21 @@
 
 {% block head %}
 <script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
-<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+<!--<script type="text/javascript">
+$( document ).ready(function() {
+    
+    $('#report-table').dataTable({
+        "bJQueryUI": true,
+        "bPaginate": true,
+        "sPaginationType": "full_numbers",
+        "bProcessing": true,
+        "bServerSide": true,
+        "sAjaxSource": '{% url 'dt-reports' %}',
+        "sDom": '<"H"f>rt<"F"lp>',
+        "iDisplayLength": 50
+    });
+});
+</script>-->
 {% endblock %}
 
 {% block reports_active %}active open{% endblock %}
@@ -25,7 +39,7 @@
                 <h5>Reports Listing</h5>
             </div>
             <div class="widget-content nopadding">
-                <table class="table table-bordered data-table">
+                <table class="table table-bordered data-table" id="report-table">
                     <thead>
                         <tr>
                             <th>Lot #</th>
@@ -40,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for report in reports %}
+                        {% for report in reports.object_list %}
                         <tr>
                             <td>
                                 <strong><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</a></strong>
@@ -93,6 +107,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                {{ reports.render }}
             </div>
         </div>
     </div>

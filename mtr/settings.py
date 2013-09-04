@@ -1,7 +1,7 @@
 import os
 DIRNAME = os.path.dirname(__file__)
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = True
 
@@ -134,6 +134,8 @@ INSTALLED_APPS = (
     'haystack',
     'csvimport',
     'easydump',
+    'eztables',
+    'djangojs',
     
     # Local Apps
     'dashboard',
