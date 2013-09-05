@@ -1,11 +1,16 @@
 from django.db import models
 
+from audit_log.models.fields import LastUserField
+from audit_log.models.managers import AuditLog
+
 class Part(models.Model):
     part_number = models.CharField(max_length=128, unique=True)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     box_quantity = models.IntegerField(null=True, blank=True)
+    
+    audit_log = AuditLog()
 
     class Meta:
         ordering = ('part_number', )

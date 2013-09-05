@@ -57,12 +57,16 @@
 
         <div class="search" id="search">
             <form method="get" action="/search/">
-                <input autocomplete="off" name="q" type="text" placeholder="Search here..." value="{{ searchterm }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+                <input autocomplete="off" name="q" type="text" placeholder="Search here..." value="{{ query }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
             </form>
         </div>
         
         <div id="user-nav" class="navbar navbar-inverse noprint">
-            
+            <ul class="btn-group">
+                <li class="btn btn-inverse" ><a style="color:white" title="" href="#"><i class="icon-user"></i> <span class="text">{{ user.username }}</span></a></li>
+                <li class="btn btn-inverse"><a style="color:white" title="" href="#"><i class="icon-cog"></i> <span class="text">Settings</span></a></li>
+                <li class="btn btn-inverse"><a style="color:white" title="" href="{% url 'django.contrib.auth.views.logout' %}?next=/"><i class="icon-share-alt"></i> <span class="text">Logout</span></a></li>
+            </ul>    
         </div>
 
         {% block no_sidebar %}

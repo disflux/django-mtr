@@ -1,5 +1,6 @@
 {% extends "base/main.html" %}
 {% load thumbnail %}
+{% load humanize %}
 
 {% block title %}
 Lot # {{ report.lot_number }}
@@ -65,13 +66,13 @@ Lot # {{ report.lot_number }}
                     <h5>Details</h5>
                 </a>
                 <div class="buttons">
+                    <a class="btn btn-inverse btn-mini tip-top" title="Copy to new Lot" href="{% url 'reports.views.new_report' %}?copy={{ report.lot_number }}" data-toggle="modal"><i class="icon-retweet icon-white"></i></a>
+                    <a class="btn btn-inverse btn-mini tip-top" title="Edit Part" href="{% url 'reports.views.edit_report' report.lot_number %}" data-toggle="modal"><i class="icon-edit icon-white"></i></a>
                     {% if report.origin_po %}
-                    <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.batch_inspection_report' %}?po={{ report.origin_po }}" data-toggle="modal"><i class="icon-search"></i> Batch IR PO# {{ report.origin_po }}</a>
+                    <a target="_blank" class="btn btn-mini tip-top" title="Batch Inspection Report" href="{% url 'pdfgen.blank_inspection_report.batch_inspection_report' %}?po={{ report.origin_po }}" data-toggle="modal"><i class="icon-zoom-in"></i> </a>
                     {% endif %}
-                    <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.blank_inspection_report' report.lot_number %}" data-toggle="modal"><i class="icon-search"></i> Inspection Report</a>
-                    <a target="_blank" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-tag"></i> Print Inventory Tag</a>
-                    <a class="btn btn-inverse btn-mini tip-left" title="Copy to new Lot" href="{% url 'reports.views.new_report' %}?copy={{ report.lot_number }}" data-toggle="modal"><i class="icon-retweet icon-white"></i></a>
-                    <a class="btn btn-inverse btn-mini tip-left" title="Edit Part" href="{% url 'reports.views.edit_report' report.lot_number %}" data-toggle="modal"><i class="icon-edit icon-white"></i></a>
+                    <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.blank_inspection_report' report.lot_number %}" data-toggle="modal"><i class="icon-search"></i> </a>
+                    <a target="_blank" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-barcode"></i> </a>
                 </div>
             </div>
             <div class="widget-content nopadding">
@@ -222,8 +223,8 @@ Lot # {{ report.lot_number }}
                 </span>
                 <h5>Attached Documents</h5>
                 <div class="buttons">
-                    <a class="btn btn-mini tip-top" title="Generate MTR" href="{% url 'pdfgen.views.mtr_generator' %}?lot_number={{ report.lot_number }}" data-toggle="modal"><i class="icon-random"></i> Build an MTR</a>
-                    <a class="btn btn-inverse btn-mini tip-top" title="Attach a New Document" href="#new_document-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> Attach New Document</a>
+                    <a class="btn btn-mini tip-top" title="Generate MTR" href="{% url 'pdfgen.views.mtr_generator' %}?lot_number={{ report.lot_number }}" data-toggle="modal"><i class="icon-wrench"></i> </a>
+                    <a class="btn btn-inverse btn-mini tip-top" title="Attach a New Document" href="#new_document-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> </a>
                 </div>
             </div>
             <div class="widget-content nopadding">
@@ -267,7 +268,7 @@ Lot # {{ report.lot_number }}
                                     </tr>
                                     <tr>
                                         <td colspan="2" style="text-align:center;">
-                                            <a class="btn btn-mini tip-top" title="Download/Print Document" href="{{ d.document.file.url }}" ><i class="icon-print"></i> Print Document</a>
+                                            <a class="btn btn-mini tip-top" target="_blank" href="{% url 'pdfgen.doc_overlay.doc_overlay' d.document.uuid report.lot_number %}"><i class="icon-print"></i> Print Document</a>
                                             <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.document.pk }}" data-toggle="modal" title="Email Document">
                                                 <i class="icon-envelope"></i> Email Document
                                             </a>
@@ -433,9 +434,6 @@ Lot # {{ report.lot_number }}
                     <i class="icon-random"></i>
                 </span>
                 <h5>Linked Orders</h5>
-                <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-left" title="Link Order" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
-                </div>
             </div>
             <div class="widget-content nopadding">
                 <div id="xrefs-table">
@@ -479,9 +477,6 @@ Lot # {{ report.lot_number }}
                     <i class="icon-random"></i>
                 </span>
                 <h5>Reports that link to this report</h5>
-                <div class="buttons">
-                    <a class="btn btn-inverse btn-mini tip-left" title="Link Order" href="#add-xref" data-toggle="modal"><i class="icon-plus-sign icon-white"></i></a>
-                </div>
             </div>
             <div class="widget-content nopadding">
                 <div id="xrefs-table">
@@ -512,6 +507,29 @@ Lot # {{ report.lot_number }}
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>    
+    </div>
+    
+    <!-- Audit Log -->
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-random"></i>
+                </span>
+                <h5>Audit Log</h5>
+            </div>
+            <div class="widget-content">
+                <ul class="activity-list">
+                    {% for l in audit_log %}
+                    <li><a href="#">
+                        <i class="icon-user"></i>
+                        <strong>{{ l.action_user }}</strong> {{ l.get_action_type_display|lower }} {{ l.object_state }} {{ l.object }}<span>{{ l.action_date|naturaltime }}</span>
+
+                    </a></li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>    
     </div>

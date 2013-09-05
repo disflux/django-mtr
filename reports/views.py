@@ -50,6 +50,7 @@ def reports_index(request):
 
 def report(request, lot_number):
     report = Report.objects.get(lot_number=lot_number)
+    audit_log = report.audit_log.all()
     orders = OrderLineItem.objects.filter(report=report)
     newdoc = NewDocumentForm(None)
 
@@ -71,6 +72,7 @@ def report(request, lot_number):
                                   'report': report,
                                   'new_document_form': newdoc,
                                   'orders': orders,
+                                  'audit_log': audit_log,
                               },
                               context_instance=RequestContext(request))
 
@@ -80,7 +82,7 @@ def new_report(request):
     if request.method == 'POST':
         reportform = ReportForm(request.POST)
         if reportform.is_valid():
-            report = reportform.save()
+            report = reportform.save(commit=False)
             report.created_by = request.user
             report.save()
             return HttpResponseRedirect(report.get_absolute_url())

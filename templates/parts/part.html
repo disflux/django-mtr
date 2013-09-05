@@ -1,7 +1,7 @@
 {% extends "base/main.html" %}
 
 {% load thumbnail %}
-
+{% load humanize %}
 
 {% block title %}
 Part # {{ part.part_number }}
@@ -11,8 +11,8 @@ Part # {{ part.part_number }}
 {% block parts_active %}active open{% endblock %}
 
 {% block breadcrumb_links %}
-<a href="{% url 'parts.views.parts_index'">Parts</a>
-<a href="#" class="current">{{ part }} : {{ part.description }}</a>
+<a href="{% url 'parts_index' %}">Parts</a>
+<a class="current">{{ part }} : {{ part.description }}</a>
 {% endblock %}
 
 {% block page_title %}Part # {{ part.part_number }} Details{% endblock %}
@@ -133,6 +133,30 @@ Part # {{ part.part_number }}
             </div>
             <div id="xrefs-table">
         </div>
+    </div>
+    
+        
+    <!-- Audit Log -->
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-random"></i>
+                </span>
+                <h5>Audit Log</h5>
+            </div>
+            <div class="widget-content">
+                <ul class="activity-list">
+                    {% for l in audit_log %}
+                    <li><a href="#">
+                        <i class="icon-user"></i>
+                        <strong>{{ l.action_user }}</strong> {{ l.get_action_type_display|lower }} {{ l.object_state }} {{ l.object }}<span>{{ l.action_date|naturaltime }}</span>
+
+                    </a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>    
     </div>
     
 

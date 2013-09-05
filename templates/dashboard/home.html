@@ -1,5 +1,5 @@
 {% extends "base/main.html" %}
-{% load thumbnail %}
+{% load humanize %}
 
 {% block head %}
 <script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
@@ -146,19 +146,20 @@
 	   <div class="widget-box">
             <div class="widget-title">
                 <span class="icon"><i class="icon-repeat"></i></span>
-                <h5>Recent Activity</h5>
+                <h5>Recent Report Activity</h5>
             </div>
             <div class="widget-content nopadding">
+                
                 <ul class="activity-list">
-                    <li><a href="#">
+                    {% for l in log %}
+                    {% if l.lot_number %}
+                    <li><a href="{% url 'reports.views.report' l.lot_number %}">
                         <i class="icon-user"></i>
-                        <strong>Admin</strong> added <strong>1 report</strong> <span>2 hours ago</span>
+                        <strong>{{ l.action_user }}</strong> {{ l.get_action_type_display|lower }} {{ l.object_state }} <span>{{ l.action_date|naturaltime }}</span>
+
                     </a></li>
-                    <li><a href="#">
-                        <i class="icon-file"></i>
-                        <strong>Derek</strong> uploaded a <strong>document</strong> <span>Yesterday</span>
-                    </a></li>
-                    
+                    {% endif %}
+                    {% endfor %}
                 </ul>
             </div>
         </div>

@@ -12,6 +12,7 @@ def home(request):
     reports = Report.objects.all().count()
     orders = Order.objects.all().count()
     parts = Part.objects.all().count()
+    log = Report.audit_log.all()[:8]
 
     return render_to_response('dashboard/home.html', 
                               {
@@ -19,5 +20,6 @@ def home(request):
                                   'report_count': reports,
                                   'order_count': orders,
                                   'part_count': parts,
+                                  'log': log,
                               },
                               context_instance=RequestContext(request))

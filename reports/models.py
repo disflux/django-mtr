@@ -7,6 +7,9 @@ from vendors.models import Vendor
 from specifications.models import Specification
 from parts.models import Part
 
+from audit_log.models.fields import LastUserField
+from audit_log.models.managers import AuditLog
+
 
 class Report(models.Model):
     """
@@ -34,6 +37,7 @@ class Report(models.Model):
                                             related_name='report_links',
                                             null=True, blank=True)
     
+    audit_log = AuditLog()
     class Meta:
         ordering = ('lot_number', )
         
@@ -44,9 +48,9 @@ class Report(models.Model):
         """
         Sanitizes user inputted data to upper() and assigns a lot number
         """
-        self.mfg_lot_number = self.mfg_lot_number.upper()
-        self.vendor_lot_number = self.vendor_lot_number.upper()
-        self.heat_number = self.heat_number.upper()
+        self.mfg_lot_number = self.mfg_lot_number.strip().upper()
+        self.vendor_lot_number = self.vendor_lot_number.strip().upper()
+        self.heat_number = self.heat_number.strip().upper()
         self.origin_po = re.sub(r'([^\s\w]|_)+', ' ', self.origin_po.strip())
         self.origin_po = re.sub(' +', ' ', self.origin_po)
         super(Report, self).save(*args, **kwargs)
@@ -100,6 +104,8 @@ class ReportDocument(models.Model):
     attachment_date = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True)
     internal_cert = models.CharField(max_length=4, choices=CERT_TYPES)
+    
+    audit_log = AuditLog()
     
     def __unicode__(self):
         return "Report # %s : Document UUID: %s" % (self.report.lot_number, self.document.uuid)

@@ -5,6 +5,7 @@ argparse==1.2.1
 boto==2.9.5
 chardet==2.1.1
 distribute==0.6.34
+django-audit-log==0.2.3
 django-contact-form==0.3
 django-csvimport==0.9
 django-currencies==0.3.1
