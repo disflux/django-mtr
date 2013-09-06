@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
+from actstream import action
 
 from documents.models import Document
 from documents.forms import AttachDocumentForm
@@ -62,6 +63,7 @@ def attach_document(request):
         rd.save()
         lot_number.save()
         messages.success(request, 'Document attachment successful.')
+        action.send(request.user, verb="attached document", action_object=doc, target=lot_number)
         return HttpResponseRedirect(reverse('documents.views.document', args=[str(doc.uuid)]))
 
 

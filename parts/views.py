@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
+from actstream import action
 
 from parts.models import Part
 from parts.forms import NewPartForm
@@ -33,7 +34,7 @@ def new_part(request):
             part = partform.save()
             part.created_by = request.user
             part.save()
-            
+            action.send(request.user, verb="created part", target=part)
             return HttpResponseRedirect(part.get_absolute_url())
     else:
         partform = NewPartForm()
@@ -49,7 +50,7 @@ def edit_part(request, part_number):
             part = partform.save()
             part.created_by = request.user
             part.save()
-            
+            action.send(request.user, verb="edited part", target=part)
             return HttpResponseRedirect(part.get_absolute_url())
     else:
         partform = NewPartForm(instance=p)

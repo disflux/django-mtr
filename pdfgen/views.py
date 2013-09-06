@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, Htt
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from StringIO import StringIO
+from actstream import action
 
 from documents.models import Document, DocumentType
 from pdfgen.forms import MTRForm
