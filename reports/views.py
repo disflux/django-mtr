@@ -5,7 +5,6 @@ from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, Htt
 from django.template import RequestContext
 from django.contrib import messages
 from django.core.files.storage import default_storage
-from eztables.views import DatatablesView
 from actstream import action
 from actstream.models import target_stream
 
@@ -98,7 +97,7 @@ def edit_report(request, lot_number):
         reportform = ReportForm(request.POST, instance=report)
         if reportform.is_valid():
             report = reportform.save()
-            action.send(request.user, 'edited lot number', target=report)
+            action.send(request.user, verb='edited lot number', target=report)
             return HttpResponseRedirect(report.get_absolute_url())
     else:
         reportform = ReportForm(instance=report)

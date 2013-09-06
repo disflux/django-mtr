@@ -4,5 +4,5 @@ urlpatterns = patterns('',
     #url(r'^$', include('haystack.urls')),
     #url(r'^advanced/$', 'search.views.index'),
     #url(r'^autocomplete/$', 'search.autocomplete.autocomplete'),
-    url(r'^$', 'search.views.results'),
+    url(r'^$', 'search.views.results', name='search'),
 )

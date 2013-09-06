@@ -1,14 +1,12 @@
+import time
 from django.shortcuts import render_to_response, redirect, get_object_or_404
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from haystack.query import SearchQuerySet
 from haystack.inputs import AutoQuery
+from pure_pagination import Paginator, PageNotAnInteger, EmptyPage
 
 from reports.models import Report
 from search.forms import SearchForm
-
-import re
 
 def index(request):
     return render_to_response('search/search.html',
@@ -16,6 +14,7 @@ def index(request):
                               context_instance=RequestContext(request))
 
 def results(request):
+    start = time.time()
     searchform = SearchForm(request.GET)
     
     if not "q" in request.GET:
@@ -34,11 +33,23 @@ def results(request):
 
         else:
             results = []
+        
+        try:                                                                    
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        p = Paginator(sqs, 20, request=request)
+        results_list = p.page(page)
+
+        end = time.time()
+        
+        runtime = end-start
 
     return render_to_response('search/search.html',
                               { 
-                                  'results_list': results, 
+                                  'results_list': results_list, 
                                   'query': q,
-                                 # 'facets': results.facet_counts(),
+                                  'runtime': runtime,
                               },
                               context_instance=RequestContext(request))

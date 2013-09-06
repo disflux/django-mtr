@@ -32,6 +32,7 @@
                         <tr>
                             <th>Part #</th>
                             <th>Description</th>
+                            <th>Created</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +44,9 @@
                             </td>
                             <td>
                                 {{ part.description }}
+                            </td>
+                            <td>
+                                {{ part.created_at }}
                             </td>
                         </tr>
                         {% endfor %}

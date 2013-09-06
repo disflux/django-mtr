@@ -2,21 +2,7 @@
 
 {% block head %}
 <script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
-<!--<script type="text/javascript">
-$( document ).ready(function() {
-    
-    $('#report-table').dataTable({
-        "bJQueryUI": true,
-        "bPaginate": true,
-        "sPaginationType": "full_numbers",
-        "bProcessing": true,
-        "bServerSide": true,
-        "sAjaxSource": '{% url 'dt-reports' %}',
-        "sDom": '<"H"f>rt<"F"lp>',
-        "iDisplayLength": 50
-    });
-});
-</script>-->
+
 {% endblock %}
 
 {% block reports_active %}active open{% endblock %}

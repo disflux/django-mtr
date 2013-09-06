@@ -34,10 +34,10 @@ def doc_overlay(request, document_uuid, lot_number):
     # create a new PDF with Reportlab
     p = canvas.Canvas(packet, pagesize=letter)
     p.setFillColorRGB(255,255,255)
-    p.rect(0*mm, 265*mm, 220*mm, 18*mm, fill=1, stroke=0)
+    p.rect(0*mm, 276*mm, 220*mm, 3*mm, fill=1, stroke=0)
     p.setFillColorRGB(0,0,0)
     p.setFont("Helvetica", 7)
-    p.drawCentredString(width/2.0,height-12.0, "%s LOT # %s / %s (doc# %s)" % 
+    p.drawCentredString(width/2.0,height-9.0, "%s LOT # %s / %s (doc# %s)" % 
                                 (settings.PDF_COMPANY_SHORT_NAME,
                                 report.lot_number, str(report.created_at.date()), document.uuid))
 

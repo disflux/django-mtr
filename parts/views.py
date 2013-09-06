@@ -20,11 +20,9 @@ def parts_index(request):
 def part(request, part_number):
     part = Part.objects.get(part_number=part_number)
     reports = Report.objects.filter(part_number=part)
-    audit_log = part.audit_log.all()
     return render_to_response('parts/part.html',
                               {'part': part,
                                'reports': reports,
-                               'audit_log': audit_log,
                               },
                               context_instance=RequestContext(request))
                               

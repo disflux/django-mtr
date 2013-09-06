@@ -134,10 +134,7 @@ INSTALLED_APPS = (
     'storages',
     'sorl.thumbnail',
     'haystack',
-    'csvimport',
     'easydump',
-    'eztables',
-    'djangojs',
     
     
     # Local Apps
