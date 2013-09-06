@@ -1,0 +1,30 @@
+<div class="modal hide" id="fax_document-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Email Document</h3>
+    </div>
+    <form method="post" action="{% url 'documents.views.fax_document' %}">
+        <div class="modal-body">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label">Send To</label>
+                <div class="controls">
+                    <input type="text" name="recipient" placeholder="recipient email" />
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" id="fax-doc-id-hidden" name="doc-id" value="" />
+            <input type="hidden" id="report-id-hidden" name="report-id" value="{{ report.pk }}" />
+            <button id="send-email" data-loading-text="Sending..." class="btn"><i class="icon-envelope"></i> Email Document</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+    $('#send-email').click(function() {
+        $('#send-email').button('loading');
+    });
+</script>
+

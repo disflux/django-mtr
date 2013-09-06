@@ -52,6 +52,21 @@ def email_document(request):
     messages.success(request, "Email sent to %s" % recipient)
     return HttpResponseRedirect(reverse('reports.views.report', args=[str(report.lot_number)]))
     
+def fax_document(request):
+    from interfax import client
+    import urllib
+    doc_id = request.POST.get('doc-id', None)
+    report_id = request.POST.get('report-id', None)
+    recipient = request.POST.get('recipient', None)
+
+    doc = Document.objects.get(pk=doc_id)
+    report = Report.objects.get(id=report_id)
+    urllib.urlretrieve(doc.file.url, "fax.pdf")
+    c = client.InterFaxClient('tsaderek', 'jbn12177')
+    result = c.sendFax('+14028953297', 'fax.pdf')
+    messages.success(request, "Fax sent")
+    return HttpResponseRedirect(reverse('reports.views.report', args=[str(report.lot_number)]))
+    
 def attach_document(request):
     doc_id = request.POST.get('document_id', None)
     

@@ -38,6 +38,13 @@ Lot # {{ report.lot_number }}
      $("#doc-id-hidden").val( id );
      $('#email_document-modal').modal('show');
      console.log('Show Modal');
+     });
+     
+     $(document).on("click", ".open-fax-doc-modal", function () {
+            var id = $(this).data('id');
+     $("#fax-doc-id-hidden").val( id );
+     $('#fax_document-modal').modal('show');
+     console.log('Show Modal');
 });
 </script>
 
@@ -272,6 +279,9 @@ Lot # {{ report.lot_number }}
                                             <a class="btn btn-mini tip-top" target="_blank" href="{% url 'pdfgen.doc_overlay.doc_overlay' d.document.uuid report.lot_number %}"><i class="icon-print"></i> Print Document</a>
                                             <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.document.pk }}" data-toggle="modal" title="Email Document">
                                                 <i class="icon-envelope"></i> Email Document
+                                            </a>
+                                            <a class="open-fax-doc-modal btn btn-mini tip-top" data-id="{{ d.document.pk }}" data-toggle="modal" title="Fax Document">
+                                                <i class="icon-envelope"></i> Fax Document {{ d.document.pk }}
                                             </a>
                                             {% if user.is_staff %}
                                             <a href="{% url 'documents.views.remove_document' %}?rd={{ d.pk }}" class="btn btn-mini tip-top" title="Remove Document"><i class="icon-trash"></i></a>
@@ -537,6 +547,7 @@ Lot # {{ report.lot_number }}
     <div id="modals">
         {% csrf_token %}
         {% include 'modals/email_document.html' %}
+        {% include 'modals/fax_document.html' %}
         {% include 'modals/new_document.html' %}
         
 
