@@ -1,9 +1,9 @@
 from django.conf.urls.defaults import patterns, include, url
-from reports.views import ReportsDatatablesView
+
 
 urlpatterns = patterns('',
     url(r'^$', 'reports.views.reports_index'),
-    url(r'^table/$', ReportsDatatablesView.as_view(), name='dt-reports'),
+
     
     url(r'^new_report/$', 'reports.views.new_report'),
     url(r'^new_mtr/$', 'pdfgen.views.mtr_generator'),

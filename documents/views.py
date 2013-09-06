@@ -72,6 +72,7 @@ def remove_document(request):
     report = rd.report
     rd.delete()
     messages.success(request, 'Document removal successful.')
+    action.send(request.user, verb="viewed document", action_object=rd, target=rd.report)
     return HttpResponseRedirect(report.get_absolute_url())
     
     

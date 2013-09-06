@@ -37,7 +37,7 @@ class Report(models.Model):
                                             related_name='report_links',
                                             null=True, blank=True)
     
-    audit_log = AuditLog()
+    #audit_log = AuditLog()
     class Meta:
         ordering = ('lot_number', )
         
@@ -105,9 +105,9 @@ class ReportDocument(models.Model):
     created_by = models.ForeignKey(User, null=True)
     internal_cert = models.CharField(max_length=4, choices=CERT_TYPES)
     
-    audit_log = AuditLog()
+    #audit_log = AuditLog()
     
     def __unicode__(self):
-        return "Report # %s : Document UUID: %s" % (self.report.lot_number, self.document.uuid)
+        return self.document.type
 
     

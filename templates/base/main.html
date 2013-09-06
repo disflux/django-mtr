@@ -57,7 +57,7 @@
 
         <div class="search" id="search">
             <form method="get" action="/search/">
-                <input autocomplete="off" name="q" type="text" placeholder="Search here..." value="{{ query }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
+                <input autocomplete="off" name="q" type="text" placeholder="{% if query %}{{ query }}{% else %}Search here...{% endif %}" value="{{ query }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
             </form>
         </div>
         

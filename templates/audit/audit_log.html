@@ -1,0 +1,19 @@
+{% load humanize %}
+<div class="widget-box">
+    <div class="widget-title">
+        <span class="icon"><i class="icon-repeat"></i></span>
+        <h5>Recent Report Activity</h5>
+    </div>
+    <div class="widget-content nopadding">       
+        <ul class="activity-list">
+            {% for l in log %}
+            {% if l.lot_number %}
+            <li><a href="{% url 'reports.views.report' l.lot_number %}">
+                <i class="icon-user"></i>
+                <strong>{{ l.action_user }}</strong> {{ l.get_action_type_display|lower }} Lot # <strong>{{ l.lot_number }}</strong> - {{ l.part_number }} <span>{{ l.action_date|naturaltime }}</span>
+            </a></li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

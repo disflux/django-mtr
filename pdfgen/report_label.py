@@ -8,6 +8,8 @@ from django.conf import settings
 from io import BytesIO
 from reportlab.pdfgen import canvas
 
+from actstream import action
+
 from reports.models import Report
 
 def report_label(request, lot_number):
@@ -94,4 +96,5 @@ def report_label(request, lot_number):
     pdf = buffer.getvalue()
     buffer.close()
     response.write(pdf)
+    action.send(request.user, verb="generated a label", target=report)
     return response

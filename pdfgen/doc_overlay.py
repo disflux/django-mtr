@@ -7,6 +7,7 @@ from reportlab.lib.pagesizes import letter
 from pyPdf import PdfFileReader, PdfFileWriter
 from StringIO import StringIO
 from urllib2 import Request, urlopen
+from actstream import action
 
 from reports.models import Report
 from documents.models import Document
@@ -56,4 +57,5 @@ def doc_overlay(request, document_uuid, lot_number):
     
     # finally, write "output" to a real file
     outputPDF.write(response)
+    action.send(request.user, verb="viewed document", action_object=document, target=report)
     return response

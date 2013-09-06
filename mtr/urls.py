@@ -16,6 +16,7 @@ urlpatterns = patterns('',
                        url(r'^vendors/', include('vendors.urls')),
 
                        url('^accounts/', include('django.contrib.auth.urls')),
+                       url('^activity/', include('actstream.urls')),
 
                        # Admin related urls
                        (r'^admin/doc/', include('django.contrib.admindocs.urls')),

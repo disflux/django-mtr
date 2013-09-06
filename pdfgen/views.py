@@ -31,7 +31,8 @@ def mtr_generator(request):
             rd = ReportDocument(report=report, document=doc, primary_document=True, created_by=request.user, internal_cert=True)
             rd.save()
             report.save()
-            messages.success(request, 'Document upload successful.') 
+            messages.success(request, 'Document upload successful.')
+            action.send(request.user, verb="generated an MTR ", action_object=rd, target=report) 
             return HttpResponseRedirect(reverse('reports.views.report',
                                                     args=[report.lot_number]))
     

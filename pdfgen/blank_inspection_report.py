@@ -7,10 +7,11 @@ from reportlab.lib.pagesizes import letter
 from pyPdf import PdfFileReader, PdfFileWriter
 from StringIO import StringIO
 from django.db.models import Avg, Max, Min
+from actstream import action
 
 from reports.models import Report
 
-def generate_inspection_report(lot_number):
+def generate_inspection_report(request, lot_number):
     report = Report.objects.get(lot_number=lot_number)
 
     outputPDF = PdfFileWriter()
@@ -50,14 +51,15 @@ def generate_inspection_report(lot_number):
     outputPDF.addPage(page)
     
     # finally, write "output" to a real file
-
+    action.send(request.user, verb="generated an inspection report", target=report)
     return outputPDF
     
 
 def blank_inspection_report(request, lot_number):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="inspection_report.pdf"'
-    outputPDF = generate_inspection_report(lot_number)
+    report = Report.objects.get(lot_number=lot_number)
+    outputPDF = generate_inspection_report(request, lot_number)
     outputPDF.write(response)
     return response
 
@@ -77,7 +79,7 @@ def batch_inspection_report(request):
     
     for cert in range(start, end+1):
         report = Report.objects.get(lot_number=cert)
-        pdf = generate_inspection_report(report.lot_number)
+        pdf = generate_inspection_report(request, report.lot_number)
         outputPDF.addPage(pdf.getPage(0))
     
     outputPDF.write(response)

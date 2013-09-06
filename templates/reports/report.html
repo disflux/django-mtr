@@ -1,6 +1,7 @@
 {% extends "base/main.html" %}
 {% load thumbnail %}
 {% load humanize %}
+{% load activity_tags %}
 
 {% block title %}
 Lot # {{ report.lot_number }}
@@ -523,11 +524,11 @@ Lot # {{ report.lot_number }}
             <div class="widget-content">
                 <ul class="activity-list">
                     {% for l in audit_log %}
-                    <li><a href="#">
+                    <li><a>
                         <i class="icon-user"></i>
-                        <strong>{{ l.action_user }}</strong> {{ l.get_action_type_display|lower }} {{ l.object_state }} {{ l.object }}<span>{{ l.action_date|naturaltime }}</span>
-
-                    </a></li>
+                        <strong>{{ l.actor }}</strong> {{ l.verb }} {% if l.action_object %}<strong>{{ l.action_object }}</strong>{% endif %} <span>{{ l.timestamp|naturaltime }}</span>
+                        </a>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>

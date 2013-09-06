@@ -129,40 +129,42 @@
 			</div>
 			
 			<div class="widget-content nopadding updates">
-				<div class="new-update clearfix">
-					<i class="icon-ok-sign"></i>
+				{% for n in news %}
+                <div class="new-update clearfix">
+					<i class="icon-info-sign"></i>
 					<div class="update-done">										
-						<a title="" href="#"><strong>New Dashboard</strong></a>
-						<span>The dashboard has been implemented and new features are being added</span>
+						<a title="" href="#"><strong>{{ n.title }}</strong></a>
+						<span>{{ n.news }}</span>
 					</div>
-					<div class="update-date"><span class="update-day">04</span>jun</div>
-					
+					<div class="update-date"><span class="update-day">{{ n.date|date:"d" }}</span>{{ n.date|date:"M" }}</div>
 				</div>
-				
+				{% endfor %}
 			</div>
 		</div>
 	</div>
 	<div class="span6">
-	   <div class="widget-box">
+	       <!-- Audit Log -->
+
+        <div class="widget-box">
             <div class="widget-title">
-                <span class="icon"><i class="icon-repeat"></i></span>
-                <h5>Recent Report Activity</h5>
+                <span class="icon">
+                    <i class="icon-random"></i>
+                </span>
+                <h5>Audit Log</h5>
             </div>
-            <div class="widget-content nopadding">
-                
+            <div class="widget-content">
                 <ul class="activity-list">
                     {% for l in log %}
-                    {% if l.lot_number %}
-                    <li><a href="{% url 'reports.views.report' l.lot_number %}">
+                    <li><a>
                         <i class="icon-user"></i>
-                        <strong>{{ l.action_user }}</strong> {{ l.get_action_type_display|lower }} {{ l.object_state }} <span>{{ l.action_date|naturaltime }}</span>
-
-                    </a></li>
-                    {% endif %}
+                        {% if l.target %}<strong>{{ l.target }}:</strong>{% endif %} <strong>{{ l.actor }}</strong> {{ l.verb }} {% if l.action_object %}<strong>{{ l.action_object }}</strong>{% endif %} <span>{{ l.timestamp|naturaltime }}</span>
+                        </a>
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
-        </div>
+        </div>    
+
     </div>
 </div>
 {% endblock %}

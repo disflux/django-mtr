@@ -139,6 +139,7 @@ INSTALLED_APPS = (
     'eztables',
     'djangojs',
     
+    
     # Local Apps
     'dashboard',
     'reports',
@@ -147,7 +148,18 @@ INSTALLED_APPS = (
     'specifications',
     'parts',
     'orders',
+    
+    # Audit/activity log goes after all apps
+    'actstream',
 )
+
+# Activity log/audit log settings
+ACTSTREAM_SETTINGS = {
+    'MODELS': ('auth.user', 'reports.report', 'vendors.vendor', 'parts.part', 'documents.document', 'reports.reportdocument',),
+    'FETCH_RELATIONS': True,
+    'USE_PREFETCH': True,
+    'GFK_FETCH_DEPTH': 1,
+}
 
 # Amazon S3 Storage Settings
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
