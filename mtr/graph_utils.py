@@ -9,6 +9,6 @@ def flot_values(queryset=None):
         d = defaultdict(int)
         for i in queryset:
             d[i.created_at.strftime("%Y%m%d")] += 1
-        return [v for k,v in d.iteritems()]
+        return d.values()
     else:
         return None 
