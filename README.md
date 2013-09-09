@@ -59,4 +59,6 @@ Screenshots
 ![report](https://raw.github.com/phrac/django-mtr/master/new_report.png)
 * Search Results
 ![search](https://raw.github.com/phrac/django-mtr/master/search.png)
+* Product Labels (pdf)
+![search](https://raw.github.com/phrac/django-mtr/master/label.png)
 
