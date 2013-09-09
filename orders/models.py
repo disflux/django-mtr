@@ -22,6 +22,7 @@ class Order(models.Model):
     line_items = models.ManyToManyField('OrderLineItem', related_name='order_line_items', null=True, blank=True)
     documents = models.ManyToManyField(Document, related_name='order_documents', null=True, blank=True)
     created_by = models.ForeignKey(User, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
 
     def __unicode__(self):
         return self.order_number

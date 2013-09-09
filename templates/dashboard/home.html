@@ -86,29 +86,29 @@
 <div class="row-fluid">
     <div class="span12 center" style="text-align: center;">					
         <ul class="stat-boxes">
-            <li class="popover-visits">
-            <div class="left peity_bar_good"><span>2,4,9,7,12,10,12</span>+10%</div>
+            <li>
+            <div class="left peity_line_good"><span>{% for v in document_graph %} {{ v }}, {% endfor %}</span></div>
             <div class="right">
                 <strong>{{ doc_count }}</strong>
                 Documents
             </div>
             </li>
-            <li class="popover-users">
-            <div class="left peity_bar_neutral"><span>20,15,18,14,10,9,9,9</span>0%</div>
+            <li>
+            <div class="left peity_line_good"><span>{% for v in report_graph %} {{ v }}, {% endfor %}</span></div>
             <div class="right">
                 <strong>{{ report_count }}</strong>
                 Reports
             </div>
             </li>
-            <li class="popover-orders">
-            <div class="left peity_bar_bad"><span>3,5,9,7,12,20,10</span>-50%</div>
+            <li>
+            <div class="left peity_line_good"><span>{% for v in order_graph %} {{ v }}, {% endfor %}</span></div>
             <div class="right">
                 <strong>{{ order_count }}</strong>
                 Orders
             </div>
             </li>
-            <li class="popover-tickets">
-            <div class="left peity_line_good"><span>12,6,9,23,14,10,17</span>+70%</div>
+            <li>
+            <div class="left peity_line_good"><span>{% for v in part_graph %} {{ v }}, {% endfor %}</span></div>
             <div class="right">
                 <strong>{{ part_count }}</strong>
                 Parts
