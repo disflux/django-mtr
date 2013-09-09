@@ -1,5 +1,7 @@
 from django.db import models
 
+from specifications.models import Specification
+
 from audit_log.models.fields import LastUserField
 from audit_log.models.managers import AuditLog
 
@@ -9,6 +11,7 @@ class Part(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     box_quantity = models.IntegerField(null=True, blank=True)
+    specification = models.ForeignKey(Specification, null=True)
     
     class Meta:
         ordering = ('part_number', )

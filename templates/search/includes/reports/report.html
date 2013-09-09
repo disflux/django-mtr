@@ -31,7 +31,7 @@
         <a href="{{ result.object.part_number.get_absolute_url }}">{% highlight result.object.part_number with query %}</a>
     </td>
     <td>
-        {% highlight result.object.specification with query %}
+        {% highlight result.object.part_number.specification with query %}
     </td>
     <td>
         {% if result.object.origin_po %}

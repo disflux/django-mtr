@@ -20,7 +20,7 @@ class Report(models.Model):
     vendor_lot_number = models.CharField(max_length=128, null=True, blank=True, help_text="The vendor's lot number (if available)")
     heat_number = models.CharField(max_length=128, null=True, blank=True, help_text="The heat number (if available)")
     vendor = models.ForeignKey(Vendor, help_text="Vendor or Manufacturer who supplied the material")
-    specification = models.ForeignKey(Specification, null=True)
+    #specification = models.ForeignKey(Specification, null=True)
     part_number = models.ForeignKey(Part, help_text="The TSA part number")
     description = models.TextField()
     origin_po = models.CharField(max_length=32, null=True, blank=True, help_text="The purchase order # material was purchased on")

@@ -6,4 +6,4 @@ from reports.models import Report
 class NewPartForm(ModelForm):
     class Meta:
         model = Part
-        fields = ['part_number', 'description', 'box_quantity']
+        fields = ['part_number', 'specification', 'description', 'box_quantity',]

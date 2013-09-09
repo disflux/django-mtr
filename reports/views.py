@@ -75,7 +75,7 @@ def new_report(request):
     if request.method == 'POST':
         reportform = ReportForm(request.POST)
         if reportform.is_valid():
-            report = reportform.save(commit=False)
+            report = reportform.save()
             report.created_by = request.user
             report.save()
             action.send(request.user, verb='created lot number', action_object=report, target=report)
