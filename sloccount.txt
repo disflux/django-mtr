@@ -1,0 +1,62 @@
+Have a non-directory at the top, so creating directory top_dir
+Adding /tank/dev/mtr/mtr/./README.md to top_dir
+Creating filelist for dashboard
+Creating filelist for documents
+Creating filelist for interfax
+Adding /tank/dev/mtr/mtr/./manage.py to top_dir
+Creating filelist for mtr
+Adding /tank/dev/mtr/mtr/./mtr_wsgi to top_dir
+Creating filelist for orders
+Creating filelist for parts
+Creating filelist for pdfgen
+Creating filelist for reports
+Adding /tank/dev/mtr/mtr/./requirements.txt to top_dir
+Creating filelist for search
+Adding /tank/dev/mtr/mtr/./sloccount.txt to top_dir
+Creating filelist for specifications
+Creating filelist for static
+Creating filelist for templates
+Creating filelist for vendors
+Categorizing files.
+Finding a working MD5 command....
+Found a working MD5 command.
+Computing results.
+
+
+SLOC	Directory	SLOC-by-Language (Sorted)
+440     pdfgen          python=440
+376     interfax        python=376
+229     mtr             python=229
+207     reports         python=207
+150     documents       python=150
+105     parts           python=105
+103     orders          python=103
+77      dashboard       python=77
+58      vendors         python=58
+50      search          python=50
+25      specifications  python=25
+6       top_dir         python=6
+0       static          (none)
+0       templates       (none)
+
+
+Totals grouped by language (dominant language first):
+python:        1826 (100.00%)
+
+
+
+
+Total Physical Source Lines of Code (SLOC)                = 1,826
+Development Effort Estimate, Person-Years (Person-Months) = 0.38 (4.52)
+ (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
+Schedule Estimate, Years (Months)                         = 0.37 (4.43)
+ (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
+Estimated Average Number of Developers (Effort/Schedule)  = 1.02
+Total Estimated Cost to Develop                           = $ 39,744
+ (average salary = $44,000/year, overhead = 2.40).
+SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
+SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
+SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
+redistribute it under certain conditions as specified by the GNU GPL license;
+see the documentation for details.
+Please credit this data as "generated using David A. Wheeler's 'SLOCCount'."
