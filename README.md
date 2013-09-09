@@ -1,5 +1,3 @@
-### Warning: THIS SOFTWARE IS ALPHA, IT IS NOT PRODUCTION READY AT THIS TIME
-
 Django-MTR
 ==========
 Derek Musselmann - May 2013
@@ -32,4 +30,8 @@ Setup
 4. Edit ```mtr/settings.py``` accordingly
 5. run ```manage.py syncdb``` to populate database tables
 6. Deploy via wsgi or run the development server for testing
+
+Screenshots
+-----------
+![search](https://raw.github.com/phrac/django-mtr/master/search.png)
 
