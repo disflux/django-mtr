@@ -1,4 +1,3 @@
-from collections import defaultdict
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
@@ -10,6 +9,7 @@ from dashboard.models import NewsItem
 
 from actstream import action
 from actstream.models import model_stream
+from mtr import graph_utils
 
 import datetime
 
@@ -24,38 +24,17 @@ def home(request):
     news = NewsItem.objects.all().order_by('-date')[:5]
     
     data = Report.objects.filter(created_at__gte=date)
-    report_graph = defaultdict(int)
-    for r in data:
-        report_graph[r.created_at.strftime("%Y%m%d")] += 1
-    r_graph = []
-    for k, v in report_graph.iteritems():
-        r_graph.append(v)
+    r_graph = graph_utils.flot_values(data)
     
     data = Document.objects.filter(created_at__gte=date)
-    dv = defaultdict(int)
-    for r in data:
-        dv[r.created_at.strftime("%Y%m%d")] += 1
-    d_graph = []
-    for k, v in dv.iteritems():
-        d_graph.append(v)
+    d_graph = graph_utils.flot_values(data)
     
     data = Order.objects.filter(created_at__gte=date)
-    dv = defaultdict(int)
-    for r in data:
-        dv[r.created_at.strftime("%Y%m%d")] += 1
-    o_graph = []
-    for k, v in dv.iteritems():
-        o_graph.append(v)
+    o_graph = graph_utils.flot_values(data)
     
     data = Part.objects.filter(created_at__gte=date)
-    dv = defaultdict(int)
-    for r in data:
-        dv[r.created_at.strftime("%Y%m%d")] += 1
-    p_graph = []
-    for k, v in dv.iteritems():
-        p_graph.append(v)
-        
-
+    p_graph = graph_utils.flot_values(data)
+    
     return render_to_response('dashboard/home.html', 
                               {
                                   'doc_count': documents,
