@@ -52,8 +52,8 @@ Development Effort Estimate, Person-Years (Person-Months) = 0.38 (4.52)
 Schedule Estimate, Years (Months)                         = 0.37 (4.43)
  (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
 Estimated Average Number of Developers (Effort/Schedule)  = 1.02
-Total Estimated Cost to Develop                           = $ 39,744
- (average salary = $44,000/year, overhead = 2.40).
+Total Estimated Cost to Develop                           = $ 50,841
+ (average salary = $56,286/year, overhead = 2.40).
 SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
 SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
 SLOCCount comes with ABSOLUTELY NO WARRANTY, and you are welcome to
