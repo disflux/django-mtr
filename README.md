@@ -33,5 +33,12 @@ Setup
 
 Screenshots
 -----------
+* Dashboard
+![dashboard](https://raw.github.com/phrac/django-mtr/master/dashboard.png)
+* Report
+![report](https://raw.github.com/phrac/django-mtr/master/report.png)
+* New Report
+![report](https://raw.github.com/phrac/django-mtr/master/new_report.png)
+* Search Results
 ![search](https://raw.github.com/phrac/django-mtr/master/search.png)
 
