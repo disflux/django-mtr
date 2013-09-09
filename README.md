@@ -13,6 +13,24 @@ number, heat number, and other data.
 
 An unlimited number of user defined documents can be attached to each report.
 
+Features
+--------
+* Search by any data, including heat number, lot number, PO number, work order number
+* Generate barcoded product labels automatically
+* Generate in-house material test reports
+* Generate inspection reports pre-filled with product data
+* Email/fax documents
+* Generate MTR report packets for customers
+* Documents stored in Amazon S3 buckets
+* Management commands for easy database backups
+* Complete audit trail that tracks document attachments, report creation, deletions, changes, etc
+* Attach unlimited documents to reports
+* Link reports together (ex: a manufactured product would link to the raw material)
+* User defined document types (Mill test reports, plating certifications, etc.)
+* Batch inspection report creation
+* Copy report to new reports
+* Part editor
+
 Requirements
 ------------
 See ```requirements.txt``` for all python requirements.  
