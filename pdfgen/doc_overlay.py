@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.conf import settings
 from reportlab.lib.units import mm
+from reportlab.graphics.barcode import createBarcodeDrawing
 from io import BytesIO
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
@@ -12,7 +13,7 @@ from actstream import action
 from reports.models import Report
 from documents.models import Document
 
-def doc_overlay(request, document_uuid, lot_number):
+def doc_overlay(request, document_uuid, lot_number, qrcode=True):
     report = Report.objects.get(lot_number=lot_number)
     document = Document.objects.get(uuid=document_uuid)
 
@@ -34,12 +35,15 @@ def doc_overlay(request, document_uuid, lot_number):
     # create a new PDF with Reportlab
     p = canvas.Canvas(packet, pagesize=letter)
     p.setFillColorRGB(255,255,255)
-    p.rect(0*mm, 276*mm, 220*mm, 3*mm, fill=1, stroke=0)
+    p.rect(0*mm, 268*mm, 205*mm, 12*mm, fill=1, stroke=0)
     p.setFillColorRGB(0,0,0)
     p.setFont("Helvetica", 7)
     p.drawCentredString(width/2.0,height-9.0, "%s LOT # %s / %s (doc# %s)" % 
                                 (settings.PDF_COMPANY_SHORT_NAME,
                                 report.lot_number, str(report.created_at.date()), document.uuid))
+    
+    barcode = createBarcodeDrawing('QR', value="%s%s" % (request.META['HTTP_HOST'], report.get_absolute_url()))
+    barcode.drawOn(p,175*mm, 10*mm)
 
                                 
     

@@ -35,7 +35,7 @@ def generate_inspection_report(request, lot_number):
         p.drawCentredString(43*mm,95*mm, report.part_number.part_number)
     else:
         p.drawCentredString(43*mm,176*mm, report.part_number.part_number)
-        p.drawCentredString(45*mm,170*mm, str(report.specification))
+        p.drawCentredString(45*mm,170*mm, str(report.part_number.specification))
     p.save()
     
     #move to the beginning of the StringIO buffer

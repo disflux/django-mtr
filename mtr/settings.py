@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     'sorl.thumbnail',
     'haystack',
     'easydump',
+    'south',
     
     
     # Local Apps
@@ -145,6 +146,7 @@ INSTALLED_APPS = (
     'specifications',
     'parts',
     'orders',
+    'pdfgen',
     
     # Audit/activity log goes after all apps
     'actstream',

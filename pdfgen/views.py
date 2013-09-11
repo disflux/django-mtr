@@ -12,6 +12,9 @@ from pdfgen.forms import MTRForm
 from pdfgen.generate_mtr import MTR
 from reports.models import Report, ReportDocument
 
+def pdf_generator(request):
+    pass
+    
 def mtr_generator(request):
     lot_number = request.GET.get('lot_number', None)
     if lot_number:
