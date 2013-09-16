@@ -1,6 +1,10 @@
 Django==1.5.1
+Django-Select2==4.2.0
 PIL==1.1.7
+PyXML==0.8.4
+South==0.8.2
 Whoosh==2.4.1
+ZSI==2.0-rc3
 argparse==1.2.1
 boto==2.9.5
 chardet==2.1.1

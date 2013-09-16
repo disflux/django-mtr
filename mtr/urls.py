@@ -17,6 +17,7 @@ urlpatterns = patterns('',
 
                        url('^accounts/', include('django.contrib.auth.urls')),
                        url('^activity/', include('actstream.urls')),
+                       url(r'^select2/', include('django_select2.urls')),
 
                        # Admin related urls
                        (r'^admin/doc/', include('django.contrib.admindocs.urls')),

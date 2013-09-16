@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'haystack',
     'easydump',
     'south',
+    'django_select2',
     
     
     # Local Apps

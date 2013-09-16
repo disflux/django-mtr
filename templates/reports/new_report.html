@@ -1,20 +1,11 @@
 {% extends "base/main.html" %}
+{% load django_select2_tags %}
 {% block head %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
 <link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
-<!-- search typeahead -->
-<script type="text/javascript">
-    $(document).ready(function() {
-        $(".company-ta input[type=text]").typeahead({
-            items: 5,
-            source: function (query, process) {
-                $.get('/search/autocomplete?type=company', { q: query }, function (data) {
-                    process(data)
-                })
-            }
-        });
-    });
-</script>
+
+{% import_django_select2_js %}
+{% import_django_select2_css %}
 {% endblock %}
 
 {% block js %}
