@@ -25,7 +25,7 @@ class ReportForm(ModelForm):
                   'vendor', 'part_number', 'raw_material', 
                   'origin_po', 'origin_wo', 'linked_reports']
     part_number = PartChoice()
-    linked_reports = ReportChoices()
+    linked_reports = ReportChoices(required=False)
     vendor = VendorChoice()
     origin_po = forms.CharField(label='Originating PO#', required=False)
     origin_wo = forms.CharField(label='Originating WO#', required=False)

@@ -93,10 +93,7 @@ $(document).ready(function(){
 	$('.tip-bottom').tooltip({ placement: 'bottom' });	
 	
 	// === Search input typeahead === //
-	$('#search input[type=text]').typeahead({
-		source: ['Dashboard','Form elements','Common Elements','Validation','Wizard','Buttons','Icons','Interface elements','Support','Calendar','Gallery','Reports','Charts','Graphs','Widgets'],
-		items: 4
-	});
+
 	
 	// === Fixes the position of buttons group in content header and top user navigation === //
 	function fix_position()
@@ -107,28 +104,4 @@ $(document).ready(function(){
         var cwidth = $('#content-header .btn-group').width();
         $('#content-header .btn-group').css({width:cwidth,'margin-left':'-' + uwidth / 2 + 'px'});
 	}
-	
-	// === Style switcher === //
-	$('#style-switcher i').click(function()
-	{
-		if($(this).hasClass('open'))
-		{
-			$(this).parent().animate({marginRight:'-=220'});
-			$(this).removeClass('open');
-		} else 
-		{
-			$(this).parent().animate({marginRight:'+=220'});
-			$(this).addClass('open');
-		}
-		$(this).toggleClass('icon-arrow-left');
-		$(this).toggleClass('icon-arrow-right');
-	});
-	
-	$('#style-switcher a').click(function()
-	{
-		var style = $(this).attr('href').replace('#','');
-		$('.skin-color').attr('href','css/unicorn.'+style+'.css');
-		$(this).siblings('a').css({'border-color':'transparent'});
-		$(this).css({'border-color':'#aaaaaa'});
-	});
-});
+
