@@ -21,11 +21,13 @@ class ReportChoices(AutoModelSelect2MultipleField):
 class ReportForm(ModelForm):
     class Meta:
         model = Report
-        fields = ['mfg_lot_number', 'vendor_lot_number', 'heat_number',
+        fields = ('mfg_lot_number', 'vendor_lot_number', 'heat_number',
                   'vendor', 'part_number', 'raw_material', 
-                  'origin_po', 'origin_wo', 'linked_reports']
+                  'origin_po', 'origin_wo', 'receiving_date', 'linked_reports', )
     part_number = PartChoice()
-    linked_reports = ReportChoices(required=False)
-    vendor = VendorChoice()
-    origin_po = forms.CharField(label='Originating PO#', required=False)
-    origin_wo = forms.CharField(label='Originating WO#', required=False)
+    linked_reports = ReportChoices(required=False, help_text='Any lot numbers that this lot number uses')
+    vendor = VendorChoice(help_text='The vendor this material originated from')
+    receiving_date = forms.CharField(help_text='Leave blank for today\'s date', required=False)
+    receiving_date.widget.attrs['class'] = 'datepicker form-control input-sm'
+    origin_po = forms.CharField(label='Originating PO#', required=False, help_text='The purchase order this material originated from')
+    origin_wo = forms.CharField(label='Originating WO#', required=False, help_text='The work order this material originated from')

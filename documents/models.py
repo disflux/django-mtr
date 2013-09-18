@@ -34,6 +34,15 @@ class Document(models.Model):
 
     def save(self, *args, **kwargs):
         super(Document, self).save(*args, **kwargs)
+        if not self.pages:
+            from pyPdf import PdfFileReader, PdfFileWriter
+            from StringIO import StringIO
+            from urllib2 import Request, urlopen
+            f = urlopen(Request(self.file.url)).read()
+            mem = StringIO(f)
+            pdf = PdfFileReader(mem)
+            self.pages = pdf.getNumPages()
+            self.save()
 
     @models.permalink
     def get_absolute_url(self):

@@ -3,6 +3,7 @@
 {% block head %}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
 <link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/datepicker.css" />
 
 {% import_django_select2_js %}
 {% import_django_select2_css %}
@@ -12,11 +13,11 @@
 <script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
 <script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
-<script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.form_common.js"></script>
 <script type="text/javascript">
     $(document).ready(function() { 
-            $("select").select2({ width: 'resolve' });           
-            }); 
+        $("select").select2({ width: 'resolve' });           
+    }); 
 </script>
 {% endblock %}
 

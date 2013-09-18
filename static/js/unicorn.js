@@ -91,8 +91,6 @@ $(document).ready(function(){
 	$('.tip-right').tooltip({ placement: 'right' });	
 	$('.tip-top').tooltip({ placement: 'top' });	
 	$('.tip-bottom').tooltip({ placement: 'bottom' });	
-	
-	// === Search input typeahead === //
 
 	
 	// === Fixes the position of buttons group in content header and top user navigation === //
@@ -105,3 +103,4 @@ $(document).ready(function(){
         $('#content-header .btn-group').css({width:cwidth,'margin-left':'-' + uwidth / 2 + 'px'});
 	}
 
+});

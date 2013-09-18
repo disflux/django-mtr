@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.core.files.storage import default_storage
 from actstream import action
 from actstream.models import target_stream
+import time
 
 from reports.forms import ReportForm
 from reports.models import Report, ReportDocument
@@ -86,7 +87,7 @@ def new_report(request):
             report = Report.objects.get(lot_number=copy)
             reportform = ReportForm(instance=report)
         else:
-            reportform = ReportForm()
+            reportform = ReportForm(initial={'receiving_date': time.strftime("%Y-%m-%d")})
     return render_to_response('reports/new_report.html',
                               {'reportform': reportform,},
                               context_instance=RequestContext(request))

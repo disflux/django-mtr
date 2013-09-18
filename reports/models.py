@@ -6,6 +6,7 @@ from documents.models import Document
 from vendors.models import Vendor
 from specifications.models import Specification
 from parts.models import Part
+import datetime
 
 from audit_log.models.fields import LastUserField
 from audit_log.models.managers import AuditLog
@@ -20,13 +21,13 @@ class Report(models.Model):
     vendor_lot_number = models.CharField(max_length=128, null=True, blank=True, help_text="The vendor's lot number (if available)")
     heat_number = models.CharField(max_length=128, null=True, blank=True, help_text="The heat number (if available)")
     vendor = models.ForeignKey(Vendor, help_text="Vendor or Manufacturer who supplied the material")
-    #specification = models.ForeignKey(Specification, null=True)
     part_number = models.ForeignKey(Part, help_text="The TSA part number")
     description = models.TextField()
     origin_po = models.CharField(max_length=32, null=True, blank=True, help_text="The purchase order # material was purchased on")
     origin_wo = models.CharField(max_length=32, null=True, blank=True, help_text="The work order # material was produced from")
     approved = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    receiving_date = models.DateField(default=datetime.datetime.today(), null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, null=True)
     raw_material = models.BooleanField(default=False, help_text="Check this box if product is raw material")

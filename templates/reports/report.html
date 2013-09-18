@@ -195,6 +195,14 @@ Lot # {{ report.lot_number }}
                             </tr>
                             <tr>
                                 <td>
+                                    <strong>Receiving Date</strong>   
+                                </td>
+                                <td>
+                                    {{ report.receiving_date }} 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <strong>Lot Number Created</strong>   
                                 </td>
                                 <td>
@@ -269,6 +277,10 @@ Lot # {{ report.lot_number }}
                                     <tr>
                                         <td>Document Created By</td>
                                         <td>{{ d.document.created_by }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pages</td>
+                                        <td>{{ d.document.pages }}</td>
                                     </tr>
                                     <tr>
                                         <td>Attached to Report By</td>

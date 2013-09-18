@@ -7,6 +7,5 @@ $(document).ready(function(){
 	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	
 	$('select').select2({ width: 'resolve' });
-    $('.colorpicker').colorpicker();
-    $('.datepicker').datepicker();
+    $('.datepicker').datepicker({ dateFormat: 'yy-mm-dd' });
 });
