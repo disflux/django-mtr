@@ -4,8 +4,6 @@
         <h3>Attach a new document</h3>
     </div>
     <div class="modal-body">
-
-
         <form id="image-form" class="form-horizontal" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="control-group">
@@ -31,16 +29,19 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="document_button" value="1" />
-                <button id="save-document" type="submit" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Upload</button>
+                <button id="save-document" type="submit" data-toggle="button" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Upload</button>
                 <button class="btn" data-dismiss="modal">Cancel</button>
             </div>
 
         </form>
 
-</script>
-<script type="text/javascript">
-    $(document).ready(function() { 
-            $("select").select2({ width: 'resolve' });           
+        <script type="text/javascript">
+            $(document).ready(function() { 
+                $("select").select2({ width: 'resolve' });
+                $('#save-document').on('click', function () {
+                    $(this).button('loading')
+                });           
             }); 
-</script>
-                    </div>
+        </script>
+    </div>
+</div>

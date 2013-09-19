@@ -17,14 +17,10 @@
         <div class="modal-footer">
             <input type="hidden" id="fax-doc-id-hidden" name="doc-id" value="" />
             <input type="hidden" id="report-id-hidden" name="report-id" value="{{ report.pk }}" />
-            <button id="send-email" data-loading-text="Sending..." class="btn"><i class="icon-envelope"></i> Email Document</button>
+            <button id="send-email" data-toggle="button" data-loading-text="Sending..." class="btn"><i class="icon-envelope"></i> Fax Document</button>
             <button class="btn" data-dismiss="modal">Cancel</button>
         </div>
     </form>
 </div>
-<script type="text/javascript">
-    $('#send-email').click(function() {
-        $('#send-email').button('loading');
-    });
-</script>
+
 

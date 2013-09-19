@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.mail import EmailMessage
@@ -62,7 +63,7 @@ def fax_document(request):
     doc = Document.objects.get(pk=doc_id)
     report = Report.objects.get(id=report_id)
     urllib.urlretrieve(doc.file.url, "fax.pdf")
-    c = client.InterFaxClient('tsaderek', 'jbn12177')
+    c = client.InterFaxClient(settings.INTERFAX_USER, settings.INTERFAX_PASSWORD)
     result = c.sendFax('+14028953297', 'fax.pdf')
     messages.success(request, "Fax sent")
     return HttpResponseRedirect(reverse('reports.views.report', args=[str(report.lot_number)]))

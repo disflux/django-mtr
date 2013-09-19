@@ -23,8 +23,8 @@
     </form>
 </div>
 <script type="text/javascript">
-    $('#send-email').click(function() {
-        $('#send-email').button('loading');
+    $('#send-email').on('click', function () {
+        $(this).button('loading')
     });
 </script>
 

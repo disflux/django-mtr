@@ -19,16 +19,15 @@
             </div>
             <div class="modal-footer">
                 <input type="hidden" name="document_id" value="{{ document.pk }}" />
-                <button id="save-document" type="submit" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Attach</button>
+                <button id="save-document" type="submit" data-toggle="button" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Attach</button>
                 <button class="btn" data-dismiss="modal">Cancel</button>
             </div>
 
         </form>
-
-</script>
-<script type="text/javascript">
-    $(document).ready(function() { 
-            $("select").select2({ width: 'resolve' });           
+        <script type="text/javascript">
+            $(document).ready(function() { 
+                $("select").select2({ width: 'resolve' });           
             }); 
-</script>
-                    </div>
+        </script>
+    </div>
+</div>

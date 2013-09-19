@@ -66,6 +66,12 @@ EASYDUMP_MANIFESTS = {
     }
 }
 
+
+# Interfax FAX Settings
+INTERFAX_USER = ''
+INTERFAX_PASSWORD = ''
+INTERFAX_TEST_NUMBER = ''
+
 # Uncomment the following line to store static files on Amazon S3
 #STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
