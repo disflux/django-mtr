@@ -1,6 +1,7 @@
-from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, HttpResponse
+from django.shortcuts import render_to_response, redirect, get_object_or_404
+from django.utils.timezone import localtime
 
 from reportlab.graphics.barcode import createBarcodeDrawing
 from reportlab.lib.units import mm
@@ -78,17 +79,17 @@ def report_label(request, lot_number):
     # Draw Other Info
     #p.line(110*mm, 0, 110*mm, 25*mm)
     p.setFont("Helvetica", 15)
-    p.drawString(10, 20*mm, "Date")
-    p.drawString(40*mm, 20*mm, str(report.created_at))
+    p.drawString(10, 20*mm, "Date:")
+    p.drawString(40*mm, 20*mm, localtime(report.created_at).strftime('%Y-%m-%d %H:%M %Z'))
     p.line(0, 18*mm, 150*mm, 18*mm)
-    p.drawString(10, 12*mm, "Vendor")
+    p.drawString(10, 12*mm, "Vendor:")
     p.drawString(40*mm, 12*mm, report.vendor.name)
     p.line(0,10*mm, 150*mm, 10*mm)
     if report.origin_po:
-        p.drawString(10, 4*mm, "PO #")
+        p.drawString(10, 4*mm, "PO #:")
         p.drawString(40*mm, 4*mm, report.origin_po)
     elif report.origin_wo:
-        p.drawString(10, 4*mm, "WO #")
+        p.drawString(10, 4*mm, "WO #:")
         p.drawString(40*mm, 4*mm, report.origin_wo)
     
     p.showPage()
