@@ -30,17 +30,20 @@ def results(request):
             except:
                 sqs = SearchQuerySet().auto_query(q)
                 results = sqs.filter(content=AutoQuery(q))
+            
+            try:                                                                    
+                page = request.GET.get('page', 1)
+            except PageNotAnInteger:
+                page = 1
+    
+            p = Paginator(sqs, 20, request=request)
+            results_list = p.page(page)
 
         else:
-            results = []
+            sqs = None
+            results_list = []
         
-        try:                                                                    
-            page = request.GET.get('page', 1)
-        except PageNotAnInteger:
-            page = 1
-
-        p = Paginator(sqs, 20, request=request)
-        results_list = p.page(page)
+        
 
         end = time.time()
         
