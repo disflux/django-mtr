@@ -25,9 +25,11 @@ def results(request):
 
         if q:
             try:
+                """ Redirect to a lot number if found """
                 report = Report.objects.get(lot_number=q)
                 return redirect('reports.views.report', lot_number=report.lot_number)
             except:
+                """ No lot # could be found, perform a search """
                 sqs = SearchQuerySet().auto_query(q)
                 results = sqs.filter(content=AutoQuery(q))
             
@@ -43,10 +45,7 @@ def results(request):
             sqs = None
             results_list = []
         
-        
-
         end = time.time()
-        
         runtime = end-start
 
     return render_to_response('search/search.html',
