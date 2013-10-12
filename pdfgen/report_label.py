@@ -14,8 +14,7 @@ from actstream import action
 from reports.models import Report
 
 def report_label(request, lot_number):
-    report = Report.objects.get(lot_number=lot_number)
-    
+    report = get_object_or_404(Report, lot_number=lot_number)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="label.pdf"'
     

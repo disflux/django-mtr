@@ -52,7 +52,7 @@
         <div id="gritter-notify" class="notify-ui">
         </div>
         <div id="header">
-            <h1><a href="/">Django MTR Tracker</a></h1>		
+            <h1><a href="/">MTRack</a></h1>		
         </div>
 
         <div class="search" id="search">
@@ -62,6 +62,10 @@
         </div>
         
         <div id="user-nav" class="navbar navbar-inverse noprint">
+            <ul class="btn-group">
+                <li class="btn btn-info" ><a style="color:white" title="" href="{% url 'parts.views.new_part' %}"><i class="icon-plus-sign"></i> <span class="text">New Part</span></a></li>
+                <li class="btn btn-info"><a style="color:white" title="" href="{% url 'reports.views.new_report' %}"><i class="icon-plus-sign icon-white"></i> <span class="text">New Report</span></a></li>
+            </ul>    
             <ul class="btn-group">
                 <li class="btn btn-inverse" ><a style="color:white" title="" href="#"><i class="icon-user"></i> <span class="text">{{ user.username }}</span></a></li>
                 <li class="btn btn-inverse"><a style="color:white" title="" href="#"><i class="icon-cog"></i> <span class="text">Settings</span></a></li>

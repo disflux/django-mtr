@@ -243,6 +243,7 @@ Lot # {{ report.lot_number }}
                     <a class="btn btn-inverse btn-mini tip-top" title="Attach a New Document" href="#new_document-modal" data-toggle="modal"><i class="icon-plus-sign icon-white"></i> </a>
                 </div>
             </div>
+            {% if report.reportdocument_set.all|length > 0 %}
             <div class="widget-content nopadding">
                 <div id="images-table">
                     <table class="table table-striped table-bordered">
@@ -288,16 +289,16 @@ Lot # {{ report.lot_number }}
                                     </tr>
                                     <tr>
                                         <td colspan="2" style="text-align:center;">
-                                            <a class="btn btn-mini tip-top" target="_blank" href="{% url 'pdfgen.doc_overlay.doc_overlay' d.document.uuid report.lot_number %}"><i class="icon-print"></i> Print Document</a>
+                                            <ul class="btn-group">
+                                            <a class="btn btn-mini tip-top" target="_blank" href="{% url 'pdfgen.doc_overlay.doc_overlay' d.document.uuid report.lot_number %}"><i class="icon-print"></i> Print</a>
                                             <a class="open-email-doc-modal btn btn-mini tip-top" data-id="{{ d.document.pk }}" data-toggle="modal" title="Email Document">
-                                                <i class="icon-envelope"></i> Email Document
+                                                <i class="icon-envelope"></i> Email
                                             </a>
-                                            <a class="open-fax-doc-modal btn btn-mini tip-top" data-id="{{ d.document.pk }}" data-toggle="modal" title="Fax Document">
-                                                <i class="icon-envelope"></i> Fax Document {{ d.document.pk }}
-                                            </a>
+                                            
                                             {% if user.is_staff %}
-                                            <a href="{% url 'documents.views.remove_document' %}?rd={{ d.pk }}" class="btn btn-mini tip-top" title="Remove Document"><i class="icon-trash"></i></a>
+                                            <a href="{% url 'documents.views.remove_document' %}?rd={{ d.pk }}" class="btn btn-mini tip-top" title="Remove Document"><i class="icon-trash"></i> Delete</a>
                                             {% endif %}
+                                            </ul>
                                         </td>
                                     </tr>
                                 </table>
@@ -306,7 +307,12 @@ Lot # {{ report.lot_number }}
                         {% endfor %}
                     </table>
                 </div>
-            </div> 
+            </div>
+            {% else %}
+            <div class="widget-content">
+                <h4>No documents found.</h4>
+            </div>
+            {% endif %} 
         </div>
         <!-- end documents widget -->
         
@@ -325,7 +331,7 @@ Lot # {{ report.lot_number }}
    
                     <table class="table table-bordered">
                     <tr>
-                    <tr>
+                        <tr>
                                 <td>
                                     <strong>Lot Number</strong>   
                                 </td>
@@ -458,6 +464,7 @@ Lot # {{ report.lot_number }}
                 </span>
                 <h5>Linked Orders</h5>
             </div>
+            {% if orders %}
             <div class="widget-content nopadding">
                 <div id="xrefs-table">
                     <table class="table table-bordered">
@@ -489,6 +496,11 @@ Lot # {{ report.lot_number }}
                     </table>
                 </div>
             </div>
+            {% else %}
+            <div class="widget-content">
+                <h4>No linked orders.</h4>
+            </div>
+            {% endif %}
         </div>    
     </div>
     
@@ -501,6 +513,7 @@ Lot # {{ report.lot_number }}
                 </span>
                 <h5>Reports that link to this report</h5>
             </div>
+            {% if report.report_links.all %}
             <div class="widget-content nopadding">
                 <div id="xrefs-table">
                     <table class="table table-bordered">
@@ -531,6 +544,11 @@ Lot # {{ report.lot_number }}
                     </table>
                 </div>
             </div>
+            {% else %}
+            <div class="widget-content">
+                <h4>No reports link to this report.</h4>
+            </div>
+            {% endif %}
         </div>    
     </div>
     
@@ -539,19 +557,23 @@ Lot # {{ report.lot_number }}
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
-                    <i class="icon-random"></i>
+                    <i class="icon-lock"></i>
                 </span>
                 <h5>Audit Log</h5>
+                <div class="buttons">
+                    <a class="btn btn-mini tip-top" title="View Complete Audit Log" href="{% url 'pdfgen.views.mtr_generator' %}?lot_number={{ report.lot_number }}" data-toggle="modal"><i class="icon-search"></i> </a>
+                   
+                </div>
             </div>
             <div class="widget-content">
                 <ul class="activity-list">
-                    {% for l in audit_log %}
+                    {% for l in audit_log|slice:":5" %}
                     <li><a>
                         <i class="icon-user"></i>
-                        <strong>{{ l.actor }}</strong> {{ l.verb }} {% if l.action_object %}<strong>{{ l.action_object }}</strong>{% endif %} <span>{{ l.timestamp|naturaltime }}</span>
+                        <strong>{{ l.actor }}</strong> {{ l.verb }} {% if l.action_object %}<strong>{{ l.action_object }}</strong>{% endif %} <span>{{ l.timestamp|date:"Y-m-d" }}</span>
                         </a>
                     </li>
-                    {% endfor %}
+                    {% endfor %}  
                 </ul>
             </div>
         </div>    
