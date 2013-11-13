@@ -3,16 +3,14 @@ from django.forms import ModelForm
 from parts.models import Part
 from vendors.models import Vendor
 from django_select2 import *
+from inventory.models import InventoryCount
     
 class PartChoice(AutoModelSelect2Field):
     queryset = Part.objects
     search_fields = ['part_number__istartswith',]
-
-class NewPartForm(ModelForm):
+    
+class InventoryForm(ModelForm):
     class Meta:
-        model = Part
-        fields = ['part_number', 'specification', 'description', 'box_quantity',]
-        
-class PartLabelForm(forms.Form):
-    part_number = PartChoice()
-       
+        model = InventoryCount
+        fields = ('part', 'location', 'inventory_count',)
+    part = PartChoice()

@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'easydump',
     'south',
     'django_select2',
+    'csvimport',
     
     
     # Local Apps
@@ -148,6 +149,7 @@ INSTALLED_APPS = (
     'parts',
     'orders',
     'pdfgen',
+    'inventory',
     
     # Audit/activity log goes after all apps
     'actstream',

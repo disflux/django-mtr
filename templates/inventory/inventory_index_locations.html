@@ -1,0 +1,58 @@
+{% extends "base/main.html" %}
+{% load thumbnail %}
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+{% endblock %}
+
+{% block inventory_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="#" class="current">Inventory Index</a>
+{% endblock %}
+
+{% block page_title %}Browse Locations{% endblock %}
+{% block title %}Browse Locations{% endblock %}
+
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Parts Index</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Rack Location</th>
+                            <th># Parts in this Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for l in locations %}
+                        <tr>
+                            
+                            <td>
+                                <a href="{{ l.get_absolute_url }}">{{ l.location_code }}</a>
+                            </td>
+                            <td>
+                                {% for part in l.inventorycount_set.all %}
+                                {{ part }}
+                                {% endfor %}
+                            </td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

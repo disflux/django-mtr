@@ -7,7 +7,7 @@ from django.template import RequestContext
 from actstream import action
 
 from parts.models import Part
-from parts.forms import NewPartForm
+from parts.forms import NewPartForm, PartLabelForm
 from reports.models import Report
 
 def parts_index(request):
@@ -25,6 +25,15 @@ def part(request, part_number):
                               {'part': part,
                                'reports': reports,
                               },
+                              context_instance=RequestContext(request))
+
+def part_label(request):
+    form = PartLabelForm(request.POST)
+    if form.is_valid():
+        return HttpResponseRedirect(reverse('pdfgen.part_label.part_label', kwargs={'part_number': form.cleaned_data['part_number']}))
+    else:
+        return render_to_response('parts/part_label.html',
+                              {'form': form,},
                               context_instance=RequestContext(request))
                               
 def new_part(request):

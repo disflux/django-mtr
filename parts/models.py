@@ -12,6 +12,7 @@ class Part(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     box_quantity = models.IntegerField(null=True, blank=True)
     specification = models.ForeignKey(Specification, null=True)
+    product_code = models.CharField(max_length=16, null=True)
     
     class Meta:
         ordering = ('part_number', )

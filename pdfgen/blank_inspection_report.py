@@ -19,16 +19,18 @@ def generate_inspection_report(request, lot_number):
     packet = StringIO()
     # create a new PDF with Reportlab
     p = canvas.Canvas(packet, pagesize=letter)
-    p.drawString(37*mm,239*mm, report.origin_po)
+    p.drawString(25*mm,216*mm, report.origin_po)
     if report.origin_wo:
-        p.drawString(37*mm,237*mm, "WO# %s" % report.origin_wo)
-    p.drawCentredString(95*mm,239*mm, str(report.created_at.date()))
-    p.drawCentredString(153*mm,239*mm, report.vendor.name)
+        p.drawString(45*mm,214*mm, "WO# %s" % report.origin_wo)
+    p.drawCentredString(95*mm,216*mm, str(report.created_at.date()))
+    p.drawCentredString(165*mm,216*mm, report.vendor.name)
+    
+    p.setFont("Helvetica", 9)
     if report.heat_number:
-        p.drawString(135*mm,228*mm, "HEAT # %s" % report.heat_number)
+        p.drawString(155*mm,210*mm, "HEAT # %s" % report.heat_number)
     if report.mfg_lot_number:
-        p.drawString(135*mm,224*mm, "MFG Lot # %s" % report.mfg_lot_number)
-    p.drawString(135*mm,220*mm, "%s Lot # %s" %
+        p.drawString(135*mm,205*mm, "MFG Lot # %s" % report.mfg_lot_number)
+    p.drawString(155*mm,206*mm, "%s Lot # %s" %
                    (settings.PDF_COMPANY_SHORT_NAME, report.lot_number))
     p.setFont("Helvetica", 9)
     if report.raw_material is False:

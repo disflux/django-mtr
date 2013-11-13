@@ -14,6 +14,7 @@ urlpatterns = patterns('',
                        url(r'^search/', include('search.urls')),
                        url(r'^parts/', include('parts.urls')),
                        url(r'^vendors/', include('vendors.urls')),
+                       url(r'^inventory/', include('inventory.urls')),
 
                        url('^accounts/', include('django.contrib.auth.urls')),
                        url('^activity/', include('actstream.urls')),
