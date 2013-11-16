@@ -7,6 +7,7 @@ from django_select2 import *
 class PartChoice(AutoModelSelect2Field):
     queryset = Part.objects
     search_fields = ['part_number__istartswith',]
+    max_results = 10
 
 class NewPartForm(ModelForm):
     class Meta:

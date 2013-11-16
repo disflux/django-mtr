@@ -609,3 +609,11 @@ div.uploader input {
   border: none;
   cursor: default;
 }
+
+tr.unaudited {
+    background-color: #fae6e6;
+}
+
+tr.audited {
+    background-color: #ccffcc;
+}

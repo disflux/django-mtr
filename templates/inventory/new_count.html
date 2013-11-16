@@ -51,7 +51,7 @@
                 <h5>Insert inventory count</h5>
             </div>
             <div class="widget-content nopadding">
-                <form class="well form-horizontal" action="" method="post" autocomplete="off">
+                <form id="count_form" class="well form-horizontal" action="" method="post" autocomplete="off">
                     {% csrf_token %}
                     
                     <div class="control-group">
@@ -66,9 +66,14 @@
                     </div>
 
                     <div class="form-actions">
-                        <button type="submit" name="save-add" class="btn btn-inverse">Save and add another</button>
                         <button type="submit" name="save" class="btn btn-inverse">Save Count</button>
-                        <button type="submit" class="btn btn-default" onclick="this.form.reset()">Clear Form</button>
+                        <input type="button" class="btn btn-default" onclick="formReset()" value="Clear Form">
+                        <script>
+                            function formReset()
+                            {
+                                document.getElementById("count_form").reset();
+                            }
+                        </script>
                     </div>
                 </form>
             </div>
@@ -82,12 +87,19 @@
                 <span class="icon">
                     <i class="icon-th"></i>
                 </span>
-                <h5>Recent Actions</h5>
+                <h5>Recent Counts</h5>
             </div>
             <div class="widget-content">
-               
+            {% for r in recent_counts %}
+            <li>{{ r.counter }} counted <strong>{{ r.inventory_count }}</strong> pieces of <strong>{{ r.part }}</strong> in location <strong>{{ r.location }}</strong></li>
+            {% endfor %}   
             </div>
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    window.onload = function() {
+        var input = document.getElementById("id_part").focus();
+    }
+</script>
 {% endblock %}

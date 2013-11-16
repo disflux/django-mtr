@@ -9,31 +9,27 @@ from django.conf import settings
 from io import BytesIO
 from reportlab.pdfgen import canvas
 
-from actstream import action
+from inventory.models import InventoryLocation
 
-from parts.models import Part
-
-def part_label(request, part_number):
-    part = get_object_or_404(Part, part_number=part_number)
+def location_labels(request):
+    locations = InventoryLocation.objects.all()
+    count = InventoryLocation.objects.count()
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="label.pdf"'
     
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
-    p.setPageSize((105*mm, 26*mm))
-
-
+    page_length = count * 26 #26 mm in height per label
+    p.setPageSize((105*mm, page_length*mm))
     
-    # Draw Part Number
+    i = count
+    for location in locations:
+        p.setFont("Helvetica", 20)
+        p.drawCentredString(52*mm, ((i*26)+18)*mm, location.location_code)
+        barcode = createBarcodeDrawing('Code128', value=location.location_code,  barWidth=0.40*mm, barHeight=13*mm, humanReadable=False)
+        barcode.drawOn(p, 26*mm, ((i*26)+2)*mm)
+        i -= 1
 
-
-    p.setFont("Helvetica", 20)
-    p.drawCentredString(52*mm, 18*mm, part.part_number)
-    barcode = createBarcodeDrawing('Code128', value=part.part_number,  barWidth=0.33*mm, barHeight=13*mm, humanReadable=False)
-    barcode.drawOn(p, 1*mm, 2*mm)
-
-
-    
     p.showPage()
     p.save()
     pdf = buffer.getvalue()

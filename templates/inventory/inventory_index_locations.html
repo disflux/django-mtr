@@ -18,13 +18,46 @@
 
 {% block content %}
 <div class="row-fluid">
+    <div class="span6">
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_company">Jump Direct To Location</label>
+                <div class="controls">
+                    {% for field in direct_to_location_form %}
+                    {{ field }}
+                    {% endfor %}
+                    <button type="submit" name="save" class="btn btn-inverse">Go</button>
+                    <input type="hidden" name="jump" value="location" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="span6">
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_company">Jump Direct To Part</label>
+                <div class="controls">
+                    {% for field in direct_to_part_form %}
+                    {{ field }}
+                    {% endfor %}
+                    <button type="submit" name="save" class="btn btn-inverse">Go</button>
+                    <input type="hidden" name="jump" value="part" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row-fluid">
     <div class="span12">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
                     <i class="icon-th"></i>
                 </span>
-                <h5>Parts Index</h5>
+                <h5>Location Index</h5>
             </div>
             <div class="widget-content nopadding">
                 <table class="table table-bordered data-table">
@@ -37,7 +70,6 @@
                     <tbody>
                         {% for l in locations %}
                         <tr>
-                            
                             <td>
                                 <a href="{{ l.get_absolute_url }}">{{ l.location_code }}</a>
                             </td>
