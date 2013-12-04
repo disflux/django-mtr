@@ -1,0 +1,46 @@
+
+<div class="row-fluid">
+    <div class="span7">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Insert inventory count</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <form id="count_form" class="well form-horizontal" action="" method="post" autocomplete="off">
+                    {% csrf_token %}
+                    
+                    <div class="control-group">
+                        {% for field in inventoryform %}
+                        <label class="control-label" for="id_company">{{ field.label }}</label>                        
+                        <div class="controls">
+                            {{ field.errors }}
+                            {{ field }}
+                            <span class="help-block">{{ field.help_text }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-actions">
+                        <input type="submit" name="save" class="btn btn-inverse"></input>
+                        <input type="button" class="btn btn-default" onclick="formReset()" value="Clear Form">
+                        <script>
+                            function formReset()
+                            {
+                                document.getElementById("count_form").reset();
+                            }
+                        </script>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    window.onload = function() {
+        var input = document.getElementById("id_part").focus();
+    }
+</script>
+

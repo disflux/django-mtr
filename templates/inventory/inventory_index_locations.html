@@ -27,8 +27,10 @@
                     {% for field in direct_to_location_form %}
                     {{ field }}
                     {% endfor %}
+                    &nbsp;
                     <button type="submit" name="save" class="btn btn-inverse">Go</button>
                     <input type="hidden" name="jump" value="location" />
+
                 </div>
             </div>
         </form>
@@ -42,6 +44,7 @@
                     {% for field in direct_to_part_form %}
                     {{ field }}
                     {% endfor %}
+                    &nbsp;
                     <button type="submit" name="save" class="btn btn-inverse">Go</button>
                     <input type="hidden" name="jump" value="part" />
                 </div>

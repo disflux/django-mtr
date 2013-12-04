@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, Htt
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from actstream import action
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 
 from parts.models import Part
 from parts.forms import NewPartForm, PartLabelForm
@@ -12,9 +13,21 @@ from reports.models import Report
 
 def parts_index(request):
     parts = Part.objects.all()
+    try:
+        page = int(request.GET.get('page', '1'))
+    except ValueError:
+        page = 1
+        
+    paginator = Paginator(parts, 25)
+    
+    try:
+        parts_list = paginator.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        parts_list = paginator.page(1)
     
     return render_to_response('parts/parts_index.html',
-                              {'parts': parts,
+                              {
+                                'parts': parts_list,
                               },
                               context_instance=RequestContext(request))
 

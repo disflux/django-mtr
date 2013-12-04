@@ -27,9 +27,9 @@ def generate_inspection_report(request, lot_number):
     
     p.setFont("Helvetica", 9)
     if report.heat_number:
-        p.drawString(155*mm,210*mm, "HEAT # %s" % report.heat_number)
+        p.drawString(155*mm,211*mm, "HEAT # %s" % report.heat_number)
     if report.mfg_lot_number:
-        p.drawString(135*mm,205*mm, "MFG Lot # %s" % report.mfg_lot_number)
+        p.drawString(155*mm,209*mm, "MFG Lot # %s" % report.mfg_lot_number)
     p.drawString(155*mm,206*mm, "%s Lot # %s" %
                    (settings.PDF_COMPANY_SHORT_NAME, report.lot_number))
     p.setFont("Helvetica", 9)

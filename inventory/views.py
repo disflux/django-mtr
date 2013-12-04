@@ -50,7 +50,7 @@ def new_count(request):
             return HttpResponseRedirect(reverse('inventory.views.new_count'))
     else:
         inventoryform = InventoryForm()
-    return render_to_response('inventory/new_count.html',
+    return render_to_response('inventory/new_count_bare.html',
                               {
                                 'inventoryform': inventoryform,
                                 'recent_counts': recent_counts,

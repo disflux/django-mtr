@@ -27,7 +27,7 @@
                 <h5>Parts Index</h5>
             </div>
             <div class="widget-content nopadding">
-                <table class="table table-bordered data-table">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Part #</th>
@@ -36,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for part in parts %}
+                        {% for part in parts.object_list %}
                         <tr>
                             
                             <td>
@@ -52,6 +52,7 @@
                         {% endfor %}
                     </tbody>
                 </table>
+                {{ parts.render }}
             </div>
         </div>
     </div>
