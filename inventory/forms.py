@@ -17,6 +17,7 @@ class InventoryForm(forms.Form):
     part = forms.CharField()
     location = forms.CharField()
     inventory_count = forms.IntegerField()
+    location_complete = forms.BooleanField(required=False)
     
 class DirectToLocationForm(forms.Form):
     location = LocationChoice()

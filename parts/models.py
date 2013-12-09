@@ -25,6 +25,15 @@ class Part(models.Model):
         self.description = self.description.upper()
         super(Part, self).save(*args, **kwargs)
         
+    def get_stocking_cost(self):
+        from inventory.models import PartValuation
+        cost = PartValuation.objects.get(part=self)
+        return cost.stocking_cost
+
+    def get_uom(self):
+        from inventory.models import PartValuation
+        cost = PartValuation.objects.get(part=self)
+        return cost.uom        
     @models.permalink
     def get_absolute_url(self):
         return ('parts.views.part', [str(self.part_number)])

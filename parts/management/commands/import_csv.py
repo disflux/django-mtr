@@ -7,7 +7,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         with open('allinventory.csv', 'rb') as csvfile:
             invreader = csv.reader(csvfile, delimiter=',')
-            i = 0
             for row in invreader:
                 part_number = row[0].strip().upper()
                 description = row[1].strip().upper().replace("''", '"')
@@ -17,7 +16,6 @@ class Command(BaseCommand):
                     part.description = description
                 part.product_code = product_code
                 part.save()
-                print "PART: %s | DESC: %s | P: %s" % (part_number, description, product_code)
-                i += 1
+                self.stdout.write("PART: %s | DESC: %s | P: %s" % (part_number, description, product_code))
 
         self.stdout.write("\nFinished.\n")

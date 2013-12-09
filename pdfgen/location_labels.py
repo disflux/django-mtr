@@ -12,7 +12,7 @@ from reportlab.pdfgen import canvas
 from inventory.models import InventoryLocation
 
 def location_labels(request):
-    locations = InventoryLocation.objects.filter(location_code__startswith='SP')
+    locations = InventoryLocation.objects.filter(location_code__startswith='ATR')
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="locations.pdf"'
     p = canvas.Canvas(response)

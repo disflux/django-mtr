@@ -91,7 +91,7 @@
             </div>
             <div class="widget-content">
             {% for r in recent_counts %}
-            <li>{{ r.counter }} counted <strong>{{ r.inventory_count }}</strong> pieces of <strong>{{ r.part }}</strong> in location <strong>{{ r.location }}</strong></li>
+            <li>{{ r.counter }} counted <strong>{{ r.inventory_count }}</strong> pieces of <strong><a href="{{ r.part.get_absolute_url}}">{{ r.part }}</a></strong> in location <strong><a href="{{ r.location.get_absolute_url }}">{{ r.location }}</a></strong></li>
             {% endfor %}   
             </div>
         </div>
