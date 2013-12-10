@@ -1,0 +1,80 @@
+{% extends "base/main.html" %}
+{% load humanize %}
+
+{% block head %}
+{% endblock %}
+
+{% block inventory_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+<a href="{% url 'inventory.views.dashboard' %}" class="current">Inventory</a>
+{% endblock %}
+
+{% block page_title %}Inventory Dashboard{% endblock %}
+{% block title %}Inventory Dashboard{% endblock %}
+
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span6">
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_company">Jump Direct To Location</label>
+                <div class="controls">
+                    {% for field in direct_to_location_form %}
+                    {{ field }}
+                    {% endfor %}
+                    &nbsp;
+                    <button type="submit" name="save" class="btn btn-inverse">Go</button>
+                    <input type="hidden" name="jump" value="location" />
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="span6">
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_company">Jump Direct To Part</label>
+                <div class="controls">
+                    {% for field in direct_to_part_form %}
+                    {{ field }}
+                    {% endfor %}
+                    &nbsp;
+                    <button type="submit" name="save" class="btn btn-inverse">Go</button>
+                    <input type="hidden" name="jump" value="part" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="col-xs-12">
+        <div class="widget-box">
+            <div class="widget-title"><span class="icon"><i class="icon-signal"></i></span><h5>Inventory Statistics</h5><div class="buttons"></div></div>
+            <div class="widget-content">
+                <div class="row-fluid">
+                    <div class="span6">
+                        <ul class="site-stats">
+                            <li><div class="cc"><i class="icon-cog"></i> <strong>{{ part_numbers }}</strong> <small>Total Part Numbers</small></div></li>
+                            <li><div class="cc"><i class="icon-chevron-right"></i> <strong>{{ part_stock }}</strong> <small>Part Numbers with stock</small></div></li>
+                            <li><div class="cc"><i class="icon-bullhorn"></i> <strong>${{ valuation.valuation|intcomma }}</strong> <small>Total Inventory</small></div></li>
+                            <li><div class="cc"><i class="icon-map-marker"></i> <strong>{{ bin_locations|intcomma }}</strong> <small>Tracked Bin Locations</small></div></li>
+                        </ul>
+                    </div>
+                    <div class="span6">
+                        <ul class="site-stats">
+                            <li><div class="cc"><i class="icon-info-sign"></i> <strong>{{ raw_lbs.lbs|intcomma }}</strong> <small>pounds of raw material</small></div></li>
+                            <li><div class="cc"><i class="icon-info-sign"></i> <strong>{{ pcs.pcs|intcomma }}</strong> <small>Individual Pieces</small></div></li>
+                            <li><div class="cc"><i class="icon-tag"></i> <strong>${{ avg_cost|floatformat:4 }}</strong> <small>Average Part Cost</small></div></li>
+                        </ul>
+                    </div>
+                </div>							
+            </div>
+        </div>					
+    </div>
+</div>
+{% endblock %}

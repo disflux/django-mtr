@@ -74,12 +74,40 @@
                                 document.getElementById("count_form").reset();
                             }
                         </script>
+                        <script>
+                            $("#id_location").focusout(function () {
+                                var $form = $("#count_form")
+                                var $inputs = $form.find("input, select, button, textarea");
+                                var serializedData = $form.serialize();
+                                $.ajax({ // create an AJAX call...
+                                    data: serializedData, // get the form data
+                                    type: $(this).attr('method'), // GET or POST
+                                    url: "/inventory/ajax/location/", // the file to call
+                                    success: function(response) { // on success..
+                                        $("#location_box").hide().html(response).fadeIn("slow");
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Location Details</h5>
+            </div>
+            <div class="widget-content" id="location_box">
+                Please scan a part number and location to see details.    
+            </div>
+        </div>
+    </div>
 
     <div class="span5">
         <div class="widget-box">

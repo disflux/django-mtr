@@ -17,15 +17,22 @@ class InventoryLocation(models.Model):
 class InventoryCount(models.Model):
     part = models.ForeignKey(Part)
     location = models.ForeignKey(InventoryLocation)
-    inventory_count = models.IntegerField()
+    inventory_count = models.IntegerField(null=True)
     count_timestamp = models.DateTimeField(auto_now_add=True)
-    counter = models.ForeignKey(User, related_name='count_user')
+    counter = models.ForeignKey(User, related_name='count_user', null=True)
+    scans = models.IntegerField(null=True)
     audited = models.BooleanField(default=False)
     auditor = models.ForeignKey(User, null=True, related_name='audit_user')
     audit_timestamp = models.DateTimeField(null=True)
+    stocking_value = models.DecimalField(null=True, decimal_places=4,
+                                         max_digits=12)
     
     class Meta:
         ordering = ['part']
+
+    def save(self, *args, **kwargs):
+        self.stocking_value = self.get_scan_value()
+        super(InventoryCount, self).save(*args, **kwargs)
     
     def __unicode__(self):
         return "%s: %s pcs" % (self.part, self.inventory_count)

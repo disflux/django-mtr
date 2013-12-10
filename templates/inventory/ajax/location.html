@@ -1,0 +1,49 @@
+{% if count > 0 %}
+<div class="alert alert-danger">
+    <strong>WARNING!</strong> This part has previous counts at this location. Did you mean to count them again?
+    <br /><br />
+<p><strong>{{ count_details.counter.username }}</strong> already counted {{ count_details.inventory_count }} pcs of {{ count_details.part }}</p>
+<ul>
+    <li>To add additional pieces of <strong>{{ count_details.part }}</strong> to {{ count_details.location }}, continue filling out the form and submit</li>
+    <li>To subtract pieces, enter a <strong>negative number</strong> of how many pieces you want to remove</li>
+    <li>To take no further action, refresh this page by pressing the F5 button</li>
+</ul>
+</div>
+{% else %}
+<div class="alert alert-success">
+    <strong>OK</strong> No previous counts of this part at this location
+</div>
+{% endif %}
+
+{% if other_scans %}
+<h3>Scans of this part</h3>
+<table class="table table-bordered">
+    <tr>
+        <th>Location</th>
+        <th>Count</th>
+    </tr>
+    {% for s in other_scans %}
+    <tr>
+        <td>
+            {{ s.location.location_code }}
+        </td>
+        <td>
+            {{ s.inventory_count }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
+<h3>Pre Inventory Count</h3>
+<table class="table table-bordered">
+<tr>
+    <th>Pieces</th>
+    <td>{{ valuation.quantity }}</td>
+</tr>
+<tr>
+    <th>Ext Cost</th>
+    <td>${{ valuation.ext_value }}</td>
+</tr> 
+</table
+    

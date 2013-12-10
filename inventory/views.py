@@ -7,8 +7,51 @@ from django.template import RequestContext
 from actstream import action
 
 from parts.models import Part
-from inventory.models import InventoryLocation, InventoryCount
+from inventory.models import InventoryLocation, InventoryCount, PartValuation
 from inventory.forms import InventoryForm, DirectToPartForm, DirectToLocationForm
+
+
+def dashboard(request):
+    direct_to_part_form = DirectToPartForm(request.POST)
+    direct_to_location_form = DirectToLocationForm(request.POST)
+    
+    if 'jump' in request.POST:
+        jump = request.POST.get('jump', None)
+        if jump == 'part':
+            part = direct_to_part_form.cleaned_data['jump']
+            partobj = Part.objects.get(id=part)
+            return HttpResponseRedirect(reverse('inventory.views.part', kwargs={'part_number': partobj.part_number}))
+        if jump == 'location':
+            if direct_to_location_form.is_valid():
+                location = direct_to_location_form.cleaned_data['location']
+                return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': location.location_code}))
+                
+    part_numbers = Part.objects.all().count()
+    parts_with_stock = PartValuation.objects.all().count()
+    scans = InventoryCount.objects.all().count()
+    valuation = PartValuation.objects.all().aggregate(valuation=Sum('ext_value'))
+    raw_lbs = PartValuation.objects.filter(uom='LB').aggregate(lbs=Sum('quantity'))
+    pcs = PartValuation.objects.filter(uom='EA').aggregate(pcs=Sum('quantity'))
+    total_pcs = PartValuation.objects.all().aggregate(total_pcs=Sum('quantity'))
+    
+    avg_cost = valuation['valuation'] / total_pcs['total_pcs']
+    
+    bin_locations = InventoryLocation.objects.all().count()
+
+    return render_to_response('inventory/dashboard.html',
+                              {
+                                  'part_numbers': part_numbers,
+                                  'part_stock': parts_with_stock,
+                                  'scans': scans,
+                                  'valuation': valuation,
+                                  'raw_lbs': raw_lbs,
+                                  'pcs': pcs,
+                                  'avg_cost': avg_cost,
+                                  'direct_to_location_form': direct_to_location_form,
+                                  'direct_to_part_form': direct_to_part_form,
+                                  'bin_locations': bin_locations,
+                              },
+                              context_instance=RequestContext(request))
 
 def inventory_index(request):
     locations = InventoryLocation.objects.all()
@@ -46,7 +89,15 @@ def new_count(request):
             complete = inventoryform.cleaned_data['location_complete']
             part = get_object_or_404(Part, part_number=part_number)
             location = get_object_or_404(InventoryLocation, location_code=location)
-            inv_count = InventoryCount(part=part, location=location, inventory_count=count, counter=request.user, count_complete=complete)
+            inv_count, _created = InventoryCount.objects.get_or_create(part=part, location=location)
+            if _created:
+                inv_count.inventory_count = count
+                inv_count.scans = 1
+            else:
+                inv_count.inventory_count += count
+                inv_count.scans += 1
+            inv_count.counter = request.user
+            inv_count.count_complete=complete
             inv_count.save()
             messages.success(request, 'Inventory Count Added')
             return HttpResponseRedirect(reverse('inventory.views.new_count'))
@@ -62,18 +113,13 @@ def new_count(request):
 def location(request, location_code):
     location = InventoryLocation.objects.get(location_code=location_code)
     total_part_numbers = InventoryCount.objects.filter(location=location).count()
-    scanned_value = 0
-    for scan in location.inventorycount_set.all():
-        scanned_value += scan.get_scan_value()
-
-    agg = InventoryCount.objects.filter(location=location).aggregate(total_parts=Sum('inventory_count'))
+    agg = InventoryCount.objects.filter(location=location).aggregate(stocking_value=Sum('stocking_value'), total_parts=Sum('inventory_count'))
         
     
     return render_to_response('inventory/location.html',
                               {
                                   'location': location,
                                   'total_part_numbers': total_part_numbers,
-                                  'scanned_value': scanned_value,
                                   'agg': agg,
 
                               },

@@ -61,14 +61,16 @@ Location {{ location }}
             <div class="widget-content nopadding">
                 <table class="table table-bordered">
                     <tr>
+                        <th></th>
                         <th>Total Part Numbers</th>
                         <th>Total # of Parts</th>
                         <th>Scanned Inventory Value</th>
                     </tr>
                     <tr>
+                        <th>Pre Inventory</th>
                         <td>{{ total_part_numbers }}</td>
                         <td>{{ agg.total_parts }}</td>
-                        <td>${{ scanned_value }}</td>
+                        <td>${{ agg.stocking_value }}</td>
                     </tr>
                 </table>
             </div>
@@ -96,6 +98,7 @@ Location {{ location }}
                         <th>Stocking Cost/UOM</th>
                         <th>Scan Value</th>
                         <th>Scan Time</th>
+                        <th># Scans</th>
                         <th>Counter</th>
                         <th>Audited?</th>
                         <th>Auditor</th>
@@ -117,6 +120,7 @@ Location {{ location }}
                         <td>${{ scan.part.get_stocking_cost }}/{{ scan.part.get_uom }}</td>
                         <td>${{ scan.get_scan_value }}</td>
                         <td>{{ scan.count_timestamp }}</td>
+                        <td>{{ scan.scans }}</td>
                         <td>{{ scan.counter }}</td>
                         <td>{{ scan.audited }}</td>
                         <td>{{ scan.auditor }}</td>
