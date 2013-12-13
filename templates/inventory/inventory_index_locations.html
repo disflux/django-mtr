@@ -67,7 +67,9 @@
                     <thead>
                         <tr>
                             <th>Rack Location</th>
-                            <th># Parts in this Location</th>
+                            <th># of Scans</th>
+                            <th>Fully Audited?</th>
+                            <th>Scan Value</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -77,10 +79,15 @@
                                 <a href="{{ l.get_absolute_url }}">{{ l.location_code }}</a>
                             </td>
                             <td>
-                                {% for part in l.inventorycount_set.all %}
-                                {{ part }}
-                                {% endfor %}
+                                {{ l.scan_count }}
                             </td>
+                            <td>
+                                {{ l.check_audits }}
+                            </td>
+                            <td>
+                                ${{ l.scan_value|default:"0" }}
+                            </td>
+
 
                         </tr>
                         {% endfor %}

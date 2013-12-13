@@ -28,7 +28,6 @@ def dashboard(request):
                 
     part_numbers = Part.objects.all().count()
     parts_with_stock = PartValuation.objects.all().count()
-    scans = InventoryCount.objects.all().count()
     valuation = PartValuation.objects.all().aggregate(valuation=Sum('ext_value'))
     raw_lbs = PartValuation.objects.filter(uom='LB').aggregate(lbs=Sum('quantity'))
     pcs = PartValuation.objects.filter(uom='EA').aggregate(pcs=Sum('quantity'))
@@ -37,6 +36,23 @@ def dashboard(request):
     avg_cost = valuation['valuation'] / total_pcs['total_pcs']
     
     bin_locations = InventoryLocation.objects.all().count()
+
+    scans = InventoryCount.objects.all().count()
+    scan_times = InventoryCount.objects.all().aggregate(scans=Sum('scans'))
+    #scan_locations = InventoryCount.objects.order_by('location').distinct('location')
+    
+    scanned = InventoryCount.objects.all()
+    pre_value = 0
+    skipped = 0
+    for s in scanned:
+        try:
+            value_obj = PartValuation.objects.get(part=s.part)
+            pre_value += value_obj.ext_value
+        except:
+            skipped += 1
+
+    post_value = InventoryCount.objects.all().aggregate(post_value=Sum('stocking_value'))
+    
 
     return render_to_response('inventory/dashboard.html',
                               {
@@ -50,11 +66,15 @@ def dashboard(request):
                                   'direct_to_location_form': direct_to_location_form,
                                   'direct_to_part_form': direct_to_part_form,
                                   'bin_locations': bin_locations,
+                                  'scan_times': scan_times,
+                                  'pre_value': pre_value,
+                                  'post_value': post_value['post_value'],
+                                  'skipped': skipped,
                               },
                               context_instance=RequestContext(request))
 
 def inventory_index(request):
-    locations = InventoryLocation.objects.all()
+    locations = InventoryLocation.objects.filter(inventorycount__audited=False).order_by('location_code').distinct()
     direct_to_part_form = DirectToPartForm(request.POST)
     direct_to_location_form = DirectToLocationForm(request.POST)
     

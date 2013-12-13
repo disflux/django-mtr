@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'^part/(?P<part_number>\.+)$', 'inventory.views.part'),
     url(r'^audit/(?P<scan_id>\d+)$', 'inventory.views.switch_audit'),
     url(r'^location_labels/$', 'pdfgen.location_labels.location_labels'),
+    url(r'^location_scan_sheet/$', 'pdfgen.location_scan_sheet.location_scan_sheet'),
     url(r'^location/(?P<location_code>.+)$', 'inventory.views.location'),
     
     url(r'^ajax/location/$', 'inventory.ajax.location_ajax'),

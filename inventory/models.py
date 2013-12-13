@@ -1,13 +1,31 @@
 from django.db import models
 from parts.models import Part
+from django.db.models import Avg, Sum
 from django.contrib.auth.models import User
 
 class InventoryLocation(models.Model):
     location_code = models.CharField(max_length=32, unique=True)
     count_complete = models.BooleanField(default=False)
     
+    class Meta:
+        ordering = ['location_code']
+    
     def __unicode__(self):
         return str(self.location_code)
+        
+    def check_audits(self):
+        no_audit = InventoryCount.objects.filter(location=self, audited=False).count()
+        if no_audit > 0:
+            return False
+        else:
+            return True
+    
+    def scan_count(self):
+        return InventoryCount.objects.filter(location=self).count()
+        
+    def scan_value(self):
+        agg = InventoryCount.objects.filter(location=self).aggregate(stocking_value=Sum('stocking_value'), total_parts=Sum('inventory_count'))
+        return agg['stocking_value']
         
     @models.permalink
     def get_absolute_url(self):
