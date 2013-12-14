@@ -34,9 +34,14 @@ class Part(models.Model):
         from inventory.models import PartValuation
         cost = PartValuation.objects.get(part=self)
         return cost.uom        
+    
     @models.permalink
     def get_absolute_url(self):
         return ('parts.views.part', [str(self.part_number)])
+        
+    @models.permalink
+    def get_absolute_inventory_url(self):
+        return ('inventory.views.part', [str(self.part_number)])
 
         
 

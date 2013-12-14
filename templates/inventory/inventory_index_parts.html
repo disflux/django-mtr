@@ -1,0 +1,112 @@
+{% extends "base/main.html" %}
+{% load thumbnail %}
+
+{% block head %}
+<script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
+{% endblock %}
+
+{% block inventory_active %}active open{% endblock %}
+
+{% block breadcrumb_links %}
+    <a href="#" class="current">Inventory Index</a>
+{% endblock %}
+
+{% block page_title %}Browse Locations{% endblock %}
+{% block title %}Browse Locations{% endblock %}
+
+
+{% block content %}
+<div class="row-fluid">
+    <div class="span6">
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_company">Jump Direct To Location</label>
+                <div class="controls">
+                    {% for field in direct_to_location_form %}
+                    {{ field }}
+                    {% endfor %}
+                    &nbsp;
+                    <button type="submit" name="save" class="btn btn-inverse">Go</button>
+                    <input type="hidden" name="jump" value="location" />
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="span6">
+        <form class="form-horizontal" action="" method="post" autocomplete="off">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label" for="id_company">Jump Direct To Part</label>
+                <div class="controls">
+                    {% for field in direct_to_part_form %}
+                    {{ field }}
+                    {% endfor %}
+                    &nbsp;
+                    <button type="submit" name="save" class="btn btn-inverse">Go</button>
+                    <input type="hidden" name="jump" value="part" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-th"></i>
+                </span>
+                <h5>Location Index</h5>
+            </div>
+            <div class="widget-content nopadding">
+                <table class="table table-bordered data-table">
+                    <thead>
+                        <tr>
+                            <th>Part #</th>
+                            <th>Counted Parts</th>
+                            <th>Counted Part Value</th>
+                            <th>Pre Inventory Count</th>
+                            <th>Pre Inventory Value</th>
+                            <th>Pieces Difference</th>
+                            <th>$ Difference</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in parts %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'inventory.views.part_inv' part_number=p.part.part_number %}">{{ p.part }}</a>
+                            </td>
+                            <td>
+                                {{ p.get_combined_part_count }}
+                            </td>
+                            <td>
+                                {{ p.get_combined_inventory_value }}
+                            </td>
+                            <td>
+                                {{ p.get_pre_inventory_count }}
+                            </td>
+                            <td>
+                                {{ p.get_pre_inventory_value }}
+                            </td>
+                            <td>
+                                {{ p.get_difference }}
+                            </td>
+                            <td>
+                                {{ p.get_dollar_difference }}
+                            </td>
+
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

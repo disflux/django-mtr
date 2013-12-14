@@ -7,10 +7,10 @@ class Command(BaseCommand):
         if location_type == 'rack':
             self.stdout.write("Creating Rack Locations")
             #rack_rows = ['A', 'B', 'C', 'H', 'I', 'J', 'K', 'L']
-            rack_rows = ['G']
+            rack_rows = ['CP']
             for row in rack_rows:
-                for i in range(1,8):
-                    for j in range(0,29):
+                for i in range(1,6):
+                    for j in range(0,11):
                         location_code = "%s-%s%02d" % (row, i, j)
                         location, created = InventoryLocation.objects.get_or_create(location_code=location_code)
                         location.count_complete = False
@@ -27,6 +27,8 @@ class Command(BaseCommand):
                     location.count_complete = False
                     location.save()
                     self.stdout.write("Added location %s" % (location_code, ))
+                    
+
         
         if location_type == 'atr':
             self.stdout.write("Creating atr Locations")

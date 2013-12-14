@@ -88,13 +88,14 @@
                         <ul class="site-stats">
                             <li><div class="cc"><i class="icon-barcode"></i> <strong>{{ scans }}</strong> <small>Scanned Parts</small></div></li>
                             <li><div class="cc"><i class="icon-chevron-right"></i> <strong>{{ scan_times.scans }}</strong> <small>Total Scans</small></div></li>
+                            <li><div class="cc"><i class="icon-tag"></i> <strong>{{ percent_difference|floatformat:4 }}%</strong> <small>Projected Percentage Change</small></div></li>
                         </ul>
                     </div>
                     <div class="span6">
                         <ul class="site-stats">
                             <li><div class="cc"><i class="icon-info-sign"></i> <strong>${{ pre_value|intcomma }}</strong> <small>Value of scanned items pre-inventory ({{ skipped }} parts not found)</small></div></li>
                             <li><div class="cc"><i class="icon-info-sign"></i> <strong>${{ post_value|intcomma }}</strong> <small>Value of scanned inventory</small></div></li>
-                            <li><div class="cc"><i class="icon-tag"></i> <strong>${{ avg_cost|floatformat:4 }}</strong> <small>Average Part Cost</small></div></li>
+                            <li><div class="cc"><i class="icon-tag"></i> <strong>${{ dollar_difference|intcomma }}</strong> <small>Projected Dollar Change</small></div></li>
                         </ul>
                     </div>
                 </div>							

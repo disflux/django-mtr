@@ -63,6 +63,36 @@ class InventoryCount(models.Model):
             value = 0
         return value
         
+    def get_combined_part_count(self):
+        parts = InventoryCount.objects.filter(part=self.part).aggregate(total_count=Sum('inventory_count'))
+        return parts['total_count']
+        
+    def get_combined_inventory_value(self):
+        parts = InventoryCount.objects.filter(part=self.part).aggregate(value=Sum('stocking_value'))
+        return parts['value']
+        
+    def get_pre_inventory_count(self):
+        part = PartValuation.objects.get(part=self.part)
+        return part.quantity
+        
+    def get_pre_inventory_value(self):
+        part = PartValuation.objects.get(part=self.part)
+        return part.ext_value
+        
+    def get_difference(self):
+        post = self.get_combined_part_count()
+        pre = self.get_pre_inventory_count()
+        return post - pre
+        
+    def get_dollar_difference(self):
+        post = self.get_combined_inventory_value()
+        pre = self.get_pre_inventory_value()
+        
+        return post - pre
+        
+        
+        
+        
 class PartValuation(models.Model):
     part = models.ForeignKey(Part, unique=True)
     uom = models.CharField(max_length=4, null=True)
@@ -70,6 +100,12 @@ class PartValuation(models.Model):
     quantity = models.IntegerField(null=True)
     stocking_cost = models.DecimalField(decimal_places=4, max_digits=12, null=True)
     ext_value = models.DecimalField(null=True, decimal_places=4, max_digits=12)
+    
+    class Meta:
+        ordering = ['part']
+    
+    def __unicode__(self):
+        return "%s (pcs: %s)" % (self.part.part_number, self.quantity)
     
 class InventoryValuation(models.Model):
     date = models.DateTimeField(auto_now_add=True)

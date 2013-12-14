@@ -27,7 +27,7 @@ def dashboard(request):
                 return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': location.location_code}))
                 
     part_numbers = Part.objects.all().count()
-    parts_with_stock = PartValuation.objects.all().count()
+    parts_with_stock = PartValuation.objects.filter(quantity__gt=0).count()
     valuation = PartValuation.objects.all().aggregate(valuation=Sum('ext_value'))
     raw_lbs = PartValuation.objects.filter(uom='LB').aggregate(lbs=Sum('quantity'))
     pcs = PartValuation.objects.filter(uom='EA').aggregate(pcs=Sum('quantity'))
@@ -42,17 +42,25 @@ def dashboard(request):
     #scan_locations = InventoryCount.objects.order_by('location').distinct('location')
     
     scanned = InventoryCount.objects.all()
+    uniques = []
+    for s in scanned:
+        if s.part not in uniques:
+            uniques.append(s.part)
     pre_value = 0
     skipped = 0
-    for s in scanned:
+    for s in uniques:
         try:
-            value_obj = PartValuation.objects.get(part=s.part)
+            value_obj = PartValuation.objects.get(part=s)
             pre_value += value_obj.ext_value
         except:
             skipped += 1
 
+    
     post_value = InventoryCount.objects.all().aggregate(post_value=Sum('stocking_value'))
     
+    dollar_difference = float(post_value['post_value']) - float(pre_value)
+    percent_difference = (1.0 - (float(post_value['post_value']) / float(pre_value))) * 100
+        
 
     return render_to_response('inventory/dashboard.html',
                               {
@@ -70,6 +78,8 @@ def dashboard(request):
                                   'pre_value': pre_value,
                                   'post_value': post_value['post_value'],
                                   'skipped': skipped,
+                                  'dollar_difference': dollar_difference,
+                                  'percent_difference': percent_difference,
                               },
                               context_instance=RequestContext(request))
 
@@ -92,6 +102,39 @@ def inventory_index(request):
     return render_to_response('inventory/inventory_index_locations.html',
                               {
                                 'locations': locations,
+                                'direct_to_location_form': direct_to_location_form,
+                                'direct_to_part_form': direct_to_part_form,
+                              },
+                              context_instance=RequestContext(request))
+                              
+def inventory_index_parts(request):
+    parts = InventoryCount.objects.all().order_by('part')
+    scanned = InventoryCount.objects.all()
+    uniques = []
+    unique_counts = []
+    for s in scanned:
+        if s.part not in uniques:
+            uniques.append(s.part)
+            unique_counts.append(s)
+
+    direct_to_part_form = DirectToPartForm(request.POST)
+    direct_to_location_form = DirectToLocationForm(request.POST)
+    
+    
+    if 'jump' in request.POST:
+        jump = request.POST.get('jump', None)
+        if jump == 'part':
+            part = direct_to_part_form.cleaned_data['jump']
+            partobj = Part.objects.get(id=part)
+            return HttpResponseRedirect(reverse('inventory.views.part', kwargs={'part_number': partobj.part_number}))
+        if jump == 'location':
+            if direct_to_location_form.is_valid():
+                location = direct_to_location_form.cleaned_data['location']
+                return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': location.location_code}))
+    
+    return render_to_response('inventory/inventory_index_parts.html',
+                              {
+                                'parts': unique_counts,
                                 'direct_to_location_form': direct_to_location_form,
                                 'direct_to_part_form': direct_to_part_form,
                               },
@@ -142,6 +185,18 @@ def location(request, location_code):
                                   'total_part_numbers': total_part_numbers,
                                   'agg': agg,
 
+                              },
+                              context_instance=RequestContext(request))
+                              
+def part_inv(request, part_number):
+    part = Part.objects.get(part_number=part_number)
+    scans = InventoryCount.objects.filter(part=part)
+        
+    
+    return render_to_response('inventory/part.html',
+                              {
+                                  'part': part,
+                                  'scans': scans,
                               },
                               context_instance=RequestContext(request))
 

@@ -123,10 +123,11 @@
                     </ul>
                 </li>
                 
-                <li class="submenu {% block inventory_active %}{% endblock %}" ><a href="#"><i class="icon-barcode"></i> <span>Inventory</span> <span class="label">5</span></a>
+                <li class="submenu {% block inventory_active %}{% endblock %}" ><a href="#"><i class="icon-barcode"></i> <span>Inventory</span> <span class="label">6</span></a>
                     <ul>
                         <li><a href="{% url 'inventory.views.dashboard' %}"><i class="icon-home"></i> Inventory Dashboard</a></li>
                         <li><a href="{% url 'inventory.views.inventory_index' %}"><i class="icon-plus-sign"></i> Location Index</a></li>
+                        <li><a href="{% url 'inventory.views.inventory_index_parts' %}"><i class="icon-plus-sign"></i> Part Index</a></li>
                         <li><a href="{% url 'inventory.views.new_count' %}"><i class="icon-plus-sign"></i> New Count</a></li>
                         <li><a href="{% url 'pdfgen.location_labels.location_labels' %}"><i class="icon-barcode"></i> Generate Location Labels</a></li>
                         <li><a href="{% url 'pdfgen.location_scan_sheet.location_scan_sheet' %}"><i class="icon-barcode"></i> Location Scan Sheet</a></li>
