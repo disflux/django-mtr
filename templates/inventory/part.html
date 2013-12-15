@@ -15,7 +15,7 @@ Location {{ location }}
 <a class="current">{{ location }}</a>
 {% endblock %}
 
-{% block page_title %}Location {{ location }} Details{% endblock %}
+{% block page_title %}Part {{ part }} Scan Details{% endblock %}
 
 
 {% block head %}
@@ -62,8 +62,11 @@ Location {{ location }}
             <div class="widget-content nopadding">
                 <table class="table table-bordered">
                     <tr>
+                        <th>Tools</th>
                         <th>Bin Location</th>
                         <th><strong>Count</strong></th>
+                        <th>On Reserve</th>
+                        <th>Count less Reserve</th>
                         <th>Stocking Cost/UOM</th>
                         <th>Scan Value</th>
                         <th>Scan Time</th>
@@ -72,18 +75,23 @@ Location {{ location }}
                         <th>Audited?</th>
                         <th>Auditor</th>
                     </tr>
-                    {% for scan in scans %}
-                        <td>{{ scan.location.location_code }}</td>
-                        <td><strong>{{ scan.inventory_count }}</strong></td>
-                        <td>${{ scan.part.get_stocking_cost }}/{{ scan.part.get_uom }}</td>
-                        <td>${{ scan.get_scan_value }}</td>
-                        <td>{{ scan.count_timestamp }}</td>
-                        <td>{{ scan.scans }}</td>
-                        <td>{{ scan.counter }}</td>
-                        <td>{{ scan.audited }}</td>
-                        <td>{{ scan.auditor }}</td>
-                    </tr>
+                        {% for scan in scans %}
+                        <tr id="scan_{{ scan.pk }}">
+                            {% include 'inventory/scan_row.html' %}
+                        </tr>
                     {% endfor %}
+                    <script>
+                        $(".audit").live('click', function() {
+                            var $id = $(this).data('id');
+                                $.ajax({
+                                    data: "part=1",
+                                    url: "/inventory/audit/" + $id,
+                                    success: function(response) {
+                                        $("#scan_"+$id).hide().html(response).fadeIn("fast");
+                                    }
+                                });
+                        });
+                        </script>
                 </table>
             </div>
         </div>                                               

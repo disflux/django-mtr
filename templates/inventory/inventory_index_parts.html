@@ -70,6 +70,7 @@
                             <th>Counted Parts</th>
                             <th>Counted Part Value</th>
                             <th>Pre Inventory Count</th>
+                            <th>Applied</th>
                             <th>Pre Inventory Value</th>
                             <th>Pieces Difference</th>
                             <th>$ Difference</th>
@@ -89,6 +90,9 @@
                             </td>
                             <td>
                                 {{ p.get_pre_inventory_count }}
+                            </td>
+                            <td>
+                                {{ p.get_applied_quantity }}
                             </td>
                             <td>
                                 {{ p.get_pre_inventory_value }}

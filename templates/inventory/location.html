@@ -95,6 +95,8 @@ Location {{ location }}
                         <th>Tools</th>
                         <th>Part #</th>
                         <th><strong>Count</strong></th>
+                        <th>On Reserve</th>
+                        <th>Count less Reserve</th>
                         <th>Stocking Cost/UOM</th>
                         <th>Scan Value</th>
                         <th>Scan Time</th>
@@ -104,28 +106,22 @@ Location {{ location }}
                         <th>Auditor</th>
                     </tr>
                     {% for scan in location.inventorycount_set.all %}
-                    {% if scan.audited == False %}
-                    <tr class="unaudited">
-                        <td style="text-align:center;">
-                            <a class="btn btn-mini btn-success" href="{% url 'inventory.views.switch_audit' scan.pk %}">Audit</a>
-                        </td>
-                    {% else %}
-                    <tr class="audited">
-                        <td style="text-align:center;">
-                            <a class="btn btn-mini btn-danger" href="{% url 'inventory.views.switch_audit' scan.pk %}">Un-Audit</a>
-                        </td>
-                    {% endif %}
-                        <td><strong>{{ scan.part }}</strong></td>
-                        <td><strong>{{ scan.inventory_count }}</strong></td>
-                        <td>${{ scan.part.get_stocking_cost }}/{{ scan.part.get_uom }}</td>
-                        <td>${{ scan.get_scan_value }}</td>
-                        <td>{{ scan.count_timestamp }}</td>
-                        <td>{{ scan.scans }}</td>
-                        <td>{{ scan.counter }}</td>
-                        <td>{{ scan.audited }}</td>
-                        <td>{{ scan.auditor }}</td>
-                    </tr>
+                        <tr id="scan_{{ scan.pk }}">
+                            {% include 'inventory/scan_row.html' %}
+                        </tr>
                     {% endfor %}
+                    <script>
+                        $(".audit").live('click', function() {
+                            var $id = $(this).data('id');
+                                $.ajax({
+                                    url: "/inventory/audit/" + $id,
+                                    success: function(response) {
+                                        $("#scan_"+$id).hide().html(response).fadeIn("fast");
+                                    }
+                                });
+                        });
+                    </script>
+                        
                 </table>
             </div>
         </div>                                               

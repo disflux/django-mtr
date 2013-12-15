@@ -12,8 +12,9 @@ class Command(BaseCommand):
             for row in invreader:
                 part_number = row[0].strip().upper()
                 uom = row[1].strip().upper()
-                on_hand = row[2].replace(",","")
-                stocking_cost = row[3].strip().replace(",","")
+                applied = row[2].replace(",","")
+                on_hand = row[3].replace(",","")
+                stocking_cost = row[4].strip().replace(",","")
                 #self.stdout.write("PART: %s | QTY: %s | COST: %s" % (part_number, on_hand, stocking_cost))
                 
                 try:
@@ -23,6 +24,7 @@ class Command(BaseCommand):
                     v.quantity = on_hand
                     v.stocking_cost = stocking_cost
                     v.ext_value = float(v.stocking_cost) * float(v.quantity)
+                    v.applied_quantity = applied
                     self.stdout.write("PART: %s | QTY: %s | COST: %s | EXT: %s" % (v.part.part_number, v.quantity, v.stocking_cost, v.ext_value))
                     v.save()
                     sum += v.ext_value

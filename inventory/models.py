@@ -78,6 +78,10 @@ class InventoryCount(models.Model):
     def get_pre_inventory_value(self):
         part = PartValuation.objects.get(part=self.part)
         return part.ext_value
+    
+    def get_applied_quantity(self):
+        part = PartValuation.objects.get(part=self.part)
+        return part.applied_quantity
         
     def get_difference(self):
         post = self.get_combined_part_count()
@@ -90,6 +94,13 @@ class InventoryCount(models.Model):
         
         return post - pre
         
+    def get_on_reserve(self):
+        pv = PartValuation.objects.get(part=self.part)
+        return pv.applied_quantity
+    
+    def get_less_reserve(self):
+        return self.inventory_count - self.get_on_reserve()
+        
         
         
         
@@ -98,6 +109,7 @@ class PartValuation(models.Model):
     uom = models.CharField(max_length=4, null=True)
     date = models.DateTimeField(auto_now_add=True)
     quantity = models.IntegerField(null=True)
+    applied_quantity = models.IntegerField(null=True, default=0)
     stocking_cost = models.DecimalField(decimal_places=4, max_digits=12, null=True)
     ext_value = models.DecimalField(null=True, decimal_places=4, max_digits=12)
     

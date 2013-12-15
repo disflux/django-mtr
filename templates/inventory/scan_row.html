@@ -1,0 +1,24 @@
+    <td style="text-align:center;">
+        {% if scan.audited == True %}
+            <a data-id="{{ scan.pk }}" class="btn btn-mini btn-danger audit" href="#">Un-Audit</a>
+        {% else %}
+            <a data-id="{{ scan.pk }}" class="btn btn-mini btn-success audit" href="#">Audit</a>
+        {% endif %}
+    </td>
+    {% if part %}
+    <td><strong><a href="{{ scan.location.get_absolute_url }}">{{ scan.location }}</a></strong></td>
+    {% else %}
+        <td><strong><a href="{% url 'inventory.views.part_inv' part_number=scan.part.part_number %}">{{ scan.part }}</a></strong></td>
+    {% endif %}
+        
+
+    <td><strong>{{ scan.inventory_count }}</strong></td>
+    <td>{{ scan.get_on_reserve }}</td>
+    <td>{{ scan.get_less_reserve }}</td>
+    <td>${{ scan.part.get_stocking_cost }}/{{ scan.part.get_uom }}</td>
+    <td>${{ scan.get_scan_value }}</td>
+    <td>{{ scan.count_timestamp }}</td>
+    <td>{{ scan.scans }}</td>
+    <td>{{ scan.counter }}</td>
+    <td>{{ scan.audited }}</td>
+    <td>{{ scan.auditor }}</td>

@@ -47,11 +47,13 @@ def dashboard(request):
         if s.part not in uniques:
             uniques.append(s.part)
     pre_value = 0
+    reserve_value = 0
     skipped = 0
     for s in uniques:
         try:
             value_obj = PartValuation.objects.get(part=s)
             pre_value += value_obj.ext_value
+            reserve_value += value_obj.applied_quantity * value_obj.stocking_cost
         except:
             skipped += 1
 
@@ -60,6 +62,8 @@ def dashboard(request):
     
     dollar_difference = float(post_value['post_value']) - float(pre_value)
     percent_difference = (1.0 - (float(post_value['post_value']) / float(pre_value))) * 100
+    
+    reserve_difference = float(dollar_difference) - float(reserve_value)
         
 
     return render_to_response('inventory/dashboard.html',
@@ -77,9 +81,11 @@ def dashboard(request):
                                   'scan_times': scan_times,
                                   'pre_value': pre_value,
                                   'post_value': post_value['post_value'],
+                                  'reserve_value': reserve_value,
                                   'skipped': skipped,
                                   'dollar_difference': dollar_difference,
                                   'percent_difference': percent_difference,
+                                  'reserve_difference': reserve_difference,
                               },
                               context_instance=RequestContext(request))
 
@@ -91,9 +97,9 @@ def inventory_index(request):
     if 'jump' in request.POST:
         jump = request.POST.get('jump', None)
         if jump == 'part':
-            part = direct_to_part_form.cleaned_data['jump']
-            partobj = Part.objects.get(id=part)
-            return HttpResponseRedirect(reverse('inventory.views.part', kwargs={'part_number': partobj.part_number}))
+            if direct_to_part_form.is_valid():
+                part = direct_to_part_form.cleaned_data['part']
+                return HttpResponseRedirect(reverse('inventory.views.part_inv', kwargs={'part_number': part.part_number}))
         if jump == 'location':
             if direct_to_location_form.is_valid():
                 location = direct_to_location_form.cleaned_data['location']
@@ -124,9 +130,9 @@ def inventory_index_parts(request):
     if 'jump' in request.POST:
         jump = request.POST.get('jump', None)
         if jump == 'part':
-            part = direct_to_part_form.cleaned_data['jump']
-            partobj = Part.objects.get(id=part)
-            return HttpResponseRedirect(reverse('inventory.views.part', kwargs={'part_number': partobj.part_number}))
+            if direct_to_part_form.is_valid():
+                part = direct_to_part_form.cleaned_data['part']
+                return HttpResponseRedirect(reverse('inventory.views.part_inv', kwargs={'part_number': part.part_number}))
         if jump == 'location':
             if direct_to_location_form.is_valid():
                 location = direct_to_location_form.cleaned_data['location']
@@ -202,6 +208,10 @@ def part_inv(request, part_number):
 
 def switch_audit(request, scan_id):
     scan = InventoryCount.objects.get(pk=scan_id)
+    if 'part' in request.GET:
+        part = 1
+    else:
+        part = None
     if scan.audited == True:
         scan.audited = False
         scan.auditor = None
@@ -209,7 +219,16 @@ def switch_audit(request, scan_id):
         scan.audited = True
         scan.auditor = request.user
     scan.save()
-    return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': scan.location.location_code}))
+
+    #if request.is_ajax():
+    return render_to_response('inventory/scan_row.html',
+                                  {
+                                      'scan': scan,
+                                      'part': part,
+                                  },
+                                  context_instance=RequestContext(request))
+    #else:
+    #    return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': scan.location.location_code}))
 
 def part(request, part_number):
     pass
