@@ -169,11 +169,14 @@
 
         <div id="content">
             <div id="content-header">
-                <h1>{% block page_title %} {% endblock %}</h1>
                 
+                <h1>{% block page_title %} {% endblock %}</h1>
+                <div class="pull-right">
                 {% block right_buttons %}
                 
                 {% endblock %}
+                </div>
+                
             </div>
             
             {% block no_breadcrumb %}

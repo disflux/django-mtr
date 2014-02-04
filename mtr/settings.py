@@ -153,6 +153,7 @@ INSTALLED_APPS = (
     
     # Audit/activity log goes after all apps
     'actstream',
+    #'debug_toolbar',
 )
 
 # Activity log/audit log settings

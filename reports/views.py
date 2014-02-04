@@ -43,6 +43,14 @@ def report(request, lot_number):
     audit_log = target_stream(report)
     orders = OrderLineItem.objects.filter(report=report)
     newdoc = NewDocumentForm(None)
+    try:
+        next_report = report.get_next_by_created_at()
+    except:
+        next_report = None
+    try:
+        prev_report = report.get_previous_by_created_at()
+    except:
+        prev_report = None
 
     if 'document_button' in request.POST:
         newdoc = NewDocumentForm(request.POST, request.FILES)
@@ -67,6 +75,8 @@ def report(request, lot_number):
                                   'new_document_form': newdoc,
                                   'orders': orders,
                                   'audit_log': audit_log,
+                                  'next_report': next_report,
+                                  'prev_report': prev_report,
                               },
                               context_instance=RequestContext(request))
 

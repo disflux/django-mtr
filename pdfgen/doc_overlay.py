@@ -61,5 +61,6 @@ def doc_overlay(request, document_uuid, lot_number, qrcode=True):
     
     # finally, write "output" to a real file
     outputPDF.write(response)
+    #f.close()
     action.send(request.user, verb="viewed document", action_object=document, target=report)
     return response

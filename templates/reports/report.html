@@ -14,9 +14,19 @@ Lot # {{ report.lot_number }}
 {% block breadcrumb_links %}
 <a href="{% url 'reports.views.reports_index' %}">Reports</a>
 <a href="#" class="current">Lot # {{ report.lot_number }}</a>
+
 {% endblock %}
 
-{% block page_title %}Lot # {{ report.lot_number }} Details{% endblock %}
+{% block right_buttons %}
+<div class="btn-group">
+    <a class="btn btn-mini tip-top" title="Previous (Lot # {{ prev_report.lot_number }})" href="{{ prev_report.get_absolute_url }}"><i class="icon-arrow-left"></i></a>
+    <a class="btn btn-mini tip-top" title="Next (Lot # {{ next_report.lot_number }})" href="{% if next_report %}{{ next_report.get_absolute_url }}{% else %}#{% endif %}"><i class="icon-arrow-right"></i></a>
+</div>
+{% endblock %}
+
+{% block page_title %}Lot # {{ report.lot_number }} Details
+
+{% endblock %}
 
 {% block head %}
 <script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
@@ -54,9 +64,9 @@ Lot # {{ report.lot_number }}
 
 
 {% block content %}
-<div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
+<div class="row-fluid">
     <div class="span12">
-        <h2>Lot # {{ report.lot_number }}</span> </h2>
+        <h2>Lot # {{ report.lot_number }}</span></h2>
         <h4>{{ report.part_number }} <small>{{ report.part_number.description }}</small></h4>
         
     </div>

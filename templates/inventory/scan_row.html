@@ -1,8 +1,8 @@
     <td style="text-align:center;">
         {% if scan.audited == True %}
-            <a data-id="{{ scan.pk }}" class="btn btn-mini btn-danger audit" href="#">Un-Audit</a>
+            <a data-id="{{ scan.pk }}" class="btn btn-mini btn-danger audit">Un-Audit</a>
         {% else %}
-            <a data-id="{{ scan.pk }}" class="btn btn-mini btn-success audit" href="#">Audit</a>
+            <a data-id="{{ scan.pk }}" class="btn btn-mini btn-success audit">Audit</a>
         {% endif %}
     </td>
     {% if part %}

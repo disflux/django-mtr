@@ -1,12 +1,17 @@
 from django import forms
 from parts.models import Part
+from django_select2 import *
 
+class PartChoice(AutoModelSelect2Field):
+    queryset = Part.objects
+    search_fields = ['part_number__istartswith',]
+    
 class MTRForm(forms.Form):
     CERT_TYPES = (
                     ('STUD', 'TSA Weld Stud'),
                     ('DBA', 'TSA DBA'),  
                 ) 
-    part_number = forms.ModelChoiceField(queryset=Part.objects.all())
+    part_number = PartChoice()
     cert_type = forms.ChoiceField(choices=CERT_TYPES)
     heat_number = forms.CharField()
     aisi_grade = forms.CharField()

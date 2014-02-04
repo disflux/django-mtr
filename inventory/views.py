@@ -196,13 +196,15 @@ def location(request, location_code):
                               
 def part_inv(request, part_number):
     part = Part.objects.get(part_number=part_number)
+    
     scans = InventoryCount.objects.filter(part=part)
-        
+    agg = InventoryCount.objects.filter(part=part).aggregate(scans=Sum('scans'), total_parts=Sum('inventory_count'))    
     
     return render_to_response('inventory/part.html',
                               {
                                   'part': part,
                                   'scans': scans,
+                                  'agg': agg,
                               },
                               context_instance=RequestContext(request))
 
