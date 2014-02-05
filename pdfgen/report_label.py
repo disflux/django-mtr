@@ -14,6 +14,7 @@ from actstream import action
 from reports.models import Report
 
 def report_label(request, lot_number):
+    weight = request.POST.get('weight', None)
     report = get_object_or_404(Report, lot_number=lot_number)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="label.pdf"'
@@ -76,20 +77,27 @@ def report_label(request, lot_number):
     
     
     # Draw Other Info
-    #p.line(110*mm, 0, 110*mm, 25*mm)
+    p.line(105*mm, 0, 105*mm, 25*mm)
     p.setFont("Helvetica", 15)
     p.drawString(10, 20*mm, "Date:")
     p.drawString(40*mm, 20*mm, localtime(report.created_at).strftime('%Y-%m-%d %H:%M %Z'))
-    p.line(0, 18*mm, 150*mm, 18*mm)
+    p.line(0, 18*mm, 105*mm, 18*mm)
     p.drawString(10, 12*mm, "Vendor:")
     p.drawString(40*mm, 12*mm, report.vendor.name)
-    p.line(0,10*mm, 150*mm, 10*mm)
+    p.line(0,10*mm, 105*mm, 10*mm)
     if report.origin_po:
         p.drawString(10, 4*mm, "PO #:")
         p.drawString(40*mm, 4*mm, report.origin_po)
     elif report.origin_wo:
         p.drawString(10, 4*mm, "WO #:")
         p.drawString(40*mm, 4*mm, report.origin_wo)
+        
+    # Draw weight
+    if weight is not None and weight != '':
+        p.setFont("Helvetica", 10)
+        p.drawCentredString(120*mm, 20*mm, "Weight (lbs)")
+        p.setFont("Helvetica", 25)
+        p.drawCentredString(128*mm, 9*mm, str(weight))
     
     p.showPage()
     p.save()

@@ -21,9 +21,6 @@ def part_label(request, part_number):
     buffer = BytesIO()
     p = canvas.Canvas(buffer)
     p.setPageSize((105*mm, 26*mm))
-
-
-    
     # Draw Part Number
 
 

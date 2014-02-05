@@ -90,7 +90,7 @@ Lot # {{ report.lot_number }}
                     <a target="_blank" class="btn btn-mini tip-top" title="Batch Inspection Report" href="{% url 'pdfgen.blank_inspection_report.batch_inspection_report' %}?po={{ report.origin_po }}" data-toggle="modal"><i class="icon-zoom-in"></i> </a>
                     {% endif %}
                     <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.blank_inspection_report' report.lot_number %}" data-toggle="modal"><i class="icon-search"></i> </a>
-                    <a target="_blank" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-barcode"></i> </a>
+                    <a href="#label-modal" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-barcode"></i> </a>
                 </div>
             </div>
             <div class="widget-content nopadding">
@@ -593,6 +593,7 @@ Lot # {{ report.lot_number }}
         {% include 'modals/email_document.html' %}
         {% include 'modals/fax_document.html' %}
         {% include 'modals/new_document.html' %}
+        {% include 'modals/label_options.html' %}
         
 
     </div>
