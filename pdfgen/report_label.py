@@ -15,6 +15,7 @@ from reports.models import Report
 
 def report_label(request, lot_number):
     weight = request.POST.get('weight', None)
+    quantity = request.POST.get('quantity', None)
     report = get_object_or_404(Report, lot_number=lot_number)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="label.pdf"'
@@ -95,9 +96,15 @@ def report_label(request, lot_number):
     # Draw weight
     if weight is not None and weight != '':
         p.setFont("Helvetica", 10)
-        p.drawCentredString(120*mm, 20*mm, "Weight (lbs)")
+        p.drawString(107*mm, 21*mm, "Weight (lbs)")
         p.setFont("Helvetica", 25)
-        p.drawCentredString(128*mm, 9*mm, str(weight))
+        p.drawString(115*mm, 13*mm, str(weight))
+    
+    if quantity is not None and quantity != '':
+        p.setFont("Helvetica", 10)
+        p.drawString(107*mm, 10*mm, "Quantity (pcs)")
+        p.setFont("Helvetica", 25)
+        p.drawString(115*mm, 2*mm, str(quantity))
     
     p.showPage()
     p.save()
