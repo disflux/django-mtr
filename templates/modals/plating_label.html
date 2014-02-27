@@ -1,0 +1,50 @@
+<div class="modal hide" id="plating-label-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Print Label</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" method="post" action="{% url 'pdfgen.plating_label.plating_label' report.lot_number %}">
+            {% csrf_token %}
+            <div class="control-group">
+                <label class="control-label">Pallet weight in lbs.</label>
+                <div class="controls">
+                    <input type="text" name="weight" placeholder="Weight of package" />
+                    <p>This field is <strong>not</strong> required.</p>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Quantity</label>
+                <div class="controls">
+                    <input type="text" name="quantity" placeholder="Quantity" />
+                    <p>This field is <strong>not</strong> required.</p>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Tare Weight</label>
+                <div class="controls">
+                    <input type="text" name="tare" placeholder="Pallet & Box Tare Weight" />
+                    <p>This field is <strong>not</strong> required.</p>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label">Plating Type</label>
+                <div class="controls">
+                    <input type="text" name="plating" placeholder="Plating type" />
+                    <p>This field is <strong>not</strong> required.</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" id="doc-id-hidden" name="doc-id" value="" />
+            <input type="hidden" id="report-id-hidden" name="report-id" value="{{ report.pk }}" />
+            <button id="send-email" data-loading-text="Sending..." class="btn"><i class="icon-barcode"></i> Generate Label</button>
+            <button class="btn" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+</div>
+
+

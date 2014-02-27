@@ -83,13 +83,14 @@ Lot # {{ report.lot_number }}
                     </span>
                     <h5>Details</h5>
                 </a>
-                <div class="buttons">
+                <div class="buttons btn-group">
                     <a class="btn btn-inverse btn-mini tip-top" title="Copy to new Lot" href="{% url 'reports.views.new_report' %}?copy={{ report.lot_number }}" data-toggle="modal"><i class="icon-retweet icon-white"></i></a>
                     <a class="btn btn-inverse btn-mini tip-top" title="Edit Part" href="{% url 'reports.views.edit_report' report.lot_number %}" data-toggle="modal"><i class="icon-edit icon-white"></i></a>
                     {% if report.origin_po %}
                     <a target="_blank" class="btn btn-mini tip-top" title="Batch Inspection Report" href="{% url 'pdfgen.blank_inspection_report.batch_inspection_report' %}?po={{ report.origin_po }}" data-toggle="modal"><i class="icon-zoom-in"></i> </a>
                     {% endif %}
                     <a target="_blank" class="btn btn-mini tip-top" title="Inspection Report" href="{% url 'pdfgen.blank_inspection_report.blank_inspection_report' report.lot_number %}" data-toggle="modal"><i class="icon-search"></i> </a>
+                    <a href="#plating-label-modal" class="btn btn-mini tip-top" title="Print Plating Label" href="{% url 'pdfgen.plating_label.plating_label' report.lot_number %}" data-toggle="modal"><i class="icon-tag"></i> </a>
                     <a href="#label-modal" class="btn btn-mini tip-top" title="Print Label" href="{% url 'pdfgen.report_label.report_label' report.lot_number %}" data-toggle="modal"><i class="icon-barcode"></i> </a>
                 </div>
             </div>
@@ -594,6 +595,7 @@ Lot # {{ report.lot_number }}
         {% include 'modals/fax_document.html' %}
         {% include 'modals/new_document.html' %}
         {% include 'modals/label_options.html' %}
+        {% include 'modals/plating_label.html' %}
         
 
     </div>
