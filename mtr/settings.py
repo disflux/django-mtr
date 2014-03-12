@@ -137,7 +137,7 @@ INSTALLED_APPS = (
     'easydump',
     'south',
     'django_select2',
-    'csvimport',
+    #'csvimport',
     
     
     # Local Apps

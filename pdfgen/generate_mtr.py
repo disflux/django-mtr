@@ -9,10 +9,9 @@ from urllib2 import Request, urlopen
 from StringIO import StringIO
 import cStringIO
 
-from orders.models import Customer, Order, OrderLineItem
-from documents.models import Document
     
 class MTR:
+    
     def __init__(self, properties):
         for k, v in properties.iteritems():
             setattr(self, k, v)
@@ -27,7 +26,6 @@ class MTR:
         self.template = settings.PDF_MTR_TEMPLATE    
         
     
-
     def generate_pdf(self):
         template = PdfFileReader(file(self.template, "rb"))
         outputPDF = PdfFileWriter()
