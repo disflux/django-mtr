@@ -1,207 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>{% block title %}Material Test Report Tracker{% endblock %} - MTRack</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/fullcalendar.css" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css" />	
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.css" />
+<head>
+<title>{% block title %}Material Test Report Tracker{% endblock %} - MTRack</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/fullcalendar.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css" />	
+<link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.css" />
 
-        {% block head %}
-        {% endblock %}
-        
-    </head>
-    <body data-color="grey" class="flat">
-        <div id="wrapper">
-        
-        <div id="gritter-notify" class="notify-ui">
-        </div>
-        <div id="header">
-            <h1><a href="/">MTRack</a></h1>
-            <a id="menu-trigger" href="#"><i class="fa fa-bars"></i></a>
-        </div>
+{% block head %}
+{% endblock %}
 
+</head>
 
-        
-        <div id="user-nav">
-            <ul class="btn-group">
-                <li class="message-item" >
-                <a style="color:white" title="" href="{% url 'parts.views.new_part' %}">
-                    <i class="fa fa-plus"></i> 
-                    <span class="text">New Part</span>
-                </a>
-                </li>
-                <li class="message-item"><a style="color:white" title="" href="{% url 'reports.views.new_report' %}"><i class="fa fa-plus"></i> <span class="text">New Report</span></a></li>
+<body data-color="grey" class="flat">
+<div id="wrapper">
 
-                <li class="message-item" ><a style="color:white" title="" href="#"><i class="fa fa-user"></i> <span class="text">{{ user.username }}</span></a></li>
-                <li class="message-item"><a style="color:white" title="" href="#"><i class="fa fa-cog"></i> <span class="text">Settings</span></a></li>
-                <li class="message-item"><a style="color:white" title="" href="{% url 'django.contrib.auth.views.logout' %}?next=/"><i class="fa fa-sign-out"></i> <span class="text">Logout</span></a></li>
-            </ul>    
-        </div>
-
-        <div id="switcher">
-	            <div id="switcher-inner">
-	                <h3>Theme Options</h3>
-	                <h4>Colors</h4>
-	                <p id="color-style">
-	                    <a data-color="orange" title="Orange" class="button-square orange-switcher" href="#"></a>
-	                    <a data-color="turquoise" title="Turquoise" class="button-square turquoise-switcher" href="#"></a>
-	                    <a data-color="blue" title="Blue" class="button-square blue-switcher" href="#"></a>
-	                    <a data-color="green" title="Green" class="button-square green-switcher" href="#"></a>
-	                    <a data-color="red" title="Red" class="button-square red-switcher" href="#"></a>
-	                    <a data-color="purple" title="Purple" class="button-square purple-switcher" href="#"></a>
-	                    <a href="#" data-color="grey" title="Grey" class="button-square grey-switcher"></a>
-	                </p>
-	            </div>
-	            <div id="switcher-button">
-	                <i class="fa fa-cogs"></i>
-	            </div>
-	        </div>
-
-        {% block no_sidebar %}
-        <div id="sidebar">
-            <div id="search">
-                <form method="get" action="/search/">
-                    <input name="q" value="{{ query }}" type="text" placeholder="Search here..."/>
-                    <button type="submit" class="tip-right" title="Search"><i class="fa fa-search"></i></button>
-                </form>
-            </div>
-            <ul>
-                <li class="{% block home_active %}{% endblock %}"><a href="{% url 'dashboard.views.home' %}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
-                <li class="{% block search_active %}{% endblock %}"><a href="/search"><i class="fa fa-search"></i> <span>Search</span></a></li>
-                
-                <!-- parts sub-menu -->
-                <li class="submenu {% block reports_active %}{% endblock %}">
-                <a href=""><i class="fa fa-bar-chart-o"></i> <span>Reports</span> <i class="arrow fa fa-chevron-right"></i></a>
-                <ul>
-                    <li><a href="{% url 'reports.views.reports_index' %}">Browse/Search Reports</a></li>
-                    <li><a href="{% url 'reports.views.new_report' %}">Create New Report</a></li>
-                    <!-- <li><a href="form-wizard.html"><i class="icon-list-alt"></i> Part Statistics</a></li> -->
-                </ul>
-                </li>
-                
-                <!-- Documents sub-menu -->
-                <li class="submenu {% block doc_active %}{% endblock %}">
-                <a href="#"><i class="fa fa-file-text"></i> <span>Documents</span> <i class="arrow fa fa-chevron-right"></i></a>
-                    <ul>
-                        <li><a href="{% url 'documents.views.documents_index' %}">Document Index</a></li>
-                    </ul>
-                </li>
-                
-                <!-- Orders sub-menu -->
-                <li class="submenu {% block orders_active %}{% endblock %}">
-                <a href="#"><i class="fa fa-shopping-cart"></i> <span>Orders</span> <i class="arrow fa fa-chevron-right"></i> </a>
-                <ul>
-                    <li><a href="{% url 'orders.views.orders_index' %}">Browse/Search Orders </a></li>
-                    <li><a href="{% url 'orders.views.new_order' %}">Create New Order</a></li>
-                </ul>
-                </li>
-                
-                
-                
-                <li class="submenu {% block vendors_active %}{% endblock %}" ><a href=""><i class="fa fa-briefcase"></i> <span>Vendors</span> <i class="arrow fa fa-chevron-right"></i> </a>
-                    <ul>
-                        <li><a href="{% url 'vendors.views.vendors_index' %}">Browse Vendors</a></li>
-                        <li><a href="{% url 'parts.views.new_part' %}">Create New Part</a></li>
-                    </ul>
-                </li>
-                
-                <li class="submenu {% block parts_active %}{% endblock %}" ><a href="#"><i class="fa fa-cog"></i> <span>Parts</span> <i class="arrow fa fa-chevron-right"></i></a>
-                    <ul>
-                        <li><a href="{% url 'parts.views.parts_index' %}">Browse Parts</a></li>
-                        <li><a href="{% url 'parts.views.new_part' %}">Create New Part</a></li>
-                        <li><a href="{% url 'parts.views.part_label' %}">Create Part Labels</a></li>
-                    </ul>
-                </li>
-                
-                <li class="submenu {% block inventory_active %}{% endblock %}" ><a href="#"><i class="fa fa-barcode"></i> <span>Inventory</span> <i class="arrow fa fa-chevron-right"></i></a>
-                    <ul>
-                        <li><a href="{% url 'inventory.views.dashboard' %}">Inventory Dashboard</a></li>
-                        <li><a href="{% url 'inventory.views.inventory_index' %}">Location Index</a></li>
-                        <li><a href="{% url 'inventory.views.inventory_index_parts' %}">Part Index</a></li>
-                        <li><a href="{% url 'inventory.views.new_count' %}">New Count</a></li>
-                        <li><a href="{% url 'pdfgen.location_labels.location_labels' %}">Generate Location Labels</a></li>
-                        <li><a href="{% url 'pdfgen.location_scan_sheet.location_scan_sheet' %}">Location Scan Sheet</a></li>
-                    </ul>
-                </li>
-                
-                <li class="submenu {% block tools_active %}{% endblock %}" ><a href="#"><i class="fa fa-wrench"></i> <span>Tools</span> <i class="arrow fa fa-chevron-right"></i></a>
-                    <ul>
-                        <li><a href="{% url 'parts.views.parts_index' %}">Batch Inspection Report</a></li>
-                        <li><a href="{% url 'parts.views.parts_index' %}">Edit Document Types</a></li>
-                        
-                    </ul>
-                </li>
-                <li class="submenu {% block users_active %}{% endblock %}" >
-                    <a href="#"><i class="fa fa-user"></i> <span>Users</span> <i class="arrow fa fa-chevron-right"></i></a>
-                        <ul>
-                            <li><a href="">User Directory</a></li>
-                            {% if request.user.is_authenticated %}
-                            <li><a href="{{ request.user.get_absolute_url }}">My Profile</a></li>
-                            {% else %}
-                            <li><a href=""><i class="icon-star"></i> My Profile</a></li>
-                            {% endif %}
-                        </ul>
-                </li>
-                <li class="{% block help_active %}{% endblock %}">
-                    <a href="#"><i class="fa fa-question-circle"></i> <span>Help</span></a>
-                </li>
-                
-                
-            </ul>
-
-        </div>
-        {% endblock %}
-
-        <div id="content">
-            <div id="content-header">
-                
-                <h1>{% block page_title %} {% endblock %}</h1>
-                <div class="pull-right">
-                {% block right_buttons %}
-                
-                {% endblock %}
-                </div>
-                
-            </div>
-            
-            {% block no_breadcrumb %}
-            <div id="breadcrumb" class="noprint">
-                <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
-                {% block breadcrumb_links %} {% endblock %}
-            </div>
-            {% endblock %}
-            <div class="container-fluid">
-                {% block content %}
-                
-                {% endblock %}
-
-                <div class="noprint row-fluid">
-                    <div id="footer" class="noprint span12" style="margin-top:65px;">
-                   
-                            <br />
-                            &copy; 2012 - {% now "Y" %} disflux, LLC. ( <a href="https://github.com/disflux/django-mtr">View Source</a>  )
-                            <br /><br />
-                            </div>
-                </div>
-            </div>
-        </div>
-        <script src="{{ STATIC_URL }}js/excanvas.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery-ui.custom.js"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery.flot.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery.flot.resize.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery.sparkline.min.js"></script>
-        <script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
-
-        <script src="{{ STATIC_URL }}js/jquery.nicescroll.min.js"></script>
-        <script src="{{ STATIC_URL }}js/unicorn.js"></script>
-        {% block js %}
-        {% endblock %}
+    <div id="gritter-notify" class="notify-ui">
     </div>
-    </body>
+    <div id="header">
+        <h1><a href="/">MTRack</a></h1>
+        <a id="menu-trigger" href="#"><i class="fa fa-bars"></i></a>
+    </div>
+
+
+
+    <div id="user-nav">
+        <ul class="btn-group">
+            <li class="message-item" >
+            <a style="color:white" title="" href="{% url 'parts.views.new_part' %}">
+                <i class="fa fa-plus"></i> 
+                <span class="text">New Part</span>
+            </a>
+            </li>
+            <li class="message-item"><a style="color:white" title="" href="{% url 'reports.views.new_report' %}"><i class="fa fa-plus"></i> <span class="text">New Report</span></a></li>
+
+            <li class="message-item" ><a style="color:white" title="" href="#"><i class="fa fa-user"></i> <span class="text">{{ user.username }}</span></a></li>
+            <li class="message-item"><a style="color:white" title="" href="#"><i class="fa fa-cog"></i> <span class="text">Settings</span></a></li>
+            <li class="message-item"><a style="color:white" title="" href="{% url 'django.contrib.auth.views.logout' %}?next=/"><i class="fa fa-sign-out"></i> <span class="text">Logout</span></a></li>
+        </ul>    
+    </div>
+
+    <div id="switcher">
+        <div id="switcher-inner">
+            <h3>Theme Options</h3>
+            <h4>Colors</h4>
+            <p id="color-style">
+            <a data-color="orange" title="Orange" class="button-square orange-switcher" href="#"></a>
+            <a data-color="turquoise" title="Turquoise" class="button-square turquoise-switcher" href="#"></a>
+            <a data-color="blue" title="Blue" class="button-square blue-switcher" href="#"></a>
+            <a data-color="green" title="Green" class="button-square green-switcher" href="#"></a>
+            <a data-color="red" title="Red" class="button-square red-switcher" href="#"></a>
+            <a data-color="purple" title="Purple" class="button-square purple-switcher" href="#"></a>
+            <a href="#" data-color="grey" title="Grey" class="button-square grey-switcher"></a>
+            </p>
+        </div>
+        <div id="switcher-button">
+            <i class="fa fa-cogs"></i>
+        </div>
+    </div>
+
+    {% block no_sidebar %}
+    <div id="sidebar">
+        <div id="search">
+            <form method="get" action="/search/">
+                <input name="q" value="{{ query }}" type="text" placeholder="Search here..."/>
+                <button type="submit" class="tip-right" title="Search"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+        <ul>
+            <li class="{% block home_active %}{% endblock %}"><a href="{% url 'dashboard.views.home' %}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+            <li class="{% block search_active %}{% endblock %}"><a href="/search"><i class="fa fa-search"></i> <span>Search</span></a></li>
+
+            <!-- parts sub-menu -->
+            <li class="submenu {% block reports_active %}{% endblock %}">
+            <a href=""><i class="fa fa-bar-chart-o"></i> <span>Reports</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+                <li><a href="{% url 'reports.views.reports_index' %}">Browse/Search Reports</a></li>
+                <li><a href="{% url 'reports.views.new_report' %}">Create New Report</a></li>
+                <!-- <li><a href="form-wizard.html"><i class="icon-list-alt"></i> Part Statistics</a></li> -->
+            </ul>
+            </li>
+
+            <!-- Documents sub-menu -->
+            <li class="submenu {% block doc_active %}{% endblock %}">
+            <a href="#"><i class="fa fa-file-text"></i> <span>Documents</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+                <li><a href="{% url 'documents.views.documents_index' %}">Document Index</a></li>
+            </ul>
+            </li>
+
+            <!-- Orders sub-menu -->
+            <li class="submenu {% block orders_active %}{% endblock %}">
+            <a href="#"><i class="fa fa-shopping-cart"></i> <span>Orders</span> <i class="arrow fa fa-chevron-right"></i> </a>
+            <ul>
+                <li><a href="{% url 'orders.views.orders_index' %}">Browse/Search Orders </a></li>
+                <li><a href="{% url 'orders.views.new_order' %}">Create New Order</a></li>
+            </ul>
+            </li>
+
+
+
+            <li class="submenu {% block vendors_active %}{% endblock %}" ><a href=""><i class="fa fa-briefcase"></i> <span>Vendors</span> <i class="arrow fa fa-chevron-right"></i> </a>
+            <ul>
+                <li><a href="{% url 'vendors.views.vendors_index' %}">Browse Vendors</a></li>
+                <li><a href="{% url 'parts.views.new_part' %}">Create New Part</a></li>
+            </ul>
+            </li>
+
+            <li class="submenu {% block parts_active %}{% endblock %}" ><a href="#"><i class="fa fa-cog"></i> <span>Parts</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+                <li><a href="{% url 'parts.views.parts_index' %}">Browse Parts</a></li>
+                <li><a href="{% url 'parts.views.new_part' %}">Create New Part</a></li>
+                <li><a href="{% url 'parts.views.part_label' %}">Create Part Labels</a></li>
+            </ul>
+            </li>
+
+            <li class="submenu {% block inventory_active %}{% endblock %}" ><a href="#"><i class="fa fa-barcode"></i> <span>Inventory</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+                <li><a href="{% url 'inventory.views.dashboard' %}">Inventory Dashboard</a></li>
+                <li><a href="{% url 'inventory.views.inventory_index' %}">Location Index</a></li>
+                <li><a href="{% url 'inventory.views.inventory_index_parts' %}">Part Index</a></li>
+                <li><a href="{% url 'inventory.views.new_count' %}">New Count</a></li>
+                <li><a href="{% url 'pdfgen.location_labels.location_labels' %}">Generate Location Labels</a></li>
+                <li><a href="{% url 'pdfgen.location_scan_sheet.location_scan_sheet' %}">Location Scan Sheet</a></li>
+            </ul>
+            </li>
+
+            <li class="submenu {% block tools_active %}{% endblock %}" ><a href="#"><i class="fa fa-wrench"></i> <span>Tools</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+                <li><a href="{% url 'parts.views.parts_index' %}">Batch Inspection Report</a></li>
+                <li><a href="{% url 'parts.views.parts_index' %}">Edit Document Types</a></li>
+
+            </ul>
+            </li>
+            <li class="submenu {% block users_active %}{% endblock %}" >
+            <a href="#"><i class="fa fa-user"></i> <span>Users</span> <i class="arrow fa fa-chevron-right"></i></a>
+            <ul>
+                <li><a href="">User Directory</a></li>
+                {% if request.user.is_authenticated %}
+                <li><a href="{{ request.user.get_absolute_url }}">My Profile</a></li>
+                {% else %}
+                <li><a href=""><i class="icon-star"></i> My Profile</a></li>
+                {% endif %}
+            </ul>
+            </li>
+            <li class="{% block help_active %}{% endblock %}">
+            <a href="#"><i class="fa fa-question-circle"></i> <span>Help</span></a>
+            </li>
+
+
+        </ul>
+
+    </div>
+    {% endblock %}
+
+    <div id="content">
+        <div id="content-header">
+
+            <h1>{% block page_title %} {% endblock %}</h1>
+            <div class="pull-right">
+                {% block right_buttons %}
+
+                {% endblock %}
+            </div>
+
+        </div>
+
+        {% block no_breadcrumb %}
+        <div id="breadcrumb" class="noprint">
+            <a href="/" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a>
+            {% block breadcrumb_links %} {% endblock %}
+        </div>
+        {% endblock %}
+
+        <div class="container-fluid">
+            {% block content %}
+
+            {% endblock %}
+
+            <div class="noprint row-fluid">
+                <div id="footer" class="noprint span12" style="margin-top:65px;">
+
+                    <br />
+                    &copy; 2012 - {% now "Y" %} disflux, LLC. ( <a href="https://github.com/disflux/django-mtr">View Source</a>  )
+                    <br /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ STATIC_URL }}js/excanvas.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery-ui.custom.js"></script>
+    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.flot.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.flot.resize.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.sparkline.min.js"></script>
+    <script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
+
+    <script src="{{ STATIC_URL }}js/jquery.nicescroll.min.js"></script>
+    <script src="{{ STATIC_URL }}js/unicorn.js"></script>
+    {% block js %}
+    {% endblock %}
+</div>
+</body>
 </html>

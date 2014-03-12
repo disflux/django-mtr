@@ -64,8 +64,8 @@ Lot # {{ report.lot_number }}
 
 
 {% block content %}
-<div class="row-fluid">
-    <div class="span12">
+<div class="row">
+    <div class="col-md-12">
         <h2>Lot # {{ report.lot_number }}</span></h2>
         <h4>{{ report.part_number }} <small>{{ report.part_number.description }}</small></h4>
         
@@ -73,8 +73,8 @@ Lot # {{ report.lot_number }}
     
 </div>
 
-<div class="row-fluid">
-    <div class="span7">
+<div class="row">
+    <div class="col-md-7">
         <div class="widget-box collapsible">
             <div class="widget-title">
                 <a href="#attributes" data-toggle="collapse">
@@ -467,7 +467,7 @@ Lot # {{ report.lot_number }}
 
     </div>
 
-    <div class="span5">
+    <div class="col-md-5">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -516,7 +516,7 @@ Lot # {{ report.lot_number }}
     </div>
     
     <!-- Linked Reports -->
-    <div class="span5">
+    <div class="col-md-5">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -564,7 +564,7 @@ Lot # {{ report.lot_number }}
     </div>
     
     <!-- Audit Log -->
-    <div class="span5">
+    <div class="col-md-5">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
