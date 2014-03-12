@@ -87,7 +87,7 @@
                 <li class="submenu {% block doc_active %}{% endblock %}">
                 <a href="#"><i class="fa fa-file-text"></i> <span>Documents</span> <i class="arrow fa fa-chevron-right"></i></a>
                     <ul>
-                        <li><a href="{% url 'documents.views.documents_index' %}"><i class="icon-eye-open"></i> Document Index</a></li>
+                        <li><a href="{% url 'documents.views.documents_index' %}">Document Index</a></li>
                     </ul>
                 </li>
                 
@@ -95,64 +95,59 @@
                 <li class="submenu {% block orders_active %}{% endblock %}">
                 <a href="#"><i class="fa fa-shopping-cart"></i> <span>Orders</span> <i class="arrow fa fa-chevron-right"></i> </a>
                 <ul>
-                    <li><a href="{% url 'orders.views.orders_index' %}"><i class="icon-eye-open"></i> Browse/Search Orders </a></li>
-                    <li><a href="{% url 'orders.views.new_order' %}"><i class="icon-plus-sign"></i> Create New Order</a></li>
+                    <li><a href="{% url 'orders.views.orders_index' %}">Browse/Search Orders </a></li>
+                    <li><a href="{% url 'orders.views.new_order' %}">Create New Order</a></li>
                 </ul>
                 </li>
                 
                 
                 
-                <li class="submenu {% block vendors_active %}{% endblock %}" ><a href=""><i class="icon-briefcase"></i> <span>Vendors</span> <span class="label">2</span></a>
+                <li class="submenu {% block vendors_active %}{% endblock %}" ><a href=""><i class="fa fa-briefcase"></i> <span>Vendors</span> <i class="arrow fa fa-chevron-right"></i> </a>
                     <ul>
-                        <li><a href="{% url 'vendors.views.vendors_index' %}"><i class="icon-search"></i> Browse Vendors</a></li>
-                        <li><a href="{% url 'parts.views.new_part' %}"><i class="icon-plus-sign"></i> Create New Part</a></li>
+                        <li><a href="{% url 'vendors.views.vendors_index' %}">Browse Vendors</a></li>
+                        <li><a href="{% url 'parts.views.new_part' %}">Create New Part</a></li>
                     </ul>
                 </li>
                 
-                <li class="submenu {% block parts_active %}{% endblock %}" ><a href="#"><i class="icon-cog"></i> <span>Parts</span> <span class="label">2</span></a>
+                <li class="submenu {% block parts_active %}{% endblock %}" ><a href="#"><i class="fa fa-cog"></i> <span>Parts</span> <i class="arrow fa fa-chevron-right"></i></a>
                     <ul>
-                        <li><a href="{% url 'parts.views.parts_index' %}"><i class="icon-search"></i> Browse Parts</a></li>
-                        <li><a href="{% url 'parts.views.new_part' %}"><i class="icon-plus-sign"></i> Create New Part</a></li>
-                        <li><a href="{% url 'parts.views.part_label' %}"><i class="icon-barcode"></i> Create Part Labels</a></li>
+                        <li><a href="{% url 'parts.views.parts_index' %}">Browse Parts</a></li>
+                        <li><a href="{% url 'parts.views.new_part' %}">Create New Part</a></li>
+                        <li><a href="{% url 'parts.views.part_label' %}">Create Part Labels</a></li>
                     </ul>
                 </li>
                 
-                <li class="submenu {% block inventory_active %}{% endblock %}" ><a href="#"><i class="icon-barcode"></i> <span>Inventory</span> <span class="label">6</span></a>
+                <li class="submenu {% block inventory_active %}{% endblock %}" ><a href="#"><i class="fa fa-barcode"></i> <span>Inventory</span> <i class="arrow fa fa-chevron-right"></i></a>
                     <ul>
-                        <li><a href="{% url 'inventory.views.dashboard' %}"><i class="icon-home"></i> Inventory Dashboard</a></li>
-                        <li><a href="{% url 'inventory.views.inventory_index' %}"><i class="icon-plus-sign"></i> Location Index</a></li>
-                        <li><a href="{% url 'inventory.views.inventory_index_parts' %}"><i class="icon-plus-sign"></i> Part Index</a></li>
-                        <li><a href="{% url 'inventory.views.new_count' %}"><i class="icon-plus-sign"></i> New Count</a></li>
-                        <li><a href="{% url 'pdfgen.location_labels.location_labels' %}"><i class="icon-barcode"></i> Generate Location Labels</a></li>
-                        <li><a href="{% url 'pdfgen.location_scan_sheet.location_scan_sheet' %}"><i class="icon-barcode"></i> Location Scan Sheet</a></li>
+                        <li><a href="{% url 'inventory.views.dashboard' %}">Inventory Dashboard</a></li>
+                        <li><a href="{% url 'inventory.views.inventory_index' %}">Location Index</a></li>
+                        <li><a href="{% url 'inventory.views.inventory_index_parts' %}">Part Index</a></li>
+                        <li><a href="{% url 'inventory.views.new_count' %}">New Count</a></li>
+                        <li><a href="{% url 'pdfgen.location_labels.location_labels' %}">Generate Location Labels</a></li>
+                        <li><a href="{% url 'pdfgen.location_scan_sheet.location_scan_sheet' %}">Location Scan Sheet</a></li>
                     </ul>
                 </li>
                 
-                <li class="submenu {% block tools_active %}{% endblock %}" ><a href="#"><i class="icon-wrench"></i> <span>Tools</span> <span class="label">2</span></a>
+                <li class="submenu {% block tools_active %}{% endblock %}" ><a href="#"><i class="fa fa-wrench"></i> <span>Tools</span> <i class="arrow fa fa-chevron-right"></i></a>
                     <ul>
-                        <li><a href="{% url 'parts.views.parts_index' %}"><i class="icon-wrench"></i> Batch Inspection Report</a></li>
-                        <li><a href="{% url 'parts.views.parts_index' %}"><i class="icon-wrench"></i> Edit Document Types</a></li>
+                        <li><a href="{% url 'parts.views.parts_index' %}">Batch Inspection Report</a></li>
+                        <li><a href="{% url 'parts.views.parts_index' %}">Edit Document Types</a></li>
                         
                     </ul>
                 </li>
                 <li class="submenu {% block users_active %}{% endblock %}" >
-                    <a href="#"><i class="icon-user"></i> <span>Users</span>  <span class="label">2</span></a>
+                    <a href="#"><i class="fa fa-user"></i> <span>Users</span> <i class="arrow fa fa-chevron-right"></i></a>
                         <ul>
-                            <li><a href=""><i class="icon-user"></i> User Directory</a></li>
+                            <li><a href="">User Directory</a></li>
                             {% if request.user.is_authenticated %}
-                            <li><a href="{{ request.user.get_absolute_url }}"><i class="icon-star"></i> My Profile</a></li>
+                            <li><a href="{{ request.user.get_absolute_url }}">My Profile</a></li>
                             {% else %}
                             <li><a href=""><i class="icon-star"></i> My Profile</a></li>
                             {% endif %}
                         </ul>
                 </li>
-                
-                <!--<li {% block sourcing_active %}{% endblock %} ><a href="interface.html"><i class="icon-magnet"></i> <span>Sourcing Dashboard</span></a></li>-->
-                
-                <!--<li {% block data_collection_active %}{% endblock %} ><a href="tables.html"><i class="icon-filter"></i> <span>Data Collection</span></a></li>-->
-                
                 <li class="{% block help_active %}{% endblock %}">
-                    <a href="#"><i class="icon-question-sign"></i> <span>Help</span></a>
+                    <a href="#"><i class="fa fa-question-circle"></i> <span>Help</span></a>
                 </li>
                 
                 
