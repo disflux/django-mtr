@@ -3,95 +3,89 @@
     <head>
         <title>{% block title %}Material Test Report Tracker{% endblock %} - MTRack</title>
         <meta charset="UTF-8" />
-        <meta name="description" content="{% block meta_description %}Part Engine is the part number search engine. Find information about part numbers for automotive, electronic, and other consumer products {% endblock %}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.gritter.css" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.main.css" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.grey.css" class="skin-color" />
-        <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui.css" />
-        
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap-typeahead.js"></script>
-        <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery.gritter.min.js"></script>
-        <script src="{{ STATIC_URL }}js/jquery.peity.min.js"></script>
-        <script src="{{ STATIC_URL }}js/unicorn.js"></script>
-        <script src="{{ STATIC_URL }}js/unicorn.interface.js"></script>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/fullcalendar.css" />
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css" />	
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.css" />
+
         {% block head %}
         {% endblock %}
         
-        <!-- search typeahead -->
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $(".search input[type=text]").typeahead({
-                    items: 5,
-                    source: function (query, process) {
-                        $.get('/search/autocomplete', { q: query }, function (data) {
-                            process(data)
-                        })
-                    }
-                    });
-                {% if messages %}
-                {% for message in messages %}
-                $.gritter.add({
-                    title: 'Status Message',
-                    text: '{{ message }}',
-                    sticky: false
-                    });
-                {% endfor %}
-                {% endif %}
-            });
-        </script>
-          
     </head>
-    <body>
+    <body data-color="grey" class="flat">
+        <div id="wrapper">
         
         <div id="gritter-notify" class="notify-ui">
         </div>
         <div id="header">
-            <h1><a href="/">MTRack</a></h1>		
+            <h1><a href="/">MTRack</a></h1>
+            <a id="menu-trigger" href="#"><i class="fa fa-bars"></i></a>
         </div>
 
-        <div class="search" id="search">
-            <form method="get" action="/search/">
-                <input autocomplete="off" name="q" type="text" placeholder="{% if query %}{{ query }}{% else %}Search here...{% endif %}" value="{{ query }}" /><button type="submit" class="tip-right" title="Search"><i class="icon-search icon-white"></i></button>
-            </form>
-        </div>
+
         
-        <div id="user-nav" class="navbar navbar-inverse noprint">
+        <div id="user-nav">
             <ul class="btn-group">
-                <li class="btn btn-info" ><a style="color:white" title="" href="{% url 'parts.views.new_part' %}"><i class="icon-plus-sign"></i> <span class="text">New Part</span></a></li>
-                <li class="btn btn-info"><a style="color:white" title="" href="{% url 'reports.views.new_report' %}"><i class="icon-plus-sign icon-white"></i> <span class="text">New Report</span></a></li>
-            </ul>    
-            <ul class="btn-group">
-                <li class="btn btn-inverse" ><a style="color:white" title="" href="#"><i class="icon-user"></i> <span class="text">{{ user.username }}</span></a></li>
-                <li class="btn btn-inverse"><a style="color:white" title="" href="#"><i class="icon-cog"></i> <span class="text">Settings</span></a></li>
-                <li class="btn btn-inverse"><a style="color:white" title="" href="{% url 'django.contrib.auth.views.logout' %}?next=/"><i class="icon-share-alt"></i> <span class="text">Logout</span></a></li>
+                <li class="message-item" >
+                <a style="color:white" title="" href="{% url 'parts.views.new_part' %}">
+                    <i class="fa fa-plus"></i> 
+                    <span class="text">New Part</span>
+                </a>
+                </li>
+                <li class="message-item"><a style="color:white" title="" href="{% url 'reports.views.new_report' %}"><i class="fa fa-plus"></i> <span class="text">New Report</span></a></li>
+
+                <li class="message-item" ><a style="color:white" title="" href="#"><i class="fa fa-user"></i> <span class="text">{{ user.username }}</span></a></li>
+                <li class="message-item"><a style="color:white" title="" href="#"><i class="fa fa-cog"></i> <span class="text">Settings</span></a></li>
+                <li class="message-item"><a style="color:white" title="" href="{% url 'django.contrib.auth.views.logout' %}?next=/"><i class="fa fa-sign-out"></i> <span class="text">Logout</span></a></li>
             </ul>    
         </div>
+
+        <div id="switcher">
+	            <div id="switcher-inner">
+	                <h3>Theme Options</h3>
+	                <h4>Colors</h4>
+	                <p id="color-style">
+	                    <a data-color="orange" title="Orange" class="button-square orange-switcher" href="#"></a>
+	                    <a data-color="turquoise" title="Turquoise" class="button-square turquoise-switcher" href="#"></a>
+	                    <a data-color="blue" title="Blue" class="button-square blue-switcher" href="#"></a>
+	                    <a data-color="green" title="Green" class="button-square green-switcher" href="#"></a>
+	                    <a data-color="red" title="Red" class="button-square red-switcher" href="#"></a>
+	                    <a data-color="purple" title="Purple" class="button-square purple-switcher" href="#"></a>
+	                    <a href="#" data-color="grey" title="Grey" class="button-square grey-switcher"></a>
+	                </p>
+	            </div>
+	            <div id="switcher-button">
+	                <i class="fa fa-cogs"></i>
+	            </div>
+	        </div>
 
         {% block no_sidebar %}
         <div id="sidebar">
+            <div id="search">
+                <form method="get" action="/search/">
+                    <input name="q" value="{{ query }}" type="text" placeholder="Search here..."/>
+                    <button type="submit" class="tip-right" title="Search"><i class="fa fa-search"></i></button>
+                </form>
+            </div>
             <ul>
-                <li class="{% block home_active %}{% endblock %}"><a href="{% url 'dashboard.views.home' %}"><i class="icon-home"></i> <span>Dashboard</span></a></li>
-                <li class="{% block search_active %}{% endblock %}"><a href="/search"><i class="icon-search"></i> <span>Search</span></a></li>
+                <li class="{% block home_active %}{% endblock %}"><a href="{% url 'dashboard.views.home' %}"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
+                <li class="{% block search_active %}{% endblock %}"><a href="/search"><i class="fa fa-search"></i> <span>Search</span></a></li>
                 
                 <!-- parts sub-menu -->
                 <li class="submenu {% block reports_active %}{% endblock %}">
-                <a href=""><i class="icon-list-alt"></i> <span>Reports</span> <span class="label">2</span></a>
+                <a href=""><i class="fa fa-bar-chart-o"></i> <span>Reports</span> <i class="arrow fa fa-chevron-right"></i></a>
                 <ul>
-                    <li><a href="{% url 'reports.views.reports_index' %}"><i class="icon-eye-open"></i> Browse/Search Reports</a></li>
-                    <li><a href="{% url 'reports.views.new_report' %}"><i class="icon-plus-sign"></i> Create New Report</a></li>
+                    <li><a href="{% url 'reports.views.reports_index' %}">Browse/Search Reports</a></li>
+                    <li><a href="{% url 'reports.views.new_report' %}">Create New Report</a></li>
                     <!-- <li><a href="form-wizard.html"><i class="icon-list-alt"></i> Part Statistics</a></li> -->
                 </ul>
                 </li>
                 
                 <!-- Documents sub-menu -->
                 <li class="submenu {% block doc_active %}{% endblock %}">
-                <a href="#"><i class="icon-file"></i> <span>Documents</span> <span class="label">1</span></a>
+                <a href="#"><i class="fa fa-file-text"></i> <span>Documents</span> <i class="arrow fa fa-chevron-right"></i></a>
                     <ul>
                         <li><a href="{% url 'documents.views.documents_index' %}"><i class="icon-eye-open"></i> Document Index</a></li>
                     </ul>
@@ -99,7 +93,7 @@
                 
                 <!-- Orders sub-menu -->
                 <li class="submenu {% block orders_active %}{% endblock %}">
-                <a href="#"><i class="icon-shopping-cart"></i> <span>Orders</span> <span class="label">2</span></a>
+                <a href="#"><i class="fa fa-shopping-cart"></i> <span>Orders</span> <i class="arrow fa fa-chevron-right"></i> </a>
                 <ul>
                     <li><a href="{% url 'orders.views.orders_index' %}"><i class="icon-eye-open"></i> Browse/Search Orders </a></li>
                     <li><a href="{% url 'orders.views.new_order' %}"><i class="icon-plus-sign"></i> Create New Order</a></li>
@@ -200,7 +194,19 @@
                 </div>
             </div>
         </div>
+        <script src="{{ STATIC_URL }}js/excanvas.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery-ui.custom.js"></script>
+        <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.flot.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.flot.resize.min.js"></script>
+        <script src="{{ STATIC_URL }}js/jquery.sparkline.min.js"></script>
+        <script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
+
+        <script src="{{ STATIC_URL }}js/jquery.nicescroll.min.js"></script>
+        <script src="{{ STATIC_URL }}js/unicorn.js"></script>
         {% block js %}
         {% endblock %}
+    </div>
     </body>
 </html>

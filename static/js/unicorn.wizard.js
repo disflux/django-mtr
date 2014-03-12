@@ -1,9 +1,16 @@
 /**
  * Unicorn Admin Template
+ * Version 2.2.0
  * Diablo9983 -> diablo9983@gmail.com
 **/
+
 $(document).ready(function(){
 	
+	$('input[type=checkbox],input[type=radio]').iCheck({
+    	checkboxClass: 'icheckbox_flat-blue',
+    	radioClass: 'iradio_flat-blue'
+	});
+
 	$("#form-wizard").formwizard({ 
 		formPluginEnabled: true,
 		validationEnabled: true,
@@ -36,10 +43,10 @@ $(document).ready(function(){
 			errorClass: "help-inline",
 			errorElement: "span",
 			highlight:function(element, errorClass, validClass) {
-			$(element).parents('.control-group').addClass('error');
+			$(element).parents('.form-group').addClass('has-error');
 			},
 			unhighlight: function(element, errorClass, validClass) {
-				$(element).parents('.control-group').removeClass('error');
+				$(element).parents('.form-group').removeClass('has-error');
 			}
 		}
 	});	
