@@ -1,48 +1,49 @@
 <tr>
-    <td>
-        <strong><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</a></strong>
-    </td>
-    <td>
-        {% if report.mfg_lot_number %}
-        {{ report.mfg_lot_number }}
-        {% else %}
-        N/A
-        {% endif %}
-    </td>
-    <td>
-        {% if report.vendor_lot_number %}
-        {{ report.vendor_lot_number }}
-        {% else %}
-        N/A
-        {% endif %}
-    </td>
-    <td>
-        {% if report.heat_number %}
-        {{ report.heat_number }}
-        {% else %}
-        N/A
-        {% endif %}
-    </td>
-    <td>
-        <a href="{{ report.vendor.get_absolute_url }}">{{ report.vendor.name }}</a>
-    </td>
-    <td>
-        <a href="{{ report.part_number.get_absolute_url }}">{{ report.part_number }}</a>
-    </td>
-    <td>
-        {% if report.origin_po %}
-        {% with po_list=report.po_list %}
-        {% include 'base/po_list.html' %}
-        {% endwith %}
-        {% else %}
-        N/A
-        {% endif %}
-    </td>
-    <td>
-        {% if report.origin_wo %}
-        {{ report.origin_wo }}
-        {% else %}
-        N/A
-        {% endif %}
-    </td>
-</tr>
+                            <td>
+                                <strong><a href="{{ report.get_absolute_url }}">{{ report.lot_number }}</a></strong>
+                            </td>
+                            <td>
+                                {% if report.mfg_lot_number %}
+                                {{ report.mfg_lot_number }}
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if report.vendor_lot_number %}
+                                {{ report.vendor_lot_number }}
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if report.heat_number %}
+                                {{ report.heat_number }}
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ report.vendor.get_absolute_url }}">{{ report.vendor.name }}</a>
+                            </td>
+                            <td>
+                                <a href="{{ report.part_number.get_absolute_url }}">{{ report.part_number }}</a>
+                            </td>
+                            <td>
+                                {% if report.origin_po %}
+                                {% with po_list=report.po_list %}
+                                {% include 'base/po_list.html' %}
+                                {% endwith %}
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if report.origin_wo %}
+                                {{ report.origin_wo }}
+                                {% else %}
+                                N/A
+                                {% endif %}
+                            </td>
+
+                        </tr>

@@ -15,8 +15,8 @@
 
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12 center" style="text-align: center;">					
+<div class="row-fluid">
+    <div class="span12 center" style="text-align: center;">					
         <ul class="quick-actions">
             <li>
             <a href="{% url 'reports.views.new_report' %}">
@@ -45,8 +45,8 @@
         </ul>
     </div>	
 </div>
-<div class="row">
-    <div class="col-md-12 center" style="text-align: center;">					
+<div class="row-fluid">
+    <div class="span12 center" style="text-align: center;">					
         <ul class="quick-actions-horizontal">
             <li>
             <a href="{% url 'reports.views.reports_index' %}">
@@ -81,8 +81,8 @@
         </ul>
     </div>	
 </div>
-<div class="row">
-    <div class="col-md-12 center" style="text-align: center;">					
+<div class="row-fluid">
+    <div class="span12 center" style="text-align: center;">					
         <ul class="stat-boxes">
             <li>
             <div class="left peity_line_good"><span>{% for v in document_graph %} {{ v }}, {% endfor %}</span></div>
@@ -116,8 +116,8 @@
     </div>
 </div>
 
-<div class="row">
-	<div class="col-md-6">
+<div class="row-fluid">
+	<div class="span6">
 	   <div class="widget-box">
 			<div class="widget-title">
 				<span class="icon">
@@ -140,7 +140,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="col-md-6">
+	<div class="span6">
 	       <!-- Audit Log -->
 
         <div class="widget-box">

@@ -2,9 +2,11 @@
 
 {% load thumbnail %}
 
+
 {% block title %}
 PO #  {{ po }}
 {% endblock %}
+
 
 {% block vendors_active %}active open{% endblock %}
 
@@ -16,6 +18,7 @@ PO #  {{ po }}
 
 {% block page_title %}PO # {{ po }} Details{% endblock %}
 
+
 {% block head %}
 <script src="{{ STATIC_URL }}js/jquery.dataTables.min.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.tables.js"></script>
@@ -25,6 +28,8 @@ PO #  {{ po }}
 <script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
 <script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
 <script>
@@ -34,15 +39,17 @@ $(document).ready(function() {
 </script>    
 {% endblock %}
 
+
+
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
+<div class="row-fluid">
+    <div class="span12">
         <h2>Purchase Order {{ po }} <small>{{ vendor }}</small></h2>     
     </div>   
 </div>
 
-<div class="row">
-    <div class="col-md-7">
+<div class="row-fluid">
+    <div class="span7">
         <div class="widget-box collapsible">
             <div class="widget-title">
             <a href="#attributes" data-toggle="collapse">
@@ -74,7 +81,7 @@ $(document).ready(function() {
         </div>                                               
     </div>
 
-    <div class="col-md-5">
+    <div class="span5">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -98,11 +105,17 @@ $(document).ready(function() {
             <div id="xrefs-table">
         </div>
     </div>
-       
-</div>
+    
+
+        
+
+        
+    </div>
     <div id="modals">
         {% csrf_token %}
         {% include 'modals/attach_document.html' %}
+        
+
     </div>
 </div>
 

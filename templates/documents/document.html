@@ -26,9 +26,27 @@
 <script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
+<link rel="stylesheet" href="{{ STATIC_URL }}js/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+<script src="{{ STATIC_URL }}js/fancybox/jquery.fancybox.pack.js"></script>
 <link href="{{ STATIC_URL }}css/bootstrap-editable.css" rel="stylesheet">
 <script src="{{ STATIC_URL }}js/bootstrap-editable.min.js"></script>
-
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".lightbox").fancybox({
+            'transitionIn'  :   'elastic',
+            'transitionOut' :   'elastic',
+            'speedIn'       :   600, 
+            'speedOut'      :   200, 
+            'overlayShow'   :   false
+            });
+        {% if user.is_authenticated %}
+        $.fn.editable.defaults.mode = 'inline';
+        $('#description').editable({
+            params: {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
+        });
+        {% endif %}
+        });
+</script>
 <script type="text/javascript">
     $(document).on("click", ".open-email-doc-modal", function () {
             var id = $(this).data('id');
@@ -37,20 +55,23 @@
      console.log('Show Modal');
 });
 </script>
-   
+
+    
 {% endblock %}
 
 
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12">
+<div class="row-fluid" itemscope itemtype="http://data-vocabulary.org/Product">
+    <div class="span12">
         <h2>Doc # {{ document.uuid }}</span> </h2>
+        
     </div>
+    
 </div>
 
-<div class="row">
-    <div class="col-md-6">
+<div class="row-fluid">
+    <div class="span6">
         <div class="widget-box collapsible">
             <div class="widget-title">
             <a href="#attributes" data-toggle="collapse">
@@ -76,7 +97,7 @@
         </div>                                               
     </div>
 
-    <div class="col-md-6">
+    <div class="span6">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -107,7 +128,7 @@
             <div id="xrefs-table">
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="span6">
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -136,10 +157,16 @@
             <div id="xrefs-table">
         </div>
     </div>
-</div>
+
+        
+
+        
+    </div>
     <div id="modals">
         {% csrf_token %}
         {% include 'modals/attach_document.html' %}
+        
+
     </div>
 </div>
 

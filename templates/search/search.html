@@ -13,32 +13,32 @@ Search
 
 {% block content %}
 
-<div class="row">
-    <div class="col-md-6 center-block">
+<div class="row-fluid">
+    <div class="span6 offset3">
         <div class="widget-box">
             <div class="widget-content">
-                <form action="." method="get" class="form-horizontal">
-                    <div class="control-group">
-
-                        <div class="input-append span12" style="text-align:center">
-                            <input class="search-large" type="text" name="q" value="{{ query }}" placeholder="{{ query }}"/>
-                            <button class="btn" type="submit" value="Search" /><i class="fa fa-search"></i>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        		<form action="." method="get" class="form-horizontal">
+        			<div class="control-group">
+        				
+        				<div class="input-append span12" style="text-align:center">
+        					<input class="search-large" type="text" name="q" value="{{ query }}" placeholder="{{ query }}"/>
+        					<button class="btn" type="submit" value="Search" /><i class="icon-search"></i>
+        				</div>
+        			</div>
+        		</form>
             </div>
         </div>
     </div>
+</div>
 
 {% if query %}
-<div class="row">
-    <div class="col-md-12">
+<div class="row-fluid">
+    <div class="span12">
         <h3>{{ results_list.paginator.count }} matches - showing {{ results_list.start_index }}-{{ results_list.end_index }}</i> <small>~ {{ runtime|floatformat:3 }} seconds</small></h3>
     </div>
 </div>        
-<div class="row">
-    <div class="col-xs-12">
+<div class="row-fluid">
+    <div class="span12">
         <div class="widget-box">
             <div class="widget-content nopadding">
                 <table class="table table-bordered results">
@@ -65,7 +65,7 @@ Search
                     {% endfor %}
                 </table>
             
-                <div class="center-block">
+                <div class="pagination">
                     {{ results_list.render }}
                 </div>
             </div>
@@ -78,7 +78,7 @@ Search
 <div class="widget-content">
     <h3>Queries <small>How to use the search box to find what you are looking for</small></h2>
     <div class="row">
-        <div class="col-md-6">
+        <div class="span6">
         <h4>Standard search</h4>
         <p>We implement all of the standard search features that you would expect to find
         on any major search engine. These include exact phrase, keyword, or, and none types.</p>
@@ -100,7 +100,7 @@ Search
             </dd>
         </dl>    
         </div>
-        <div class="col-md-6">
+        <div class="span5">
         <h4>Searchable Inputs <small>things indexed by the search engine</small></h4>
         <p>Django-MTR currently indexes the following fields. You can click on <code>text like this</code> to see an example search.</p>
         <dl>

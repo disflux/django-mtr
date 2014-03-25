@@ -20,6 +20,7 @@ django-storages==1.1.8
 django-uuidfield==0.4.0
 django.js==0.8.0
 docutils==0.10
+haystack==0.15
 psycopg2==2.5
 pyPdf==1.13
 python-dateutil==2.1
