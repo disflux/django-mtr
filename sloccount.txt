@@ -1,39 +1,15 @@
-Have a non-directory at the top, so creating directory top_dir
-Adding /tank/dev/mtr/mtr/./README.md to top_dir
-Creating filelist for dashboard
-Creating filelist for documents
-Creating filelist for interfax
-Adding /tank/dev/mtr/mtr/./manage.py to top_dir
-Creating filelist for mtr
-Adding /tank/dev/mtr/mtr/./mtr_wsgi to top_dir
-Creating filelist for orders
-Creating filelist for parts
-Creating filelist for pdfgen
-Creating filelist for reports
-Adding /tank/dev/mtr/mtr/./requirements.txt to top_dir
-Creating filelist for search
-Adding /tank/dev/mtr/mtr/./sloccount.txt to top_dir
-Creating filelist for specifications
-Creating filelist for static
-Creating filelist for templates
-Creating filelist for vendors
-Categorizing files.
-Finding a working MD5 command....
-Found a working MD5 command.
-Computing results.
-
-
 SLOC	Directory	SLOC-by-Language (Sorted)
-440     pdfgen          python=440
+1883    inventory       python=1883
+786     pdfgen          python=786
+571     reports         python=571
 376     interfax        python=376
-229     mtr             python=229
-207     reports         python=207
-150     documents       python=150
-105     parts           python=105
-103     orders          python=103
-77      dashboard       python=77
-58      vendors         python=58
-50      search          python=50
+327     parts           python=327
+316     orders          python=316
+280     mtr             python=280
+164     documents       python=164
+141     vendors         python=141
+57      dashboard       python=57
+51      search          python=51
 25      specifications  python=25
 6       top_dir         python=6
 0       static          (none)
@@ -41,18 +17,18 @@ SLOC	Directory	SLOC-by-Language (Sorted)
 
 
 Totals grouped by language (dominant language first):
-python:        1826 (100.00%)
+python:        4983 (100.00%)
 
 
 
 
-Total Physical Source Lines of Code (SLOC)                = 1,826
-Development Effort Estimate, Person-Years (Person-Months) = 0.38 (4.52)
+Total Physical Source Lines of Code (SLOC)                = 4,983
+Development Effort Estimate, Person-Years (Person-Months) = 1.08 (12.96)
  (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-Schedule Estimate, Years (Months)                         = 0.37 (4.43)
+Schedule Estimate, Years (Months)                         = 0.55 (6.62)
  (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-Estimated Average Number of Developers (Effort/Schedule)  = 1.02
-Total Estimated Cost to Develop                           = $ 50,841
+Estimated Average Number of Developers (Effort/Schedule)  = 1.96
+Total Estimated Cost to Develop                           = $ 145,884
  (average salary = $56,286/year, overhead = 2.40).
 SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
 SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
