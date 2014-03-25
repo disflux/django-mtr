@@ -137,6 +137,7 @@ INSTALLED_APPS = (
     'easydump',
     'south',
     'django_select2',
+    'widget_tweaks',
     #'csvimport',
     
     
