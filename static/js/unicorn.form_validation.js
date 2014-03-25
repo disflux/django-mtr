@@ -1,15 +1,10 @@
 /**
  * Unicorn Admin Template
- * Version 2.2.0
  * Diablo9983 -> diablo9983@gmail.com
 **/
-
 $(document).ready(function(){
 	
-	$('input[type=checkbox],input[type=radio]').iCheck({
-    	checkboxClass: 'icheckbox_flat-blue',
-    	radioClass: 'iradio_flat-blue'
-	});
+	$('input[type=checkbox],input[type=radio],input[type=file]').uniform();
 	
 	$('select').select2();
 	
@@ -35,10 +30,11 @@ $(document).ready(function(){
 		errorClass: "help-inline",
 		errorElement: "span",
 		highlight:function(element, errorClass, validClass) {
-			$(element).parents('.form-group').removeClass('has-success').addClass('has-error');
+			$(element).parents('.control-group').addClass('error');
 		},
 		unhighlight: function(element, errorClass, validClass) {
-			$(element).parents('.form-group').removeClass('has-error').addClass('has-success');
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
 		}
 	});
 	
@@ -60,11 +56,11 @@ $(document).ready(function(){
 		errorClass: "help-inline",
 		errorElement: "span",
 		highlight:function(element, errorClass, validClass) {
-			$(element).parents('.form-group').addClass('has-error');
+			$(element).parents('.control-group').addClass('error');
 		},
 		unhighlight: function(element, errorClass, validClass) {
-			$(element).parents('.form-group').removeClass('has-error');
-			$(element).parents('.form-group').addClass('has-success');
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
 		}
 	});
 	
@@ -85,11 +81,11 @@ $(document).ready(function(){
 		errorClass: "help-inline",
 		errorElement: "span",
 		highlight:function(element, errorClass, validClass) {
-			$(element).parents('.form-group').addClass('has-error');
+			$(element).parents('.control-group').addClass('error');
 		},
 		unhighlight: function(element, errorClass, validClass) {
-			$(element).parents('.form-group').removeClass('has-error');
-			$(element).parents('.form-group').addClass('has-success');
+			$(element).parents('.control-group').removeClass('error');
+			$(element).parents('.control-group').addClass('success');
 		}
 	});
 });
