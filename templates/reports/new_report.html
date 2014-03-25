@@ -1,18 +1,24 @@
 {% extends "base/main.html" %}
 {% load django_select2_tags %}
-{% load widget_tweaks %}
-
 {% block head %}
-<link rel="stylesheet" href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
 <link rel="stylesheet" href="{{ STATIC_URL }}css/datepicker.css" />
+
+{% import_django_select2_js %}
 {% import_django_select2_css %}
 {% endblock %}
 
 {% block js %}
-{% import_django_select2_js %}
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
 <script src="http://ivaynberg.github.com/select2/select2-master/select2.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
 <script src="{{ STATIC_URL }}js/unicorn.form_common.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() { 
+        $("select").select2({ width: 'resolve' });           
+    }); 
+</script>
 {% endblock %}
 
 {% block breadcrumb_links %}
@@ -31,24 +37,20 @@
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
-                    <i class="fa fa-th"></i>
+                    <i class="icon-th"></i>
                 </span>
                 <h5>Add/Edit Report</h5>
             </div>
-            <div class="widget-content">
-                <form class="form-horizontal" action="" method="post" autocomplete="off">
+            <div class="widget-content nopadding">
+                <form class="well form-horizontal" action="" method="post" autocomplete="off">
                     {% csrf_token %}
                     
-                    <div class="form-group">
+                    <div class="control-group">
                         {% for field in reportform %}
-                        <label class="col-sm-3 col-md-3 col-lg-3 control-label">{{ field.label }}</label>                        
-                        <div class="col-sm-8 col-md-8 col-lg-8">
+                        <label class="control-label" for="id_company">{{ field.label }}</label>                        
+                        <div class="controls">
                             {{ field.errors }}
-                            {% if field|widget_type == 'textinput' %}
-                            {{ field|add_class:"form-control" }}
-                            {% else %}
                             {{ field }}
-                            {% endif %}
                             <span class="help-block">{{ field.help_text }}</span>
                         </div>
                         {% endfor %}

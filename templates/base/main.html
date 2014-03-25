@@ -7,15 +7,8 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.css" />
 <link rel="stylesheet" href="{{ STATIC_URL }}css/fullcalendar.css" />
+<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.jscrollpane.css" />	
 <link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}css/colorpicker.css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}css/datepicker.css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}css/icheck/flat/blue.css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}css/select2.css" />
-<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui.css" />		
-<link rel="stylesheet" href="{{ STATIC_URL }}css/unicorn.css" />
-
-<script src="{{ STATIC_URL }}js/jquery.min.js"></script>
 
 {% block head %}
 {% endblock %}
@@ -69,6 +62,7 @@
         </div>
     </div>
 
+    {% block no_sidebar %}
     <div id="sidebar">
         <div id="search">
             <form method="get" action="/search/">
@@ -161,8 +155,9 @@
         </ul>
 
     </div>
+    {% endblock %}
 
-    <div id="content" style="top:0;bottom:0;">
+    <div id="content">
         <div id="content-header">
 
             <h1>{% block page_title %} {% endblock %}</h1>
@@ -181,33 +176,34 @@
         </div>
         {% endblock %}
 
-        <div class="container-fluid" style="">
+        <div class="container-fluid">
             {% block content %}
 
             {% endblock %}
 
+            <div class="noprint row-fluid">
+                <div id="footer" class="noprint span12" style="margin-top:65px;">
+
+                    <br />
+                    &copy; 2012 - {% now "Y" %} disflux, LLC. ( <a href="https://github.com/disflux/django-mtr">View Source</a>  )
+                    <br /><br />
+                </div>
+            </div>
         </div>
     </div>
-
     <script src="{{ STATIC_URL }}js/excanvas.min.js"></script>
+    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
     <script src="{{ STATIC_URL }}js/jquery-ui.custom.js"></script>
     <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.flot.min.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.flot.resize.min.js"></script>
     <script src="{{ STATIC_URL }}js/jquery.sparkline.min.js"></script>
     <script src="{{ STATIC_URL }}js/fullcalendar.min.js"></script>
-    <script src="{{ STATIC_URL }}js/bootstrap-colorpicker.js"></script>
-    <script src="{{ STATIC_URL }}js/bootstrap-datepicker.js"></script>
-    <script src="{{ STATIC_URL }}js/jquery.icheck.min.js"></script>
-    <script src="{{ STATIC_URL }}js/select2.min.js"></script>
+
     <script src="{{ STATIC_URL }}js/jquery.nicescroll.min.js"></script>
     <script src="{{ STATIC_URL }}js/unicorn.js"></script>
     {% block js %}
     {% endblock %}
-<div class="row">
-        <div id="footer">
-            &copy; 2012 - {% now "Y" %} disflux, LLC. ( <a href="https://github.com/disflux/django-mtr">View Source</a>  )
-        </div>
-    </div>
+</div>
 </body>
 </html>
