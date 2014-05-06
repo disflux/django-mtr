@@ -30,6 +30,7 @@
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>
+                            <th>Vendor #</th>
                             <th>Vendor</th>
                             <th>Address</th>
                             <th>City</th>
@@ -41,7 +42,9 @@
                     <tbody>
                         {% for vendor in vendors %}
                         <tr>
-                            
+                            <td>
+                                {{ vendor.pk }}
+                            </td>
                             <td>
                                 <strong><a href="{{ vendor.get_absolute_url }}">{{ vendor.name }}</a></strong>
                             </td>

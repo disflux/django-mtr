@@ -8,3 +8,4 @@
 {{ object.origin_po }}
 {{ object.origin_wo }}
 {{ object.specification }}
+{{ object.notes }}

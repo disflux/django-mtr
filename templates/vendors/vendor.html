@@ -11,7 +11,7 @@ Vendor {{ vendor }}
 {% block vendors_active %}active open{% endblock %}
 
 {% block breadcrumb_links %}
-<a href="{% url 'vendors.views.vendor_index'">Vendors</a>
+<a href="{% url 'vendors.views.vendors_index' %}">Vendors</a>
 <a href="#" class="current">{{ vendor }}</a>
 {% endblock %}
 
@@ -43,7 +43,7 @@ $(document).ready(function() {
 {% block content %}
 <div class="row-fluid">
     <div class="span12">
-        <h2>Vendor {{ vendor.name }} <small>{{ part.description }}</small></h2>     
+        <h2>{{ vendor.name }} <small># {{ vendor.pk }}</small></h2>     
     </div>   
 </div>
 

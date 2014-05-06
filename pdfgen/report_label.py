@@ -83,8 +83,8 @@ def report_label(request, lot_number):
     p.drawString(10, 20*mm, "Date:")
     p.drawString(40*mm, 20*mm, localtime(report.created_at).strftime('%Y-%m-%d %H:%M %Z'))
     p.line(0, 18*mm, 105*mm, 18*mm)
-    p.drawString(10, 12*mm, "Vendor:")
-    p.drawString(40*mm, 12*mm, report.vendor.name)
+    p.drawString(10, 12*mm, "Vendor #:")
+    p.drawString(40*mm, 12*mm, str(report.vendor.id))
     p.line(0,10*mm, 105*mm, 10*mm)
     if report.origin_po:
         p.drawString(10, 4*mm, "PO #:")

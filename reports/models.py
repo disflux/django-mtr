@@ -31,6 +31,7 @@ class Report(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, null=True)
     raw_material = models.BooleanField(default=False, help_text="Check this box if product is raw material")
+    notes = models.TextField(null=True, blank=True, help_text="Additional information about this lot (searchable)")
     documents = models.ManyToManyField(Document,
                                        null=True, blank=True,
                                        through='ReportDocument')
@@ -77,7 +78,27 @@ class Report(models.Model):
         documents.append(self.get_primary_document_url())
         for report in self.linked_reports.all():
             documents.append(report.get_primary_document_url())
+            documents.append
         return documents
+        
+    def get_linked_reports(self):
+        reports = []
+        sub = []
+        for report in self.linked_reports.all():
+            reports.append(report)
+            #r = {'child': self, 'parent': report}
+            #reports.append(r)
+            sub = report.get_linked_reports()
+        for s in sub:
+            reports.append(s)
+        
+        return reports
+        
+    def get_pedigree(self):
+        pass
+        
+            
+            
         
     def po_list(self):
         return self.origin_po.split(' ')    

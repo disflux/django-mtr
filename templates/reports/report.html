@@ -112,7 +112,7 @@ Lot # {{ report.lot_number }}
                                 </td>
                                 <td>
                                     {% if report.mfg_lot_number %}
-                                    {{ report.mfg_lot_number }}
+                                    <a href="{% url 'search.views.results' %}?q={{ report.mfg_lot_number }}">{{ report.mfg_lot_number }}</a>
                                     {% else %}
                                     N/A
                                     {% endif %} 
@@ -124,7 +124,7 @@ Lot # {{ report.lot_number }}
                                 </td>
                                 <td>
                                     {% if report.vendor_lot_number %}
-                                    {{ report.vendor_lot_number }}
+                                    <a href="{% url 'search.views.results' %}?q={{ report.vendor_lot_number }}">{{ report.vendor_lot_number }}</a>
                                     {% else %}
                                     N/A
                                     {% endif %} 
@@ -136,7 +136,7 @@ Lot # {{ report.lot_number }}
                                 </td>
                                 <td>
                                     {% if report.heat_number %}
-                                    {{ report.heat_number }}
+                                    <a href="{% url 'search.views.results' %}?q={{ report.heat_number }}">{{ report.heat_number }}</a>
                                     {% else %}
                                     N/A
                                     {% endif %} 
@@ -144,11 +144,11 @@ Lot # {{ report.lot_number }}
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Vendor</strong>   
+                                    <strong>Vendor (#) Name</strong>   
                                 </td>
                                 <td>
                                     {% if report.vendor %}
-                                    <a href="{{ report.vendor.get_absolute_url }}">{{ report.vendor.name }}</a>
+                                    (<strong>{{ report.vendor.pk }}</strong>) <a href="{{ report.vendor.get_absolute_url }}">{{ report.vendor.name }}</a>
                                     {% else %}
                                     N/A
                                     {% endif %} 
@@ -328,7 +328,7 @@ Lot # {{ report.lot_number }}
         <!-- end documents widget -->
         
         <!-- linked reports widget -->
-        {% for lr in report.linked_reports.all %}
+        {% for lr in report.get_linked_reports %}
         <div class="widget-box">
             <div class="widget-title">
                 <span class="icon">
@@ -454,6 +454,20 @@ Lot # {{ report.lot_number }}
                             </td>  
                         </tr>
                         {% endfor %}
+                        {% for ld in lr.linked_reports.all %}
+                        {% for d in ld.documents.all %}
+                        {% thumbnail d.file "100x200" as im %}
+                         <center>
+                                    
+                                    <a target="_blank" href="{% url 'pdfgen.doc_overlay.doc_overlay' d.uuid lr.lot_number %}">
+                                        <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+                                    </a>
+                                    <br /><br />
+                                    
+                                </center>
+                                    {% endthumbnail %}
+                                {% endfor %}
+                                {% endfor %}
                     </table>
                     </td>
                     </tr>
@@ -465,6 +479,26 @@ Lot # {{ report.lot_number }}
         {% endfor %}
         <!-- end documents widget -->
 
+    </div>
+    
+    <div class="span5">
+        <div class="widget-box">
+            <div class="widget-title">
+                <span class="icon">
+                    <i class="icon-file"></i>
+                </span>
+                <h5>Report Notes</h5>
+            </div>
+            {% if report.notes %}
+            <div class="widget-content">
+                <p>{{ report.notes }}
+            </div>
+            {% else %}
+            <div class="widget-content">
+                <h4>No notes entered.</h4>
+            </div>
+            {% endif %}
+        </div>    
     </div>
 
     <div class="span5">
@@ -577,8 +611,8 @@ Lot # {{ report.lot_number }}
                 </div>
             </div>
             <div class="widget-content">
-                <ul class="activity-list">
-                    {% for l in audit_log|slice:":5" %}
+                <ul class="activity-list" id="audit_log">
+                    {% for l in audit_log|slice:":10" %}
                     <li><a>
                         <i class="icon-user"></i>
                         <strong>{{ l.actor }}</strong> {{ l.verb }} {% if l.action_object %}<strong>{{ l.action_object }}</strong>{% endif %} <span>{{ l.timestamp|date:"Y-m-d" }}</span>

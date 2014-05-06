@@ -4,7 +4,9 @@ from documents.models import Document
 from reports.models import Report
 from django_select2 import *
 
-class ReportChoices(AutoModelSelect2MultipleField):
+
+
+class ReportChoices(AutoModelSelect2Field):
     queryset = Report.objects
     search_fields = ['lot_number__istartswith',]
 

@@ -23,7 +23,7 @@ class ReportForm(ModelForm):
         model = Report
         fields = ('mfg_lot_number', 'vendor_lot_number', 'heat_number',
                   'vendor', 'part_number', 'raw_material', 
-                  'origin_po', 'origin_wo', 'receiving_date', 'linked_reports', )
+                  'origin_po', 'origin_wo', 'receiving_date', 'linked_reports', 'notes' )
     part_number = PartChoice()
     linked_reports = ReportChoices(required=False, help_text='Any lot numbers that this lot number uses')
     vendor = VendorChoice(help_text='The vendor this material originated from')
