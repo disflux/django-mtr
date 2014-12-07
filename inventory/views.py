@@ -1,3 +1,4 @@
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.db.models import Avg, Sum
@@ -9,6 +10,7 @@ from actstream import action
 from parts.models import Part
 from inventory.models import InventoryLocation, InventoryCount, PartValuation
 from inventory.forms import InventoryForm, DirectToPartForm, DirectToLocationForm
+from parts.forms import StockingCostCSVForm
 
 import csv
 
@@ -16,6 +18,7 @@ import csv
 def dashboard(request):
     direct_to_part_form = DirectToPartForm(request.POST)
     direct_to_location_form = DirectToLocationForm(request.POST)
+    stocking_cost_csv_form = StockingCostCSVForm()
 
     if 'jump' in request.POST:
         jump = request.POST.get('jump', None)
@@ -85,6 +88,7 @@ def dashboard(request):
                                   'avg_cost': avg_cost,
                                   'direct_to_location_form': direct_to_location_form,
                                   'direct_to_part_form': direct_to_part_form,
+                                  'stocking_cost_csv_form': stocking_cost_csv_form,
                                   'bin_locations': bin_locations,
                                   'scan_times': scan_times,
                                   'pre_value': pre_value,
@@ -252,6 +256,7 @@ def export_scans(request):
 
     return response
 
+@staff_member_required
 def delete_scans(request):
     InventoryCount.objects.all().delete()
     messages.success(request, 'All Scans Deleted')

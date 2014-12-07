@@ -49,9 +49,11 @@
     </div>
     <div class="span6">
         <ul class="site-stats">
-            <li><a href="{% url 'inventory.views.export_scans' %}"><button type="submit" name="save" class="btn btn-inverse">Download Scan CSV</button></a></li>
+            <li><a href="{% url 'inventory.views.export_scans' %}"><button type="submit" name="save" class="btn btn-inverse">Download Scan CSV</button></a>
+            <a class="btn btn-success" title="Import Stocking CSV" href="#import_stocking-modal" data-toggle="modal">Import Stocking Cost CSV</a>
+            </li>
             {% if user.is_staff %}
-            <li><a class="btn btn-danger" title="Clear All Scans" href="#clear_scans-modal" data-toggle="modal"><i class="icon-minus-sign icon-white"></i> Clear All Scans</a></li>
+            <li><a class="btn btn-danger" title="Clear All Scans" href="#clear_scans-modal" data-toggle="modal">Clear All Scans</a></li>
 
             {% endif %}
         </ul>
@@ -96,17 +98,17 @@
                     <div class="span6">
                         <ul class="site-stats">
                             <li><div class="cc"><i class="icon-barcode"></i> <strong>{{ scans }}</strong> <small>Scanned Parts</small></div></li>
-                            <li><div class="cc"><i class="icon-chevron-right"></i> <strong>{{ scan_times.scans }}</strong> <small>Total Scans</small></div></li>
-                            <li><div class="cc"><i class="icon-tag"></i> <strong>{{ percent_difference|floatformat:4 }}%</strong> <small>Projected Percentage Change</small></div></li>
+                            <li><div class="cc"><i class="icon-chevron-right"></i> <strong>{{ scan_times.scans|default:"0" }}</strong> <small>Total Scans</small></div></li>
+                            <li><div class="cc"><i class="icon-tag"></i> <strong>{{ percent_difference|floatformat:4|default:"0" }}%</strong> <small>Projected Percentage Change</small></div></li>
                             <li><div class="cc"><i class="icon-tag"></i> <strong>${{ reserve_value|floatformat:4 }}</strong> <small>Reserve Value</small></div></li>
                         </ul>
                     </div>
                     <div class="span6">
                         <ul class="site-stats">
                             <li><div class="cc"><i class="icon-info-sign"></i> <strong>${{ pre_value|intcomma }}</strong> <small>Value of scanned items pre-inventory ({{ skipped }} parts not found)</small></div></li>
-                            <li><div class="cc"><i class="icon-info-sign"></i> <strong>${{ post_value|intcomma }}</strong> <small>Value of scanned inventory</small></div></li>
+                            <li><div class="cc"><i class="icon-info-sign"></i> <strong>${{ post_value|intcomma|default:"0" }}</strong> <small>Value of scanned inventory</small></div></li>
                             <li><div class="cc"><i class="icon-tag"></i> <strong>${{ dollar_difference|intcomma }}</strong> <small>Projected Dollar Change</small></div></li>
-                            <li><div class="cc"><i class="icon-tag"></i> <strong>${{ reserve_difference|floatformat:4 }}</strong> <small>Difference Value - Reserve Value</small></div></li>
+                            <li><div class="cc"><i class="icon-tag"></i> <strong>${{ reserve_difference|floatformat:4|default:"0" }}</strong> <small>Difference Value - Reserve Value</small></div></li>
                         </ul>
                     </div>
                 </div>
@@ -117,6 +119,7 @@
 <div id="modals">
         {% csrf_token %}
         {% include 'modals/clear_scans.html' %}
+        {% include 'modals/import_stocking.html' %}
 
 
 

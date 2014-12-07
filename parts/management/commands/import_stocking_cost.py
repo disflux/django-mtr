@@ -5,7 +5,7 @@ import csv
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        with open('scost2014.csv', 'rb') as csvfile:
+        with open('scost.csv', 'rb') as csvfile:
             invreader = csv.reader(csvfile, delimiter=',')
             not_found = []
             sum = 0

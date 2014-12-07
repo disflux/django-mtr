@@ -1,0 +1,36 @@
+<div class="modal hide" id="import_stocking-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Import Stocking Cost from CSV</h3>
+    </div>
+    <div class="modal-body">
+        <form id="image-form" class="form-horizontal" method="post" enctype="multipart/form-data" action="{% url 'parts.views.import_stocking_cost' %}">
+            {% csrf_token %}
+            <p>Use this form for erasing and importing new stocking cost data. The file must be in CSV format with the following
+                fields in exact order: <strong>PART NUMBER, UNIT OF MEASURE, ON RESERVE, ON HAND, COST, EXT COST.</strong>
+            </p>
+            <p>
+                If the file is not in CSV and the fields are not in the exact order, the import will not work.
+            </p>
+            <div class="control-group">
+
+                <label class="control-label">File</label>
+                <div class="controls">
+                    {{ stocking_cost_csv_form.file }}
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button id="save-document" type="submit" data-toggle="button" data-loading-text="Saving..." class="btn btn-inverse"><i class="icon-hdd icon-white"></i> Import</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </form>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("select").select2({ width: 'resolve' });
+            });
+        </script>
+    </div>
+</div>

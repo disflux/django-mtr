@@ -5,8 +5,9 @@ urlpatterns = patterns('',
     url(r'^new_part/$', 'parts.views.new_part'),
     url(r'^label/$', 'parts.views.part_label'),
     url(r'^show_label/(?P<part_number>.+)/$', 'pdfgen.part_label.part_label'),
-    url(r'^edit/(?P<part_number>.+)/$', 'parts.views.edit_part'),    
+    url(r'^edit/(?P<part_number>.+)/$', 'parts.views.edit_part'),
+    url(r'^import_stocking/$', 'parts.views.import_stocking_cost'),   
     url(r'^(?P<part_number>.+)/$', 'parts.views.part'),
-    
-    
+
+
 )
