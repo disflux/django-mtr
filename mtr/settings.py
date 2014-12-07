@@ -129,7 +129,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
-    
+
     # Third Party Apps
     'storages',
     'sorl.thumbnail',
@@ -138,8 +138,8 @@ INSTALLED_APPS = (
     'south',
     'django_select2',
     #'csvimport',
-    
-    
+
+
     # Local Apps
     'dashboard',
     'reports',
@@ -150,7 +150,7 @@ INSTALLED_APPS = (
     'orders',
     'pdfgen',
     'inventory',
-    
+
     # Audit/activity log goes after all apps
     'actstream',
     #'debug_toolbar',

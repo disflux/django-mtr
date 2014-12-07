@@ -32,8 +32,6 @@
                 </div>
             </div>
         </form>
-    </div>
-    <div class="span6">
         <form class="form-horizontal" action="" method="post" autocomplete="off">
             {% csrf_token %}
             <div class="control-group">
@@ -48,6 +46,16 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="span6">
+        <ul class="site-stats">
+            <li><a href="{% url 'inventory.views.export_scans' %}"><button type="submit" name="save" class="btn btn-inverse">Download Scan CSV</button></a></li>
+            {% if user.is_staff %}
+            <li><a class="btn btn-danger" title="Clear All Scans" href="#clear_scans-modal" data-toggle="modal"><i class="icon-minus-sign icon-white"></i> Clear All Scans</a></li>
+
+            {% endif %}
+        </ul>
+
     </div>
 </div>
 
@@ -70,12 +78,12 @@
                             <li><div class="cc"><i class="icon-info-sign"></i> <strong>{{ raw_lbs.lbs|intcomma }}</strong> <small>pounds of raw material</small></div></li>
                             <li><div class="cc"><i class="icon-info-sign"></i> <strong>{{ pcs.pcs|intcomma }}</strong> <small>Individual Pieces</small></div></li>
                             <li><div class="cc"><i class="icon-tag"></i> <strong>${{ avg_cost|floatformat:4 }}</strong> <small>Average Part Cost</small></div></li>
-                            
+
                         </ul>
                     </div>
-                </div>							
+                </div>
             </div>
-        </div>					
+        </div>
     </div>
 </div>
 
@@ -101,9 +109,16 @@
                             <li><div class="cc"><i class="icon-tag"></i> <strong>${{ reserve_difference|floatformat:4 }}</strong> <small>Difference Value - Reserve Value</small></div></li>
                         </ul>
                     </div>
-                </div>							
+                </div>
             </div>
-        </div>					
+        </div>
     </div>
+</div>
+<div id="modals">
+        {% csrf_token %}
+        {% include 'modals/clear_scans.html' %}
+
+
+
 </div>
 {% endblock %}

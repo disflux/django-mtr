@@ -1,0 +1,45 @@
+<div class="modal hide" id="clear_scans-modal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><i class="icon-remove"></i></button>
+        <h3>Clear All Scans</h3>
+    </div>
+    <div class="modal-body">
+        <form id="image-form" class="form-horizontal" method="post" action="{% url 'inventory.views.delete_scans' %}">
+            {% csrf_token %}
+            <p>
+                <strong>WARNING</strong> - Clearing all scans cannot be undone. To confirm your
+                choice, please type the word <strong>CONFIRM</strong> using all caps in the text box below to
+                proceed. <strong>It is recommended that you download a CSV backup before continuing.</strong>
+            </p>
+            <div class="control-group">
+                <label class="control-label">CONFIRM DELETE</label>
+                <div class="controls">
+                    <input id="confirmation" type="text"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                <button id="clear-scans" type="submit" data-toggle="button" data-loading-text="Saving..." class="btn btn-danger"><i class="icon-hdd icon-white"></i> CLEAR SCANS</button>
+                <button class="btn" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </form>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#clear-scans").attr('disabled','disabled');
+                $("#confirmation").keyup(validate);
+            });
+                function validate() {
+                    var confirmation = $("#confirmation").val();
+
+                    if(confirmation == 'CONFIRM') {
+                        $("#clear-scans").removeAttr('disabled');
+                    }
+                    else {
+                        $("#clear-scans").attr('disabled', 'disabled');
+                    }
+
+                }
+        </script>
+    </div>
+</div>

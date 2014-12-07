@@ -2,7 +2,6 @@ Django==1.6.2
 Django-Select2==4.2.0
 Pillow==2.3.0
 South==0.8.2
-Tkinter==0.0.0
 Whoosh==2.6.0
 argparse==1.1
 boto==2.9.5
@@ -13,7 +12,7 @@ django-audit-log==0.2.3
 django-classy-tags==0.4
 django-contact-form==0.3
 django-easydump==0.2.6
-django-haystack==2.1.1-dev
+django-haystack==2.1.0
 django-orm-extensions==3.0b3
 django-pure-pagination==0.2.1
 django-storages==1.1.8

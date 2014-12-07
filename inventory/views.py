@@ -10,11 +10,13 @@ from parts.models import Part
 from inventory.models import InventoryLocation, InventoryCount, PartValuation
 from inventory.forms import InventoryForm, DirectToPartForm, DirectToLocationForm
 
+import csv
+
 
 def dashboard(request):
     direct_to_part_form = DirectToPartForm(request.POST)
     direct_to_location_form = DirectToLocationForm(request.POST)
-    
+
     if 'jump' in request.POST:
         jump = request.POST.get('jump', None)
         if jump == 'part':
@@ -25,22 +27,22 @@ def dashboard(request):
             if direct_to_location_form.is_valid():
                 location = direct_to_location_form.cleaned_data['location']
                 return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': location.location_code}))
-                
+
     part_numbers = Part.objects.all().count()
     parts_with_stock = PartValuation.objects.filter(quantity__gt=0).count()
     valuation = PartValuation.objects.all().aggregate(valuation=Sum('ext_value'))
     raw_lbs = PartValuation.objects.filter(uom='LB').aggregate(lbs=Sum('quantity'))
     pcs = PartValuation.objects.filter(uom='EA').aggregate(pcs=Sum('quantity'))
     total_pcs = PartValuation.objects.all().aggregate(total_pcs=Sum('quantity'))
-    
+
     avg_cost = valuation['valuation'] / total_pcs['total_pcs']
-    
+
     bin_locations = InventoryLocation.objects.all().count()
 
     scans = InventoryCount.objects.all().count()
     scan_times = InventoryCount.objects.all().aggregate(scans=Sum('scans'))
     #scan_locations = InventoryCount.objects.order_by('location').distinct('location')
-    
+
     scanned = InventoryCount.objects.all()
     uniques = []
     for s in scanned:
@@ -57,14 +59,20 @@ def dashboard(request):
         except:
             skipped += 1
 
-    
+
     post_value = InventoryCount.objects.all().aggregate(post_value=Sum('stocking_value'))
-    
-    dollar_difference = float(post_value['post_value']) - float(pre_value)
-    percent_difference = (1.0 - (float(post_value['post_value']) / float(pre_value))) * 100
-    
-    reserve_difference = float(dollar_difference) - float(reserve_value)
-        
+
+
+
+    if float(pre_value) > 0:
+        dollar_difference = float(post_value['post_value']) - float(pre_value)
+        percent_difference = (1.0 - (float(post_value['post_value']) / float(pre_value))) * 100
+        reserve_difference = float(dollar_difference) - float(reserve_value)
+    else:
+        percent_difference = 'N/A'
+        dollar_difference = 'N/A'
+        reserve_difference = 'N/A'
+
 
     return render_to_response('inventory/dashboard.html',
                               {
@@ -93,7 +101,7 @@ def inventory_index(request):
     locations = InventoryLocation.objects.filter(inventorycount__audited=False).order_by('location_code').distinct()
     direct_to_part_form = DirectToPartForm(request.POST)
     direct_to_location_form = DirectToLocationForm(request.POST)
-    
+
     if 'jump' in request.POST:
         jump = request.POST.get('jump', None)
         if jump == 'part':
@@ -104,7 +112,7 @@ def inventory_index(request):
             if direct_to_location_form.is_valid():
                 location = direct_to_location_form.cleaned_data['location']
                 return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': location.location_code}))
-    
+
     return render_to_response('inventory/inventory_index_locations.html',
                               {
                                 'locations': locations,
@@ -112,7 +120,7 @@ def inventory_index(request):
                                 'direct_to_part_form': direct_to_part_form,
                               },
                               context_instance=RequestContext(request))
-                              
+
 def inventory_index_parts(request):
     parts = InventoryCount.objects.all().order_by('part')
     scanned = InventoryCount.objects.all()
@@ -125,8 +133,8 @@ def inventory_index_parts(request):
 
     direct_to_part_form = DirectToPartForm(request.POST)
     direct_to_location_form = DirectToLocationForm(request.POST)
-    
-    
+
+
     if 'jump' in request.POST:
         jump = request.POST.get('jump', None)
         if jump == 'part':
@@ -137,7 +145,7 @@ def inventory_index_parts(request):
             if direct_to_location_form.is_valid():
                 location = direct_to_location_form.cleaned_data['location']
                 return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': location.location_code}))
-    
+
     return render_to_response('inventory/inventory_index_parts.html',
                               {
                                 'parts': unique_counts,
@@ -146,7 +154,7 @@ def inventory_index_parts(request):
                               },
                               context_instance=RequestContext(request))
 
-                              
+
 def new_count(request):
     recent_counts = InventoryCount.objects.all().order_by('-count_timestamp')[:10]
     if request.method == 'POST':
@@ -183,8 +191,8 @@ def location(request, location_code):
     location = InventoryLocation.objects.get(location_code=location_code)
     total_part_numbers = InventoryCount.objects.filter(location=location).count()
     agg = InventoryCount.objects.filter(location=location).aggregate(stocking_value=Sum('stocking_value'), total_parts=Sum('inventory_count'))
-        
-    
+
+
     return render_to_response('inventory/location.html',
                               {
                                   'location': location,
@@ -193,13 +201,13 @@ def location(request, location_code):
 
                               },
                               context_instance=RequestContext(request))
-                              
+
 def part_inv(request, part_number):
     part = Part.objects.get(part_number=part_number)
-    
+
     scans = InventoryCount.objects.filter(part=part)
-    agg = InventoryCount.objects.filter(part=part).aggregate(scans=Sum('scans'), total_parts=Sum('inventory_count'))    
-    
+    agg = InventoryCount.objects.filter(part=part).aggregate(scans=Sum('scans'), total_parts=Sum('inventory_count'))
+
     return render_to_response('inventory/part.html',
                               {
                                   'part': part,
@@ -232,7 +240,23 @@ def switch_audit(request, scan_id):
     #else:
     #    return HttpResponseRedirect(reverse('inventory.views.location', kwargs={'location_code': scan.location.location_code}))
 
+def export_scans(request):
+    counts = InventoryCount.objects.all()
+    response = HttpResponse(content_type="text/csv")
+    response['Content-Disposition'] = 'attachment; filename="scans.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Part Number', 'Location', 'Count', 'Counter', 'Scans', 'Audited', 'Auditor', 'Stocking Value'])
+    for c in counts:
+        writer.writerow([c.part, c.location, c.inventory_count, c.counter, c.scans, c.audited, c.auditor, c.stocking_value])
+
+    return response
+
+def delete_scans(request):
+    InventoryCount.objects.all().delete()
+    messages.success(request, 'All Scans Deleted')
+    return HttpResponseRedirect(reverse('inventory.views.dashboard'))
+
+
 def part(request, part_number):
     pass
-    
-

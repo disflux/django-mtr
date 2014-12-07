@@ -7,6 +7,7 @@ from audit_log.models.managers import AuditLog
 
 class Part(models.Model):
     part_number = models.CharField(max_length=128, unique=True)
+    alternate_number = models.CharField(max_length=128, null=True)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

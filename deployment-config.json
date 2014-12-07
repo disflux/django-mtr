@@ -1,0 +1,9 @@
+{
+  "type": "sftp",
+  "host": "example.com",
+  "user": "username",
+  "password": "password",
+  "port": "22",
+  "remote_path": "/example/path",
+  "ssh_key_file": "~/.ssh/id_rsa"
+}

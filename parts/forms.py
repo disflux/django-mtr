@@ -10,9 +10,14 @@ class PartChoice(AutoModelSelect2Field):
     max_results = 10
 
 class NewPartForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(NewPartForm, self).__init__(*args, **kwargs)
+        self.fields['alternate_number'].required = False
+            
     class Meta:
         model = Part
-        fields = ['part_number', 'specification', 'description', 'box_quantity',]
+        fields = ['part_number', 'alternate_number', 'specification', 'description', 'box_quantity',]
         
 class PartLabelForm(forms.Form):
     part_number = PartChoice()

@@ -44,7 +44,7 @@ def email_document(request):
     body += "\n\nLot Number: %s" % report.lot_number
     body += "\nPart Number: %s" % report.part_number
     body += "\nDescription: %s" % report.part_number.description
-    body += "\n\nYou can view the full report at http://mtr.disflux.org%s" % report.get_absolute_url()
+    body += "\n\nYou can view the full report at http://certs.tsamfg.com%s" % report.get_absolute_url()
 
     email = EmailMessage(subject, body, 'mtr@tsamfg.com', [recipient], headers={'Reply-To': 'derek.m@tsamfg.com'})
 

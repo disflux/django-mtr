@@ -11,7 +11,9 @@ urlpatterns = patterns('',
     url(r'^location_scan_sheet/$', 'pdfgen.location_scan_sheet.location_scan_sheet'),
     url(r'^location/(?P<location_code>.+)$', 'inventory.views.location'),
     url(r'^part/(?P<part_number>.+)$', 'inventory.views.part_inv'),
-    
+    url(r'^scansexport/$', 'inventory.views.export_scans'),
+    url(r'^deletescans/$', 'inventory.views.delete_scans'),
+
     url(r'^ajax/location/$', 'inventory.ajax.location_ajax'),
 
 )
