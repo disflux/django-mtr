@@ -2,6 +2,14 @@
 {% load humanize %}
 
 {% block head %}
+
+<link rel="stylesheet" href="{{ STATIC_URL }}css/uniform.css" type="text/css" media="screen" />
+<script src="{{ STATIC_URL }}js/jquery.uniform.js"></script>
+<link href="{{ STATIC_URL }}css/select2.css" rel="stylesheet" />
+
+<script src="{{ STATIC_URL }}js/jquery.validate.js"></script>
+<script src="{{ STATIC_URL }}js/unicorn.form_validation.js"></script>
+
 {% endblock %}
 
 {% block inventory_active %}active open{% endblock %}
@@ -124,4 +132,9 @@
 
 
 </div>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("select").select2({ width: 'resolve' });
+});
+</script>
 {% endblock %}
