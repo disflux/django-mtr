@@ -1,18 +1,27 @@
 Have a non-directory at the top, so creating directory top_dir
-Adding /tank/dev/mtr/mtr/./README.md to top_dir
+Adding /home/derek/django-mtr/./README.md to top_dir
+Adding /home/derek/django-mtr/./allinventory.csv to top_dir
 Creating filelist for dashboard
+Adding /home/derek/django-mtr/./dashboard.png to top_dir
+Adding /home/derek/django-mtr/./dbdump.sh to top_dir
+Adding /home/derek/django-mtr/./deployment-config.json to top_dir
 Creating filelist for documents
 Creating filelist for interfax
-Adding /tank/dev/mtr/mtr/./manage.py to top_dir
+Creating filelist for inventory
+Adding /home/derek/django-mtr/./label.png to top_dir
+Adding /home/derek/django-mtr/./manage.py to top_dir
 Creating filelist for mtr
-Adding /tank/dev/mtr/mtr/./mtr_wsgi to top_dir
+Adding /home/derek/django-mtr/./mtr_wsgi to top_dir
+Adding /home/derek/django-mtr/./new_report.png to top_dir
 Creating filelist for orders
 Creating filelist for parts
 Creating filelist for pdfgen
+Adding /home/derek/django-mtr/./report.png to top_dir
 Creating filelist for reports
-Adding /tank/dev/mtr/mtr/./requirements.txt to top_dir
+Adding /home/derek/django-mtr/./requirements.txt to top_dir
 Creating filelist for search
-Adding /tank/dev/mtr/mtr/./sloccount.txt to top_dir
+Adding /home/derek/django-mtr/./search.png to top_dir
+Adding /home/derek/django-mtr/./sloccount.txt to top_dir
 Creating filelist for specifications
 Creating filelist for static
 Creating filelist for templates
@@ -24,35 +33,37 @@ Computing results.
 
 
 SLOC	Directory	SLOC-by-Language (Sorted)
-440     pdfgen          python=440
+1909    inventory       python=1909
+906     pdfgen          python=906
+736     reports         python=736
+431     parts           python=431
 376     interfax        python=376
-229     mtr             python=229
-207     reports         python=207
-150     documents       python=150
-105     parts           python=105
-103     orders          python=103
-77      dashboard       python=77
-58      vendors         python=58
-50      search          python=50
+316     orders          python=316
+226     mtr             python=226
+164     documents       python=164
+141     vendors         python=141
+57      dashboard       python=57
+51      search          python=51
 25      specifications  python=25
-6       top_dir         python=6
+11      top_dir         python=6,sh=5
 0       static          (none)
 0       templates       (none)
 
 
 Totals grouped by language (dominant language first):
-python:        1826 (100.00%)
+python:        5344 (99.91%)
+sh:               5 (0.09%)
 
 
 
 
-Total Physical Source Lines of Code (SLOC)                = 1,826
-Development Effort Estimate, Person-Years (Person-Months) = 0.38 (4.52)
+Total Physical Source Lines of Code (SLOC)                = 5,349
+Development Effort Estimate, Person-Years (Person-Months) = 1.16 (13.96)
  (Basic COCOMO model, Person-Months = 2.4 * (KSLOC**1.05))
-Schedule Estimate, Years (Months)                         = 0.37 (4.43)
+Schedule Estimate, Years (Months)                         = 0.57 (6.81)
  (Basic COCOMO model, Months = 2.5 * (person-months**0.38))
-Estimated Average Number of Developers (Effort/Schedule)  = 1.02
-Total Estimated Cost to Develop                           = $ 50,841
+Estimated Average Number of Developers (Effort/Schedule)  = 2.05
+Total Estimated Cost to Develop                           = $ 157,155
  (average salary = $56,286/year, overhead = 2.40).
 SLOCCount, Copyright (C) 2001-2004 David A. Wheeler
 SLOCCount is Open Source Software/Free Software, licensed under the GNU GPL.
